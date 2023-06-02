@@ -1,0 +1,20 @@
+{
+  "manifest_version": "3",
+  "version": "0.1",
+  "short_name": "DevBlog",
+  "name": "GLD DevBlog",
+  "description": "Catch up on the lates web developer trends and hot takes.",
+  "icons": [
+    {
+      "src": "GLD144.png",
+      "sizes": "144x144",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
