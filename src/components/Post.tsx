@@ -1,7 +1,7 @@
 'use client';
 
 import React from "react";
-import Router from "next/router";
+import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
 
 export type PostProps = {
@@ -18,7 +18,8 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>
+    <Link href={`/${post.id}/`}>
+    <div >
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       {post.content?<ReactMarkdown>{post.content}</ReactMarkdown>:null}
@@ -29,6 +30,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         }
       `}</style>
     </div>
+    </Link>
   );
 };
 
