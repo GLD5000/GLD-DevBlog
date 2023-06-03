@@ -1,4 +1,3 @@
-import { ReactElement } from 'react'
 import { prisma } from '../../lib/prisma'
 import Post, { PostProps } from '@/components/Post'
 
@@ -23,9 +22,6 @@ const getData = async () => {
   }
 }
 
-type Props = {
-  feed: PostProps[]
-}
 
 export default async function Page() {
   const data = await getData();
