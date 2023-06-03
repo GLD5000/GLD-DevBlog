@@ -24,20 +24,36 @@ type Props = {
   feed: PostProps[]
 }
 
+const getData = async (idIn: string) => {
+  const feed = await prisma.post.findFirst({
+    where: { id: idIn },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  })
+  return {
+    props: { feed },
+    revalidate: 10,
+  }
+}
 
-export default function Page({ params }: {params:{id:string} }) {
+
+export default async function Page({ params }: {params:{id:string} }) {
     // const { author, content, published, title} = params.stuff;
+    const {props:{feed: post}} = await getData(params.id);
+
   return (
     <div>
-      {params.id}
-        {/* <h2>{title? title : `no title`}</h2>
-    <p>By {author? `${author}` : `Unknown author`}</p>
-    {content?<ReactMarkdown>{content}</ReactMarkdown>:null} */}
+        <h2>{post?.title? post.title : `no title`}</h2>
+    <p>By {post?.author?.name? `${post.author.name}` : `Unknown author`}</p>
+    {post?.content?<ReactMarkdown>{post.content}</ReactMarkdown>:null} 
     {/* {!published && userHasValidSession && postBelongsToUser && (
       <button onClick={() => publishPost(props.id)}>Publish</button>
     )}
     {userHasValidSession && postBelongsToUser && (
       <button onClick={() => deletePost(props.id)}>Delete</button>
-    )} */}
+    )}*/}
   </div>  )
 }
