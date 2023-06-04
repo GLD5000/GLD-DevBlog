@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Post {
-  id        Int    @id @default(autoincrement())
+  id        String    @id @default(cuid())
   title     String
   content   String?
   published Boolean @default(false)
@@ -24,7 +24,7 @@ model Post {
 }
 
 model Tag {
-  id                Int    @id @default(autoincrement())
+  id                String    @id @default(cuid())
   name              String
   textColour        String @default("#000000")
   backgroundColour  String @default("#FFFFFF")
@@ -35,8 +35,8 @@ model TagOnPosts {
   id     Int   @id @default(autoincrement())
   post   Post? @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   tag    Tag?  @relation(fields: [tagId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  postId Int?
-  tagId  Int?
+  postId String?
+  tagId  String?
 
 }
 
