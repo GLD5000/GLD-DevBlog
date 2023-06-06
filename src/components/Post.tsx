@@ -3,19 +3,13 @@
 import React from "react";
 import Link from 'next/link';
 import ReactMarkdown from "react-markdown";
+import {Post} from '@prisma/client';
 
-export type PostProps = {
-  id: string;
-  title: string;
-  author: {
-    name: string | null;
-    // email: string;
-  } | null;
-  content: string | null;
-  published: boolean |null;
+export interface PostProps extends Post {
+  author: {name: string | null} |null
 };
 
-const Post: React.FC<{ post: PostProps }> = ({ post }) => {
+const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
     <Link href={`/${post.id}/`}>
@@ -29,4 +23,4 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   );
 };
 
-export default Post;
+export default BlogPost;

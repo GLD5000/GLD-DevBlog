@@ -1,5 +1,5 @@
-import { prisma } from '../../lib/prisma'
-import Post, { PostProps } from '@/components/Post'
+import  prisma  from '../../lib/prisma'
+import BlogPost from '@/components/Post'
 
 // export const getServerSideProps = async () => {
 //   const posts = await prisma.post.findMany()
@@ -31,7 +31,7 @@ export default async function Page() {
         <main>
           {data.props.feed.map((post) => {
             if (post) return <div key={post.id} className="post">
-              <Post post={post} />
+              <BlogPost post={post} />
             </div>
           })}
         </main>
