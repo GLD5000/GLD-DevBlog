@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import BlogPost from "@/components/Post";
 import {  Session, getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import  authOptions  from "@/app/api/auth/[...nextauth]/nextAuthOptions";
 
 const getData = async (sessionData: Session) => {
 
