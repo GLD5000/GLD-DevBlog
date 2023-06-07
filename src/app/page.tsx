@@ -1,11 +1,6 @@
 import prisma from "@/lib/prisma";
 import BlogPost from "@/components/Post";
 
-// export const getServerSideProps = async () => {
-//   const posts = await prisma.post.findMany()
-
-//   return { props: { posts } }
-// }
 
 const getData = async () => {
   const feed = await prisma.post.findMany({
