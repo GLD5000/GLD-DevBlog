@@ -1,16 +1,15 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import BlogPost from "@/components/Post";
-import {  getServerSession } from "next-auth";
+import {  Session, getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-const getData = async () => {
-  const session  = await getServerSession(authOptions);
+const getData = async (sessionData: Session) => {
 
   const drafts = await prisma.post.findMany({
     where: {
-      author: { email: session?.user?.email },
+      author: { email: sessionData?.user?.email },
       published: false,
     },
     include: {
@@ -22,14 +21,13 @@ const getData = async () => {
 
   return {
     props: { drafts },
-    session,
-    revalidate: 10,
+    revalidate: 1000,
   };
 };
 
 const Drafts = async () => {
-  const { props, session } = await getData();
-
+  const session  = await getServerSession(authOptions);
+console.log('session:', session);
   if (!session) {
     return (
       <>
@@ -38,6 +36,8 @@ const Drafts = async () => {
       </>
     );
   }
+  const { props } = await getData(session);
+
 
   return (
     <>

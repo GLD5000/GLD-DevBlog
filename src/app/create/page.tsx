@@ -14,12 +14,12 @@ const Draft: React.FC = () => {
     e.preventDefault();
     try {
       const body = { title, content };
-      await fetch("/api/post", {
+      await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
-      Router.push("/drafts");
+      Router.push("/drafts/");
     } catch (error) {
       console.error(error);
     }
@@ -50,7 +50,7 @@ const Draft: React.FC = () => {
           </a>
         </form>
       </div>
-      <style jsx>{`
+      {/* <style jsx>{`
         .page {
           background: white;
           padding: 3rem;
@@ -77,7 +77,7 @@ const Draft: React.FC = () => {
         .back {
           margin-left: 1rem;
         }
-      `}</style>
+      `}</style> */}
     </>
   );
 };
