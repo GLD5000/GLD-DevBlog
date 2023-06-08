@@ -45,7 +45,7 @@ export default async function Page({ params }: {params:{id:string} }) {
     const {props:{feed: post}} = await getData(params.id);
 
   return (
-    <div>
+    <div className='prose dark:prose-invert'>
         <h2>{post?.title? post.title : `no title`}</h2>
     <p>By {post?.author?.name? `${post.author.name}` : `Unknown author`}</p>
     {post?.content?<ReactMarkdown>{post.content}</ReactMarkdown>:null} 

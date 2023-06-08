@@ -16,7 +16,7 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
     <div className="mx-auto w-fit">
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
-      {post.content?<ReactMarkdown>{post.content}</ReactMarkdown>:null}
+      {post.content?<ReactMarkdown className="prose dark:prose-invert">{post.content}</ReactMarkdown>:null}
 
     </div>
     </Link>
