@@ -1,7 +1,6 @@
 import {  getServerSession } from "next-auth";
 import  authOptions  from "@/app/api/auth/[...nextauth]/nextAuthOptions";
 import prisma from "../../../lib/prisma";
-import { NextResponse } from 'next/server';
 
 // POST /api/post
 // Required fields in body: title
