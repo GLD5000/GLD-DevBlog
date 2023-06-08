@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-import {useRouter} from "next/navigation";
-
+import { useRouter } from "next/navigation";
 
 const Draft: React.FC = () => {
-    const Router = useRouter();
+  const Router = useRouter();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -26,16 +25,19 @@ const Draft: React.FC = () => {
   };
 
   return (
-    <>
       <div>
-        <form onSubmit={submitData}>
-          <h1>New Draft</h1>
+        <form
+          onSubmit={submitData}
+          className="flex w-full max-w-body mx-auto gap-2 flex-col"
+        >
+          <h1 className="text-black dark:text-white">New Draft</h1>
           <input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             type="text"
             value={title}
+            className="bg-bg-var dark:bg-bg-var-dk rounded p-2"
           />
           <textarea
             cols={50}
@@ -43,42 +45,17 @@ const Draft: React.FC = () => {
             placeholder="Content"
             rows={8}
             value={content}
+            className="bg-bg-var dark:bg-bg-var-dk rounded p-2"
           />
-          <input disabled={!content || !title} type="submit" value="Create" />
-          <a className="back" href="#" onClick={() => Router.push("/")}>
-            or Cancel
+          <div className="flex gap-2 ml-auto flex-row flex-wrap">
+
+          <input disabled={!content || !title} type="submit" value="Create" className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"/>
+          <a className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white" href="#" onClick={() => Router.push("/")}>
+            Cancel
           </a>
+          </div>
         </form>
       </div>
-      {/* <style jsx>{`
-        .page {
-          background: white;
-          padding: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        input[type="text"],
-        textarea {
-          width: 100%;
-          padding: 0.5rem;
-          margin: 0.5rem 0;
-          border-radius: 0.25rem;
-          border: 0.125rem solid rgba(0, 0, 0, 0.2);
-        }
-
-        input[type="submit"] {
-          background: #ececec;
-          border: 0;
-          padding: 1rem 2rem;
-        }
-
-        .back {
-          margin-left: 1rem;
-        }
-      `}</style> */}
-    </>
   );
 };
 

@@ -6,6 +6,28 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '420px',
+      },
+      gridTemplateColumns: {
+        frAutoFr: '1fr auto 1fr',
+        autoAuto: 'auto auto',
+        autoFr: 'auto 1fr',
+      },
+      gridTemplateRows: {
+        autoFr: 'auto 1fr',
+      },
+      minWidth: {
+        body: '250px',
+      },
+      maxWidth: {
+        body: '1000px',
+        'body-sm': '800px',
+      },
+      width: {
+        body: 'calc(100vw - 4rem)',
+        'body-sm': 'calc(100vw - 3rem)',
+      },
       colors: {
         semiWhite: '#ffffff99',
         semiBlue: '#1c2434bb',

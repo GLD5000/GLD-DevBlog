@@ -32,10 +32,10 @@ const Header = ({
     <div className="left">
       <Link
         href="/"
-        className={`text-center h-10 my-auto w-28 hover:transition ${
+        className={`rounded border-2 text-center h-10 my-auto w-28 hover:transition ${
           colourTheme
-            ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-            : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+            ? " border-white p-1 hover:text-black hover:bg-white"
+            : " border-black text-black p-1 hover:text-white hover:bg-black"
         }`}
       >
         Feed
@@ -50,10 +50,10 @@ const Header = ({
       <div className="left">
         <Link
           href="/"
-          className={`text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
+          className={`rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
             colourTheme
-              ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-              : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+              ? " border-white p-1 hover:text-black hover:bg-white"
+              : " border-black text-black p-1 hover:text-white hover:bg-black"
           }`}
         >
           Feed
@@ -80,20 +80,20 @@ const Header = ({
       <div className="p-2 flex gap-2">
         <Link
           href="/"
-          className={`text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
+          className={`rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
             colourTheme
-              ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-              : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+              ? " border-white p-1 hover:text-black hover:bg-white"
+              : " border-black text-black p-1 hover:text-white hover:bg-black"
           }`}
         >
           Feed
         </Link>
         <Link
           href="/drafts"
-          className={`text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
+          className={`rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
             colourTheme
-              ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-              : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+              ? " border-white p-1 hover:text-black hover:bg-white"
+              : " border-black text-black p-1 hover:text-white hover:bg-black"
           }`}
         >
           My drafts
@@ -119,19 +119,19 @@ const Header = ({
         ) : null}
         <Link
           href="/create"
-          className={`text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
+          className={`rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
             colourTheme
-              ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-              : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+              ? " border-white p-1 hover:text-black hover:bg-white"
+              : " border-black text-black p-1 hover:text-white hover:bg-black"
           }`}
         >
           New post
         </Link>
         <button
-          className={`text-center h-10 my-auto w-28 hover:transition ${
+          className={`rounded border-2 text-center h-10 my-auto w-28 hover:transition ${
             colourTheme
-              ? "rounded border-2 border-white p-1 hover:text-black hover:bg-white"
-              : "rounded border-2 border-black text-black p-1 hover:text-white hover:bg-black"
+              ? " border-white p-1 hover:text-black hover:bg-white"
+              : " border-black text-black p-1 hover:text-white hover:bg-black"
           }`}
           onClick={() => signOut()}
         >

@@ -1,5 +1,4 @@
 import React from "react";
-import { GetServerSideProps } from "next";
 import BlogPost from "@/components/Post";
 import {  Session, getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
@@ -43,11 +42,9 @@ console.log('session:', session);
     <>
       <div className="page">
         <h1>My Drafts</h1>
-        <main>
+        <main className="flex w-full mx-auto gap-2 flex-col">
           {props.drafts.map((post) => (
-            <div key={post.id} className="post">
-              <BlogPost post={post} />
-            </div>
+              <BlogPost key={post.id} post={post} />
           ))}
         </main>
       </div>
