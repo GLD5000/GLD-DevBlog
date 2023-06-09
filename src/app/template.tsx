@@ -5,15 +5,25 @@ import { useState } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   function setThemeToLocalStorage(themeBoolean: boolean) {
-    localStorage.setItem("theme", themeBoolean.toString());
+    if  (typeof window !== "undefined") {
+      localStorage.setItem("theme", themeBoolean.toString());
+    }
   }
-  const [colourTheme, setColourTheme] = useState(false)
+
+  function getThemeFromLocalStorage() {
+    if  (typeof window !== "undefined") {
+     return localStorage.getItem("theme") !== "false"
+    }
+    return false;
+  }
+
+  const [colourTheme, setColourTheme] = useState(getThemeFromLocalStorage());
 //     const [colourTheme, setColourTheme] = useState(
 //     localStorage.getItem("theme") !== "false"
 //   );
   function toggleColourTheme() {
     setColourTheme((currentTheme: boolean) => !currentTheme);
-    // setThemeToLocalStorage(!colourTheme);
+    setThemeToLocalStorage(!colourTheme);
   }
   return (
     <div id="theme-wrapper" className={`w-screen min-h-screen  ${colourTheme ? "dark bg-black" : 'bg-white'}`}>

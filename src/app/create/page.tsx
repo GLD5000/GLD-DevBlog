@@ -37,7 +37,7 @@ const Draft: React.FC = () => {
             placeholder="Title"
             type="text"
             value={title}
-            className="bg-bg-var dark:bg-bg-var-dk rounded p-2"
+            className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2"
           />
           <textarea
             cols={50}
@@ -45,7 +45,7 @@ const Draft: React.FC = () => {
             placeholder="Content"
             rows={8}
             value={content}
-            className="bg-bg-var dark:bg-bg-var-dk rounded p-2"
+            className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2"
           />
           <div className="flex gap-2 ml-auto flex-row flex-wrap">
 
