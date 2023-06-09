@@ -42,11 +42,11 @@ console.log('session:', session);
     <>
       <div className="page">
         <h1>My Drafts</h1>
-        <main className="flex w-full mx-auto gap-2 flex-col">
+        <section className="flex w-full mx-auto gap-2 flex-col">
           {props.drafts.map((post) => (
               <BlogPost key={post.id} post={post} />
           ))}
-        </main>
+        </section>
       </div>
       {/* <style jsx>{`
         .post {
