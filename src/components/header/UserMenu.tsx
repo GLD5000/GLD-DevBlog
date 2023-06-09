@@ -1,7 +1,7 @@
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import useDropdownMenu, { ButtonProps } from "react-accessible-dropdown-menu-hook";
+import useDropdownMenu from "react-accessible-dropdown-menu-hook";
 
 export default function UserMenu({
     loaded,
