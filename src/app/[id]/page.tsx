@@ -2,6 +2,7 @@ import { PostProps } from '@/components/Post'
 import { PrismaClient } from '@prisma/client'
 import { title } from 'process'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 const prisma = new PrismaClient()
 
@@ -48,7 +49,7 @@ export default async function Page({ params }: {params:{id:string} }) {
     <div className='prose dark:prose-invert'>
         <h2>{post?.title? post.title : `no title`}</h2>
     <p>By {post?.author?.name? `${post.author.name}` : `Unknown author`}</p>
-    {post?.content?<ReactMarkdown>{post.content}</ReactMarkdown>:null} 
+    {post?.content?<ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>:null} 
     {/* {!published && userHasValidSession && postBelongsToUser && (
       <button onClick={() => publishPost(props.id)}>Publish</button>
     )}

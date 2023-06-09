@@ -16,7 +16,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     // setThemeToLocalStorage(!colourTheme);
   }
   return (
-    <div id="theme-wrapper" className={`w-screen h-screen  ${colourTheme ? "dark bg-black" : 'bg-white'}`}>
+    <div id="theme-wrapper" className={`w-screen min-h-screen  ${colourTheme ? "dark bg-black" : 'bg-white'}`}>
       <Header
         toggleColourTheme={toggleColourTheme}
         toggleMenu={function (): void {
