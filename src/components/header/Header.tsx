@@ -2,15 +2,11 @@
 
 import React from "react";
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
+import {  useSession } from "next-auth/react";
 import MoonSvg from "@/assets/icons/MoonSvg";
 import SunSvg from "@/assets/icons/SunSvg";
 import SvgButtonNew from "@/assets/elements/SvgButtonNew";
-import useDropdownMenu, {
-  ButtonProps,
-} from "react-accessible-dropdown-menu-hook";
 import GldSvg from "@/assets/icons/GldSvg";
-import { Session } from "next-auth";
 import UserMenu from "./UserMenu";
 
 const Header = ({
@@ -24,7 +20,6 @@ const Header = ({
   colourTheme: boolean;
   showHamburger: boolean;
 }) => {
-  const { buttonProps, itemProps, isOpen } = useDropdownMenu(3);
   const { data: session, status } = useSession();
   function getDarkToggleIcon(isDark: boolean) {
     const wrapper = (
