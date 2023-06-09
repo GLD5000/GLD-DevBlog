@@ -2,7 +2,7 @@ import React from "react";
 import BlogPost from "@/components/Post";
 import {  Session, getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
-import  authOptions  from "@/app/api/auth/[...nextauth]/nextAuthOptions";
+import  {authOptions}  from "@/pages/api/auth/[...nextauth]";
 
 const getData = async (sessionData: Session) => {
 

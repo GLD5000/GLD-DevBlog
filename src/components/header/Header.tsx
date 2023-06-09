@@ -57,7 +57,7 @@ const Header = ({
       </Link>
 
       <div className="flex flex-row gap-2 p-2 items-center h-14 w-fit">
-        <Link
+     {session?   <Link
           href="/create"
           className={`rounded  text-center flex border-2 items-center justify-center h-10 my-auto w-28 hover:transition ${
             colourTheme
@@ -66,7 +66,16 @@ const Header = ({
           }`}
         >
           New post
-        </Link>
+        </Link>:<Link
+          href="/api/auth/signin"
+          className={`rounded  text-center flex border-2 items-center justify-center h-10 my-auto w-28 hover:transition ${
+            colourTheme
+              ? "  p-1 hover:text-black border-white hover:bg-white"
+              : "  text-black p-1 border-black hover:text-white hover:bg-black"
+          }`}
+        >
+          Sign In
+        </Link> }
         <UserMenu
           loaded={isLoaded}
           session={session}
