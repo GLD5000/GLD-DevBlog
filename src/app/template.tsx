@@ -12,9 +12,9 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   function getThemeFromLocalStorage() {
     if  (typeof window !== "undefined") {
-     return localStorage.getItem("theme") !== "false"
+     return localStorage.getItem("theme") === "true"
     }
-    return false;
+    return true;
   }
 
   const [colourTheme, setColourTheme] = useState(getThemeFromLocalStorage());
