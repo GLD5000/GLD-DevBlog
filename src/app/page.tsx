@@ -1,18 +1,22 @@
 import prisma from "@/lib/prisma";
-import BlogPost from "@/components/Post";
+import BlogPost, { PostProps } from "@/components/BlogPost";
+import BlogPostList from "@/components/BlogPostList";
+import { Session } from "next-auth";
 
-
-const getData = async () => {
-  const feed = await prisma.post.findMany({
-    where: { published: true },
+const getData = async ():Promise< {props: PostProps[], revalidate: number} >=> {
+  const drafts: PostProps[] = await prisma.post.findMany({
+    where: {
+      published: true ,
+    },
     include: {
       author: {
         select: { name: true },
       },
     },
   });
+
   return {
-    props: { feed },
+    props: drafts ,
     revalidate: 10,
   };
 };
@@ -21,16 +25,9 @@ export default async function Page() {
   const data = await getData();
   return (
     <section className="page">
-      {/* <h1>Public Feed</h1> */}
+      {/* <h1 >Public Feed</h1> */}
       {/* <main> */}
-        {data.props.feed.map((post) => {
-          if (post)
-            return (
-              <div key={post.id} className="post">
-                <BlogPost post={post} />
-              </div>
-            );
-        })}
+      <BlogPostList arrayIn={...data.props}/>
       {/* </main> */}
     </section>
   );
