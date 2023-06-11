@@ -17,7 +17,7 @@ export default function UserMenu({
     const isvalidSession = !!session;
 
 
-    if (!loaded) return <p>Validating session ...</p>;
+    if (!loaded) return <p>...</p>;
   
     if (isvalidSession) {
       return (
