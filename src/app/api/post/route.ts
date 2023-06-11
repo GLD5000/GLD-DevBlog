@@ -6,17 +6,14 @@ import prisma from "../../../lib/prisma";
 // Required fields in body: title
 // Optional fields in body: content
 async function handler(req: Request, res: Response) {
-  const { title, content } = await req.json();
-  console.log('req:', JSON.stringify(req));
-  console.log('req.body:', req.body);
-console.log('title:', title);
-console.log('content:', content);
+  const { title, content, publish } = await req.json();
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const result = await prisma.post.create({
     data: {
       title: title,
       content: content,
+      published: publish,
       author: { connect: { email } },
     },
   });
