@@ -19,22 +19,22 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   // console.log('postId:', postId);
   return (
     // <Link href={`/${postId}`}>
-    <>
-      {" "}
       <Link href={`blogpost/${postId}/`}>
         <div className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem]">
           <h2>{post.title}</h2>
-          <small>By {authorName} APP</small>
+          <small>By {authorName}</small>
           {/* {post.content?<ReactMarkdown >{post.content}</ReactMarkdown>:null} */}
         </div>
-      </Link>{" "}
-      {/* <Link href={`blogpage/${postId}/`}>
-        <div className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem]">
-          <h2>{post.title}</h2>
-          <small>By {authorName} PAGE</small>
-        </div>
-      </Link> */}
-    </>
+      </Link>
+    // <>
+      // {" "}
+      // {/* <Link href={`blogpage/${postId}/`}>
+        // <div className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem]">
+          // <h2>{post.title}</h2>
+          // <small>By {authorName} PAGE</small>
+        // </div>
+      // </Link> */}
+    // </>
   );
 };
 

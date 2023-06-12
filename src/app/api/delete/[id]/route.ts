@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 // DELETE /api/delete/:id
 async function handler(req: Request, context: {[key:string]: {[key:string]: string}}) {
-  console.log("delete route")
+  // console.log("delete route")
   const postId = context.params.id;
   if (req.method === "DELETE") {
     const result = await prisma.post.delete({

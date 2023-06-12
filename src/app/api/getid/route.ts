@@ -4,7 +4,7 @@ async function handler(
   req: Request
   
 ) {
-  console.log("heeeeoeeoeleoeineoineoienoeineoineoienoienoeineoin");
+  // console.log("heeeeoeeoeleoeineoineoienoeineoineoienoienoeineoin");
   const postId = `${req.json()}`;
 
   const result = await prisma.post.findFirst({

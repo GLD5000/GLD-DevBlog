@@ -2,7 +2,7 @@ import PublishButton from "@/components/publishButton";
 import { useRouter } from "next/router";
 
 export default function BlogPage() {
-    console.log("BlogPage PAGES");
+    // console.log("BlogPage PAGES");
     const router = useRouter();
     const { id } = Array.isArray(router.query)? router.query[0]: router.query;
     if (!id) return null;

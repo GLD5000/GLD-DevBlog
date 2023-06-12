@@ -6,7 +6,7 @@ async function handleClickUnpublish(
   postId: string,
   routerInstance: AppRouterInstance
 ) {
-  console.log("handleClickUnpublish");
+  // console.log("handleClickUnpublish");
   await fetch(`/api/unpublish/${postId}`, {
     method: "POST",
   });
@@ -14,7 +14,7 @@ async function handleClickUnpublish(
   routerInstance.push("/drafts/");
 }
 export default function UnpublishButton({ postId }: { postId: string }) {
-  console.log("UnpublishButton");
+  // console.log("UnpublishButton");
   const router = useRouter();
 
   return (

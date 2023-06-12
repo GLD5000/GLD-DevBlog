@@ -6,7 +6,7 @@ async function handleClickPublish(
   postId: string,
   routerInstance: AppRouterInstance
 ) {
-  console.log("handleClickPublish");
+  // console.log("handleClickPublish");
   await fetch(`/api/publish/${postId}`, {
     method: "POST",
   });
@@ -14,7 +14,7 @@ async function handleClickPublish(
   routerInstance.push("/drafts/");
 }
 export default function PublishButton({ postId }: { postId: string }) {
-  console.log("PublishButton");
+  // console.log("PublishButton");
   const router = useRouter();
 
   return (

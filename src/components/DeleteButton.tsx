@@ -3,7 +3,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
 
 async function handleClick(postId: string, routerInstance: AppRouterInstance) {
-  console.log("handleClickDelete");
+  // console.log("handleClickDelete");
   await fetch(`/api/delete/${postId}`, {
     method: "DELETE",
   });
@@ -11,7 +11,7 @@ async function handleClick(postId: string, routerInstance: AppRouterInstance) {
   routerInstance.push("/drafts/");
 }
 export default function DeleteButton({ postId }: { postId: string }) {
-  console.log("DeleteButton");
+  // console.log("DeleteButton");
   const router = useRouter();
   return (
     <button type="button" onClick={() => handleClick(postId, router)}>
