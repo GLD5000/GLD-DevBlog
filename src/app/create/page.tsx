@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
 const Draft: React.FC = () => {
   const Router = useRouter();
@@ -14,7 +13,6 @@ const Draft: React.FC = () => {
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    console.log('publish', publish);
     try {
       const body = { title, content, publish };
       await fetch("/api/post/", {

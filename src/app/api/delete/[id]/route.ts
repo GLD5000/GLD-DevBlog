@@ -1,15 +1,13 @@
 import prisma from "@/lib/prisma";
-import { NextApiRequest, NextApiResponse } from "next";
-
-// DELETE /api/post/:id
-async function handler(req: Request, res: Response) {
-  const post = await req.json();
-  const postId = post.id;
+// DELETE /api/delete/:id
+async function handler(req: Request, context: {[key:string]: {[key:string]: string}}) {
+  console.log("delete route")
+  const postId = context.params.id;
   if (req.method === "DELETE") {
-    const post = await prisma.post.delete({
+    const result = await prisma.post.delete({
       where: { id: postId },
     });
-    return new Response(JSON.stringify(post));
+    return new Response(JSON.stringify(result));
   } else {
     throw new Error(
       `The HTTP ${req.method} method is not supported at this route.`
@@ -17,4 +15,4 @@ async function handler(req: Request, res: Response) {
   }
 }
 
-export { handler as POST };
+export { handler as DELETE };
