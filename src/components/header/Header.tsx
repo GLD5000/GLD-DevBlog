@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import MoonSvg from "@/assets/icons/MoonSvg";
 import SunSvg from "@/assets/icons/SunSvg";
-import SvgButtonNew from "@/assets/elements/SvgButtonNew";
+import SvgButtonNew from "@/elements/SvgButtonNew";
 import GldSvg from "@/assets/icons/GldSvg";
 import UserMenu from "./UserMenu";
 

@@ -13,11 +13,12 @@ function getArrayTags(
     return (
       <button
       key={tagObject.id}
-        className={`rounded border-2 border-transparent text-center flex  items-center justify-center h-fit my-auto w-fit px-2 `}
-        // style={{
-        //   color: `${tagObject.textColour}`,
-        //   borderColor: `${tagObject.textColour}`,
-        // }}
+        className={`rounded border-2 border-transparent text-center flex hover:transition focus:transition  items-center justify-center h-fit my-auto w-fit px-2 `}
+        style={{
+          textDecoration: `${tagObject.backgroundColour}`,
+          textDecorationLine: `underline`,
+          textDecorationThickness: `4px`,
+        }}
       >
         {`#${tagObject.name}`}
         <style jsx>

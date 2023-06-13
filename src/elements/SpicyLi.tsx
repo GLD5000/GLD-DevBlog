@@ -1,6 +1,6 @@
 import { MouseEvent, ReactElement } from "react";
 import SvgButtonNew from "./SvgButtonNew";
-import DeleteSvg from "../icons/DeleteSvg";
+import DeleteSvg from "@/assets/icons/DeleteSvg";
 
 export default function SpicyLi({
   content,

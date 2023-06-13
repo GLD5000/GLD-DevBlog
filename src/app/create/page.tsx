@@ -3,7 +3,7 @@
 import { MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import SpicyLi from "@/assets/elements/SpicyLi";
+import SpicyLi from "@/elements/SpicyLi";
 
 
 function getTagButtons(tags: string[] | undefined, closeFunction: (tagValue:string)=>void){
