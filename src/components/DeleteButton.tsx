@@ -14,7 +14,7 @@ export default function DeleteButton({ postId }: { postId: string }) {
   // console.log("DeleteButton");
   const router = useRouter();
   return (
-    <button type="button" onClick={() => handleClick(postId, router)}>
+    <button className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white" type="button" onClick={() => handleClick(postId, router)}>
       Delete
     </button>
   );

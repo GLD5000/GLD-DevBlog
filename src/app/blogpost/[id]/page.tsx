@@ -45,8 +45,11 @@ export default async function Page({ params }: { params: { id: string } }) {
           {post.content}
         </ReactMarkdown>
       ) : null}
+      <div className="grid gap-4">
+
      {!isPublished && isCorrectUser? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
      {isCorrectUser? <DeleteButton postId={params.id} />: null}
+      </div>
     </div>
   );
 }
