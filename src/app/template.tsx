@@ -48,7 +48,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         showHamburger={false}
       />
       <main
-        className="mx-auto w-body-sm min-w-body  max-w-body items-center
+        className="relative mx-auto w-body-sm min-w-body  max-w-body items-center
                 sm:w-body"
       >
         {children}

@@ -37,21 +37,21 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!post) return <p>Uh oh! Blog post not found!</p>
 
   return (
-    <div className="prose dark:prose-invert">
-      <h2>{post.title ? post.title : `no title`}</h2>
-      {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
-      <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
-
-      <small className="font-bold block">By {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
-      {post.content ? (
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {post.content}
-        </ReactMarkdown>
-      ) : null}
-        <div className="grid gap-4">
-
-     {!isPublished && isCorrectUser? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
-     {isCorrectUser? <DeleteButton postId={params.id} />: null}
+    <div className="w-full flex">
+      <div className="prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto">
+        <h2 className="mx-auto w-fit">{post.title ? post.title : `no title`}</h2>
+        {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
+        <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
+        <small className="font-bold block">By {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
+        {post.content ? (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {post.content}
+          </ReactMarkdown>
+        ) : null}
+          <div className="grid gap-4 mx-auto w-fit">
+       {!isPublished && isCorrectUser? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
+       {isCorrectUser? <DeleteButton postId={params.id} />: null}
+        </div>
       </div>
     </div>
   );
