@@ -12,6 +12,7 @@ function getArrayTags(
     const tagObject = tag.tag;
     return (
       <button
+      key={tagObject.id}
         className={`rounded border-2 border-transparent text-center flex  items-center justify-center h-fit my-auto w-fit px-2 `}
         // style={{
         //   color: `${tagObject.textColour}`,

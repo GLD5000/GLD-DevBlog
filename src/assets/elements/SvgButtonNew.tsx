@@ -24,7 +24,7 @@ export default function SvgButtonNew({
   `,
   svg,
   textElement,
-  className = `px-2 py-1
+  className = `
    hover:border-current
    grid     
       rounded border border-solid whitespace-pre-wrap hover:transition
