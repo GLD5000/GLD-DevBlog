@@ -14,6 +14,8 @@ datasource db {
 }
 
 model Post {
+  createdAt DateTime @default(dbgenerated("CURRENT_DATE"))
+  updatedAt DateTime @updatedAt
   id        String    @id @default(cuid())
   title     String
   content   String?
