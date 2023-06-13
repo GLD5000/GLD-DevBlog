@@ -10,7 +10,7 @@ const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [publish, setPublish] = useState(false);
-  const [tags, setTags] = useState(["one", "two", "three", "four"])
+  const [tags, setTags] = useState(["sdv", "twoyut", "thytree", "foreeur"])
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();

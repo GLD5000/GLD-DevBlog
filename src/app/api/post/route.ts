@@ -1,15 +1,19 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "../../../lib/prisma";
+import makeNewTag from "@/utilities/newTagMaker";
 
 // POST /api/post
 // Required fields in body: title
 // Optional fields in body: content
 
 async function createTagOnPost(tagName: string, postId: string) {
+
+  const newTag = makeNewTag(tagName);
+
   const tagResult = await prisma.tag.upsert({
     where: { name: tagName.trim() },
-    create: { name: tagName.trim() },
+    create: { ...newTag },
     update: {},
   });
   const tagOnPostResult = await prisma.tagOnPosts.create({
