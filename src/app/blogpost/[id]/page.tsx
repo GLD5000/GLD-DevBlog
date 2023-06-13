@@ -32,11 +32,15 @@ export default async function Page({ params }: { params: { id: string } }) {
   const isPublished = post?.published;
   const isCorrectUser = session?.user?.email === post?.author?.email;
 
+  if (!post) return <p>Uh oh! Blog post not found!</p>
+
   return (
     <div className="prose dark:prose-invert">
-      <h2>{post?.title ? post.title : `no title`}</h2>
-      <p>By {post?.author?.name ? `${post.author.name}` : `Unknown author`}</p>
-      {post?.content ? (
+      <h2>{post.title ? post.title : `no title`}</h2>
+      <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
+
+      <small className="font-bold block">By {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
+      {post.content ? (
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>

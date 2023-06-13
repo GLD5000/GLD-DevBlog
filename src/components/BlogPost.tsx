@@ -18,23 +18,14 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const postId = post.id;
   // console.log('postId:', postId);
   return (
-    // <Link href={`/${postId}`}>
-      <Link href={`blogpost/${postId}/`}>
-        <div className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem]">
-          <h2>{post.title}</h2>
-          <small>By {authorName}</small>
-          {/* {post.content?<ReactMarkdown >{post.content}</ReactMarkdown>:null} */}
-        </div>
-      </Link>
-    // <>
-      // {" "}
-      // {/* <Link href={`blogpage/${postId}/`}>
-        // <div className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem]">
-          // <h2>{post.title}</h2>
-          // <small>By {authorName} PAGE</small>
-        // </div>
-      // </Link> */}
-    // </>
+    <Link
+      href={`blogpost/${postId}/`}
+      className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem] grid gap-2"
+    >
+      <h2>{post.title}</h2>
+      <small className="font-bold">By {authorName}</small>
+      <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
+    </Link>
   );
 };
 
