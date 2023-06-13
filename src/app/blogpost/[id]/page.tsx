@@ -6,11 +6,13 @@ import { DefaultSession, getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import DeleteButton from "@/components/DeleteButton";
 import UnpublishButton from "@/components/UnpublishButton";
+import TagSet from "@/components/TagSet";
 
 const getData = async (idIn: string) => {
   const feed = await prisma.post.findFirst({
     where: { id: idIn },
     include: {
+      tags: {select:{tag:true}},
       author: {
         select: { name: true, email: true },
       },
@@ -37,6 +39,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div className="prose dark:prose-invert">
       <h2>{post.title ? post.title : `no title`}</h2>
+      {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
       <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
 
       <small className="font-bold block">By {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
@@ -45,7 +48,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           {post.content}
         </ReactMarkdown>
       ) : null}
-      <div className="grid gap-4">
+        <div className="grid gap-4">
 
      {!isPublished && isCorrectUser? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
      {isCorrectUser? <DeleteButton postId={params.id} />: null}

@@ -27,7 +27,7 @@ model Post {
 
 model Tag {
   id                String    @id @default(cuid())
-  name              String
+  name              String @unique
   textColour        String @default("#000000")
   backgroundColour  String @default("#FFFFFF")
   posts             TagOnPosts[]

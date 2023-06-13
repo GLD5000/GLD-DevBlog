@@ -10,12 +10,13 @@ const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [publish, setPublish] = useState(false);
+  const [tags, setTags] = useState(["one", "two", "three", "four"])
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
 
     try {
-      const body = { title, content, publish };
+      const body = { title, content, publish, tags };
       await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
