@@ -47,7 +47,7 @@ const Drafts = async () => {
   if (!session) {
     return (
       <>
-        <h1 className="text-black dark:text-white mx-auto">My Drafts</h1>
+        <h1 className="text-black dark:text-white mx-auto">My Blogs</h1>
         <div>You need to be authenticated to view this page.</div>
       </>
     );
@@ -55,15 +55,13 @@ const Drafts = async () => {
   const { drafts, published } = await getData(session);
 
   return (
-    <>
-      <div className="page">
-      <h1 className="text-black dark:text-white w-fit mx-auto">Published</h1>
-        <BlogPostList arrayIn={...published} />
+      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
+      {!!published.length?<><h1 className="text-black dark:text-white w-fit mx-auto">Published</h1>
+        <BlogPostList arrayIn={...published} /></>: <h2 className="text-black dark:text-white w-fit mx-auto">No Published Blogs Yet</h2>}
 
-        <h1 className="text-black dark:text-white w-fit mx-auto">Drafts</h1>
-        <BlogPostList arrayIn={...drafts} />
+        {!!drafts.length?<><h1 className="text-black dark:text-white w-fit mx-auto">Drafts</h1>
+        <BlogPostList arrayIn={...drafts} /></>: <h2 className="text-black dark:text-white w-fit mx-auto">No Drafts Yet</h2>}
       </div>
-    </>
   );
 };
 

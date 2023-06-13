@@ -58,7 +58,7 @@ export default function UserMenu({
                       : "  text-black p-1 hover:text-white hover:bg-black"
                   }`}
                 >
-                  My drafts
+                  My Blogs
                 </Link>
                 <a
                   {...itemProps[1]}
