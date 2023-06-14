@@ -38,23 +38,21 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!post) return <p>Uh oh! Blog post not found!</p>
 
   return (
-    <div className="w-full flex">
-      <div className="prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto">
-        <h2 className="mx-auto w-fit">{post.title ? post.title : `no title`}</h2>
+    <div className="w-full grid text-black dark:text-white">
+        <small className="mx-auto">{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
+        <h1 className="mx-auto w-fit text-6xl font-bold">{post.title ? post.title : `no title`}</h1>
         {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
-        <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
-        <small className="font-bold block">By {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
+        <small className="font-bold block mx-auto">Written by {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
         {post.content ? (
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown className="my-6 prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  " remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
         ) : null}
-     {  isCorrectUser?   <div className="grid gap-4 mx-auto w-fit">
+     {  isCorrectUser?   <div className="grid grid-cols-3 gap-4 mx-auto w-fit">
        {!isPublished ? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
         <EditButton postId={params.id} />
         <DeleteButton postId={params.id} />
         </div>: null}
       </div>
-    </div>
   );
 }

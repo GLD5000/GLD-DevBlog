@@ -25,7 +25,7 @@ export default function DeleteButton({ postId }: { postId: string }) {
       textElement={<span>Delete</span>}
       showTextIn={true}
       clickFunction={() => handleClick(postId, router)}
-      className="rounded border-2 text-center grid grid-cols-autoFr h-12 w-40 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
     />
   );
 }

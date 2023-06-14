@@ -18,6 +18,7 @@ function getArrayTags(
           textDecoration: `${tagObject.backgroundColour}`,
           textDecorationLine: `underline`,
           textDecorationThickness: `4px`,
+          textDecorationSkipInk: 'none',
         }}
       >
         {`#${tagObject.name}`}
@@ -43,5 +44,5 @@ export default function TagSet({
   }[];
 }) {
   const returnArray = getArrayTags(tagsObject);
-  return <div className="flex flex-row flex-wrap gap-2">{returnArray}</div>;
+  return <div className="flex flex-row flex-wrap gap-2 mx-auto p-4">{returnArray}</div>;
 }
