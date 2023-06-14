@@ -41,11 +41,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     >
       <Header
         toggleColourTheme={toggleColourTheme}
-        toggleMenu={function (): void {
-          throw new Error("Function not implemented.");
-        }}
         colourTheme={colourTheme}
-        showHamburger={false}
       />
       <main
         className="relative mx-auto w-body-sm min-w-body  max-w-body items-center

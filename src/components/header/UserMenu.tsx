@@ -1,3 +1,6 @@
+import DownArrowSvg from "@/assets/icons/DownArrowSvg";
+import ExpandSvg from "@/assets/icons/ExpandSvg";
+import WriteSvg from "@/assets/icons/WriteSvg";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
@@ -21,23 +24,23 @@ export default function UserMenu({
     return (
       <>
         {session.user?.image ? (
-          <div className="relative h-10 w-10 transition">
+          <div className="relative h-10 w-16 transition">
             <button
-              className="h-10 w-10 "
+              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-black dark:hover:bg-white text-black  hover:text-white hover:bg-black dark:text-white border-black dark:border-white hover:border-white dark:hover:border-black hover-transition focus-transition"
               id="user-menu-button"
               {...buttonProps}
             >
               <img
-                className={`rounded-full w-10 h-10 ${
-                  colourTheme
-                    ? "border-2 border-white "
-                    : "border-2 border-black"
-                }`}
+                className="rounded-full w-8 h-8 m-auto border-2 border-inherit"
                 src={session.user.image}
-                height={40}
-                width={40}
+                height={32}
+                width={32}
                 alt={"User image"}
               />
+              <div className="h-6 p-[0.35rem] aspect-square m-auto">
+
+              <ExpandSvg/>
+              </div>
             </button>
             <div
               className={`absolute rounded right-0 top-[calc(100%+0.75rem)] border-2 grid gap-2 p-2 ${
@@ -59,7 +62,11 @@ export default function UserMenu({
                     : "  text-black p-1 hover:text-white hover:bg-black"
                 }`}
               >
-                New post
+                                        <div className="h-8 p-[0.15rem] aspect-square">
+            <WriteSvg />
+          </div>
+
+                Write
               </Link>
 
               <Link
