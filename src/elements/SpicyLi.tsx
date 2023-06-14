@@ -27,9 +27,8 @@ export default function SpicyLi({
         id={`${id}-close-btn`}
         name={`${id}-close-btn`}
         showTextIn={false}
-        className={undefined}
+        className="  h-full rounded-full rounded-l-none m-0 p-0 hover:transition aspect-square hover:bg-[#767676] hover:text-white focus:bg-[#767676] focus:text-white text-current items-center"
         reverse={false}
-        buttonClasses="  h-full rounded-full rounded-l-none m-0 p-0 hover:transition aspect-square hover:bg-[#767676] hover:text-white focus:bg-[#767676] focus:text-white text-current items-center"
         textElement={null}
         svg={<div className="pointer-events-none h-6 w-6 p-0"><DeleteSvg/></div>}
       />

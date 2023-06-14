@@ -1,6 +1,6 @@
 export default function PaperPlaneSvg({ classes = 'stroke-none fill-current ' }) {
   return (
-    <div className="pointer-events-none my-auto h-8 w-8 rounded-none">
+    <div className="pointer-events-none my-auto h-full w-full rounded-none">
       <svg
         style={{
           strokeLinecap: 'round',

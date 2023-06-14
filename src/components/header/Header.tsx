@@ -23,7 +23,7 @@ const Header = ({
   const { data: session, status } = useSession();
   function getDarkToggleIcon(isDark: boolean) {
     const wrapper = (
-      <div className="aspect-square h-6 text-inherit">
+      <div className="aspect-square h-5 text-inherit">
         {isDark ? <SunSvg /> : <MoonSvg />}{" "}
       </div>
     );
@@ -83,15 +83,12 @@ const Header = ({
             colourTheme={colourTheme}
           />
           <SvgButtonNew
-            showTextIn={undefined}
             clickFunction={toggleColourTheme}
-            reverse={false}
             id="colour-theme-button"
             name="Dark Mode Button"
-            className="relative rounded text-xs"
-            buttonClasses="w-fit h-fit overflow-visible flex-col flex text-txt-mid hover:text-txt-main hover:transition focus:text-txt-main  focus:transition dark:text-txt-mid-dk dark:hover:text-txt-main-dk dark:focus:text-txt-main-dk p-2"
+            className="relative rounded text-xs w-fit h-fit overflow-visible flex-col flex text-txt-mid hover:text-txt-main hover:transition focus:text-txt-main  focus:transition dark:text-txt-mid-dk dark:hover:text-txt-main-dk dark:focus:text-txt-main-dk px-2 py-[0.75rem]"
             textElement={
-              <span className="absolute top-[calc(100%-0.65rem)] w-full rounded-t-none bg-transparent text-inherit ">
+              <span className="absolute top-[calc(100%-0.85rem)] w-full rounded-t-none bg-transparent text-inherit ">
                 {colourTheme ? "Light" : "Dark"}
               </span>
             }
