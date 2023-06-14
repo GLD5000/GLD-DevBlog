@@ -46,10 +46,10 @@ const Drafts = async () => {
   const session = await getServerSession(authOptions);
   if (!session) {
     return (
-      <>
+      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
         <h1 className="text-black dark:text-white mx-auto">My Blogs</h1>
-        <div>You need to be authenticated to view this page.</div>
-      </>
+        <div className="text-black dark:text-white mx-auto">You need to be authenticated to view this page.</div>
+      </div>
     );
   }
   const { drafts, published } = await getData(session);

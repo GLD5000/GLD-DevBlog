@@ -36,11 +36,16 @@ export default async function Edit({ params }: { params: { id: string } }) {
   } = await getData(params.id);
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isCorrectUser = session?.user?.email === post?.author?.email;
-  if (!isCorrectUser) return <h1 className="text-black dark:text-white text-2xl my-10 mx-auto w-fit h-fit font-bold">Sorry, you are not authorised to edit this post!</h1>;
+  if (!isCorrectUser)
+    return (
+      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
+        <h1 className="text-black dark:text-white mx-auto">Edit Blog</h1>
+        <div className="text-black dark:text-white mx-auto">
+          You need to be authenticated to view this page.
+        </div>
+      </div>
+    );
 
-
-
-  
   const tagNames = !!post?.tags ? extractTagNames(post?.tags) : null;
 
   return (
