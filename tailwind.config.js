@@ -48,6 +48,15 @@ module.exports = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      dropShadow: {
+        logo: "1px 2px 3px rgba(0, 0, 0, 1)",
+        hero: "-0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.75)",
+        "hero-dk": "-1vw 1vw 2vw #999",
+        "post-dk": "0px 1px 3px #999f",
+        star: "-1px 1px 7px rgba(0, 0, 0, 1)",
+        "star-dk": "-1px 1px 200px white",
+      },
+
     },
   },
   plugins: [

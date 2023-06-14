@@ -24,11 +24,15 @@ const getData = async ():Promise< {props: PostProps[], revalidate: number} >=> {
 export default async function Page() {
   const data = await getData();
   return (
-    <section className="page">
-      {/* <h1 >Public Feed</h1> */}
-      {/* <main> */}
+    <section className="py-10">
+            <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
+        <h1 className="text-black dark:text-white mx-auto">Latest Blogs</h1>
+        <div className="text-black dark:text-white mx-auto">
+          Why not log in and write your own?
+        </div>
+      </div>
+
       <BlogPostList arrayIn={...data.props}/>
-      {/* </main> */}
     </section>
   );
 }
