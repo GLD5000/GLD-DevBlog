@@ -17,11 +17,15 @@ export default function DeleteButton({ postId }: { postId: string }) {
   const router = useRouter();
   return (
     <SvgButtonNew
-    svg={<div className="h-8 p-1 aspect-square"><DeleteSvg/></div>}
-    textElement={<span>Delete</span>}
-    showTextIn={true}
-    clickFunction={() => handleClick(postId, router)}
-    className="rounded border-2 text-center grid grid-cols-autoFr h-10 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+      svg={
+        <div className="h-8 p-[0.35rem] aspect-square">
+          <DeleteSvg />
+        </div>
+      }
+      textElement={<span>Delete</span>}
+      showTextIn={true}
+      clickFunction={() => handleClick(postId, router)}
+      className="rounded border-2 text-center grid grid-cols-autoFr h-12 w-40 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
     />
   );
 }

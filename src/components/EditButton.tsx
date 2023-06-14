@@ -3,7 +3,6 @@ import PencilSvg from "@/assets/icons/PencilSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import { useRouter } from "next/navigation";
 
-
 export default function EditButton({ postId }: { postId: string }) {
   // console.log("EditButton");
   const router = useRouter();
@@ -13,12 +12,15 @@ export default function EditButton({ postId }: { postId: string }) {
     //   Edit
     // </button>
     <SvgButtonNew
-    svg={<div className="h-8 my-auto p-1 aspect-square"><PencilSvg/></div>}
-    textElement={<span className="h-min my-auto">Edit</span>}
-    showTextIn={true}
-    clickFunction={()=> router.push(`/edit/${postId}/`)}
-    className="rounded border-2 text-center grid grid-cols-autoFr h-10 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+      svg={
+        <div className="h-8 my-auto p-1 aspect-square">
+          <PencilSvg />
+        </div>
+      }
+      textElement={<span className="h-min my-auto">Edit</span>}
+      showTextIn={true}
+      clickFunction={() => router.push(`/edit/${postId}/`)}
+      className="rounded border-2 text-center grid grid-cols-autoFr h-12 w-40 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
     />
-
   );
 }
