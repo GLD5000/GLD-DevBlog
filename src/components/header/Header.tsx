@@ -32,7 +32,7 @@ const Header = ({
   const isLoaded = status !== "loading";
 
   return (
-    <header         className={`w-full sticky top-0 left-0 h-14 border-b-2 ${
+    <header         className={`w-full sticky z-[999] top-0 left-0 h-14 border-b-2 ${
       colourTheme ? "border-b-border-dk bg-bg-dk" : "border-b-border bg-bg"
     }`}
 >
