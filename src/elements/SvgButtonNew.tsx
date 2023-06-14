@@ -18,27 +18,24 @@ export default function SvgButtonNew({
   clickFunction,
   id,
   name,
-  showTextIn,
+  showTextIn = undefined,
   reverse = false,
-  buttonClasses = `grid-cols-frAutoFr w-full h-full 
-  `,
   svg,
-  textElement,
-  className = `
+  textElement = null,
+  className = `grid-cols-frAutoFr w-full h-full
    hover:border-current
    grid     
       rounded border border-solid whitespace-pre-wrap hover:transition
     `,
 }: {
   clickFunction: ((e: MouseEvent<HTMLButtonElement>) => void) | (() => void);
-  id: string | undefined;
-  name: string | undefined;
-  showTextIn: boolean | undefined;
-  className: string | undefined;
-  reverse: boolean;
-  buttonClasses: string | undefined;
+  id?: string | undefined;
+  name?: string | undefined;
+  showTextIn?: boolean | undefined;
+  className?: string | undefined;
+  reverse?: boolean;
   svg: ReactElement;
-  textElement: ReactElement | null;
+  textElement?: ReactElement | null;
 }) {
   const [showText, setShowText] = useState(showTextIn ?? false);
   const content = getContent(reverse, showText, textElement, svg);
@@ -49,7 +46,7 @@ export default function SvgButtonNew({
       id={id}
       name={name}
       onClick={clickFunction}
-      className={`cursor-pointer items-center ${className.replaceAll(/[\s]+/g, ' ')} ${buttonClasses}`}
+      className={`cursor-pointer items-center ${className.replaceAll(/[\s]+/g, ' ')}`}
       aria-label={name}
       onFocus={() => {
         if (showTextIn === undefined) setShowText(true);
