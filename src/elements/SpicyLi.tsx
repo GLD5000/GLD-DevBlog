@@ -1,6 +1,5 @@
-import { MouseEvent, ReactElement } from "react";
 import SvgButtonNew from "./SvgButtonNew";
-import DeleteSvg from "@/assets/icons/DeleteSvg";
+import CloseSvg from "@/assets/icons/CloseSvg";
 
 export default function SpicyLi({
   content,
@@ -30,7 +29,7 @@ export default function SpicyLi({
         className="  h-full rounded-full rounded-l-none m-0 p-0 hover:transition aspect-square hover:bg-[#767676] hover:text-white focus:bg-[#767676] focus:text-white text-current items-center"
         reverse={false}
         textElement={null}
-        svg={<div className="pointer-events-none h-6 w-6 p-0"><DeleteSvg/></div>}
+        svg={<div className="pointer-events-none h-6 w-6 p-0"><CloseSvg/></div>}
       />
     </li>
   );

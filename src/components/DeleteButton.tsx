@@ -18,7 +18,7 @@ export default function DeleteButton({ postId }: { postId: string }) {
   return (
     <SvgButtonNew
       svg={
-        <div className="h-8 p-[0.35rem] aspect-square">
+        <div className="h-8  aspect-square">
           <DeleteSvg />
         </div>
       }
