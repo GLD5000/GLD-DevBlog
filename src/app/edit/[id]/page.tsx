@@ -36,7 +36,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
   } = await getData(params.id);
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isCorrectUser = session?.user?.email === post?.author?.email;
-  if (!isCorrectUser) return <h1 className="text-black dark:text-white text-2xl my-10 mx-auto w-fit h-fit font-bold">Sorry You are not Authorised to edit this post!</h1>;
+  if (!isCorrectUser) return <h1 className="text-black dark:text-white text-2xl my-10 mx-auto w-fit h-fit font-bold">Sorry, you are not authorised to edit this post!</h1>;
 
 
 
