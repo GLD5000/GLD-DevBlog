@@ -27,8 +27,8 @@ export default function InputForm({
   initialTags,
 }: {
   initialTitle?: string;
-  initialContent?: string;
-  initialTags?: string[];
+  initialContent?: string | null;
+  initialTags?: string[] | undefined | null;
 }) {
   const Router = useRouter();
 

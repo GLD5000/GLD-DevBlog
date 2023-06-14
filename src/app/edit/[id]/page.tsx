@@ -1,0 +1,47 @@
+import InputForm from "@/components/InputForm";
+import prisma from "@/lib/prisma";
+import { Tag } from "@prisma/client";
+
+const getData = async (idIn: string) => {
+  const feed = await prisma.post.findFirst({
+    where: { id: idIn },
+    include: {
+      tags: { select: { tag: true } },
+      author: {
+        select: { name: true, email: true },
+      },
+    },
+  });
+
+  return {
+    props: { feed },
+    next: { revalidate: 10 },
+  };
+};
+
+function extractTagNames(tagArray: { tag: Tag | null }[]) {
+  return tagArray
+    .map((tagObject) => {
+      if (!!tagObject.tag) return tagObject.tag.name;
+      return "";
+    })
+    .filter((x) => x !== "");
+}
+
+export default async function Edit({ params }: { params: { id: string } }) {
+  const {
+    props: { feed: post },
+  } = await getData(params.id);
+
+  const tagNames = !!post?.tags ? extractTagNames(post?.tags) : null;
+
+  return (
+    <div>
+      <InputForm
+        initialContent={post?.content}
+        initialTags={tagNames}
+        initialTitle={post?.title}
+      />
+    </div>
+  );
+}
