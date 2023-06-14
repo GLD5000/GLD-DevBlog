@@ -23,7 +23,7 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
 
   return (
     <button
-      onClick={()=> router.push(`blogpost/${postId}/`)}
+      onClick={()=> router.push(`/blogpost/${postId}/`)}
       className="mx-auto w-full prose dark:prose-invert bg-bg-var dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem] grid gap-2"
     >
       <h2>{post.title}</h2>

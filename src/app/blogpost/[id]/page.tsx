@@ -7,6 +7,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import DeleteButton from "@/components/DeleteButton";
 import UnpublishButton from "@/components/UnpublishButton";
 import TagSet from "@/components/TagSet";
+import EditButton from "@/components/EditButton";
 
 const getData = async (idIn: string) => {
   const feed = await prisma.post.findFirst({
@@ -48,10 +49,11 @@ export default async function Page({ params }: { params: { id: string } }) {
             {post.content}
           </ReactMarkdown>
         ) : null}
-          <div className="grid gap-4 mx-auto w-fit">
-       {!isPublished && isCorrectUser? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
-       {isCorrectUser? <DeleteButton postId={params.id} />: null}
-        </div>
+     {  isCorrectUser?   <div className="grid gap-4 mx-auto w-fit">
+       {!isPublished ? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
+        <EditButton postId={params.id} />
+        <DeleteButton postId={params.id} />
+        </div>: null}
       </div>
     </div>
   );
