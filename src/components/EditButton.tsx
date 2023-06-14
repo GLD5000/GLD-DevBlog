@@ -8,12 +8,9 @@ export default function EditButton({ postId }: { postId: string }) {
   const router = useRouter();
 
   return (
-    // <button className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white" type="button" onClick={()=> router.push(`/edit/${postId}/`)}>
-    //   Edit
-    // </button>
     <SvgButtonNew
       svg={
-        <div className="h-8 my-auto p-1 aspect-square">
+        <div className="h-8 my-auto p-[0.15rem] aspect-square">
           <PencilSvg />
         </div>
       }

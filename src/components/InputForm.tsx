@@ -4,6 +4,11 @@ import { MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpicyLi from "@/elements/SpicyLi";
+import PaperPlaneSvg from "@/assets/icons/PaperPlaneSvg";
+import SvgButtonNew from "@/elements/SvgButtonNew";
+import router from "next/router";
+import DeleteSvg from "@/assets/icons/DeleteSvg";
+import SaveSvg from "@/assets/icons/SaveSvg";
 
 function getTagButtons(
   tags: string[] | undefined,
@@ -96,8 +101,12 @@ export default function InputForm({
       onSubmit={submitData}
       className="flex w-full max-w-body mx-auto gap-4 flex-col p-4"
     >
-      <h1 className="text-black dark:text-white wfit mx-auto text-center text-2xl font-bold">Write Your Blog</h1>
-      <p className="text-black dark:text-white wfit mx-auto text-center text-base ">Then publish it or save it for later!</p>
+      <h1 className="text-black dark:text-white wfit mx-auto text-center text-2xl font-bold">
+        Write Your Blog
+      </h1>
+      <p className="text-black dark:text-white wfit mx-auto text-center text-base ">
+        Then publish it or save it for later!
+      </p>
       <input
         autoFocus
         onChange={(e) => setTitle(e.target.value)}
@@ -116,41 +125,54 @@ export default function InputForm({
       />
       <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk ">
         {tagButtons}
-        {/* <span className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2">
-          {JSON.stringify(tags)}
-        </span> */}
         <input
           onChange={(e) => handleTags(e.target.value)}
-          placeholder="Tags (Max 5)"
+          placeholder="Tags (Max 5) e.g.: Typescript, React"
           type="text"
           value={tagString}
           className="bg-bg-var text-black grow dark:text-white dark:bg-bg-var-dk rounded p-2"
         />
       </div>
       <div className="flex gap-2 ml-auto flex-row flex-wrap">
-        <input
-          disabled={!content || !title}
+        <SvgButtonNew
           type="submit"
-          value="Save"
-          onClick={() => {
+          svg={
+            <div className="h-8 p-[0.15rem] aspect-square">
+              <SaveSvg />
+            </div>
+          }
+          textElement={<span>Save</span>}
+          showTextIn={true}
+          clickFunction={() => {
             setPublish(false);
           }}
-          className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
         />
-        <input
-          disabled={!content || !title}
+
+        <SvgButtonNew
           type="submit"
-          value="Publish"
-          onClick={() => {
+          svg={
+            <div className="h-8 p-[0.15rem] aspect-square">
+              <PaperPlaneSvg />
+            </div>
+          }
+          textElement={<span>Publish</span>}
+          showTextIn={true}
+          clickFunction={() => {
             setPublish(true);
           }}
-          className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
         />
+
         <Link
-          className="rounded border-2 text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition border-black text-black dark:text-white p-1 hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
           href="/drafts/"
         >
-          Cancel
+          <div className="h-8 p-[0.15rem] aspect-square">
+            <DeleteSvg />
+          </div>
+
+          <span>Cancel</span>
         </Link>
       </div>
     </form>

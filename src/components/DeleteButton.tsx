@@ -5,7 +5,6 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
 
 async function handleClick(postId: string, routerInstance: AppRouterInstance) {
-  // console.log("handleClickDelete");
   await fetch(`/api/delete/${postId}`, {
     method: "DELETE",
   });
@@ -13,12 +12,11 @@ async function handleClick(postId: string, routerInstance: AppRouterInstance) {
   routerInstance.push("/drafts/");
 }
 export default function DeleteButton({ postId }: { postId: string }) {
-  // console.log("DeleteButton");
   const router = useRouter();
   return (
     <SvgButtonNew
       svg={
-        <div className="h-8  aspect-square">
+        <div className="h-8 p-[0.15rem] aspect-square">
           <DeleteSvg />
         </div>
       }
