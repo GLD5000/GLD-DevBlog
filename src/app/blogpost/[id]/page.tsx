@@ -39,9 +39,9 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="w-full grid text-black dark:text-white">
-        <small className="mx-auto">{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
-        <h1 className="mx-auto w-fit text-6xl font-bold">{post.title ? post.title : `no title`}</h1>
+        <h1 className="mx-auto my-6 w-fit text-6xl font-bold">{post.title ? post.title : `no title`}</h1>
         {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
+        <small className="mx-auto">{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
         <small className="font-bold block mx-auto">Written by {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
         {post.content ? (
           <ReactMarkdown className="my-6 prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  " remarkPlugins={[remarkGfm]}>
