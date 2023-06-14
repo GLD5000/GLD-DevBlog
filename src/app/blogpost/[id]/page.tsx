@@ -39,24 +39,28 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <div className="w-full grid text-black dark:text-white">
-        {  isCorrectUser?   <div className="grid w-fit mx-auto px-4 rounded-xl shadow-lg dark:drop-shadow-post-dk text-inherit bg-bg-var dark:bg-bg-var-dk py-8 my-8 gap-6">
-        <h2 className="mx-auto w-fit text-2xl font-bold text-inherit">{`Hi ${post.author?.name}!`}</h2>
-        <p className="mx-auto w-fit text-base text-inherit">{`Publish, Edit or Delete your post here...`}</p>
+        {  isCorrectUser?   <div className="flex flex-row flex-wrap items-center w-fit mx-auto p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk text-inherit bg-bg-var dark:bg-bg-var-dk my-8 gap-6">
+        <div className="grid mx-auto">
+          <h2 className="mx-auto w-fit text-2xl font-bold text-inherit">{`Hi ${post.author?.name}!`}</h2>
+          <p className="mx-auto w-fit text-base text-inherit">{`Publish, Edit or Delete your post here...`}</p>
+        </div>
           <div className="grid sm:grid-cols-3 gap-4 rounded mx-auto w-fit text-inherit">
             {!isPublished ? <PublishButton postId={params.id} />: <UnpublishButton postId={params.id}/>}
              <EditButton postId={params.id} />
              <DeleteButton postId={params.id} />
              </div>
         </div>: null}
-        <h1 className="mx-auto my-6 w-fit text-6xl font-bold text-center">{post.title ? post.title : `no title`}</h1>
-        {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
-        <small className="mx-auto">{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
-        <small className="font-bold block mx-auto">Written by {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
-        {post.content ? (
-          <ReactMarkdown className="my-6 prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  " remarkPlugins={[remarkGfm]}>
-            {post.content}
-          </ReactMarkdown>
-        ) : null}
+        <div className="bg-bg-var dark:bg-bg-var-dk p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk">
+          <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-center">{post.title ? post.title : `no title`}</h1>
+          {!!post.tags.length && !!post.tags? <TagSet tagsObject={...post.tags}/>: null}
+          <small className="mx-auto w-fit block">{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
+          <small className="font-bold block w-fit mx-auto">Written by {post.author?.name ? `${post.author.name}` : `Unknown author`}</small>
+          {post.content ? (
+            <ReactMarkdown className="my-6  w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  " remarkPlugins={[remarkGfm]}>
+              {post.content}
+            </ReactMarkdown>
+          ) : null}
+        </div>
       </div>
   );
 }

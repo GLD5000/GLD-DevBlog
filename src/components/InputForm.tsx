@@ -94,16 +94,17 @@ export default function InputForm({
   return (
     <form
       onSubmit={submitData}
-      className="flex w-full max-w-body mx-auto gap-2 flex-col"
+      className="flex w-full max-w-body mx-auto gap-4 flex-col p-4"
     >
-      <h1 className="text-black dark:text-white">New Draft</h1>
+      <h1 className="text-black dark:text-white wfit mx-auto text-center text-2xl font-bold">Write Your Blog</h1>
+      <p className="text-black dark:text-white wfit mx-auto text-center text-base ">Then publish it or save it for later!</p>
       <input
         autoFocus
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         type="text"
         value={title}
-        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2"
+        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
       />
       <textarea
         cols={50}
@@ -111,9 +112,9 @@ export default function InputForm({
         placeholder="Content"
         rows={8}
         value={content}
-        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2"
+        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
       />
-      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded ">
+      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk ">
         {tagButtons}
         {/* <span className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded p-2">
           {JSON.stringify(tags)}
