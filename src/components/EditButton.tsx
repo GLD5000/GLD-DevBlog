@@ -10,7 +10,7 @@ export default function EditButton({ postId }: { postId: string }) {
   return (
     <SvgButtonNew
       svg={
-        <div className="h-8 my-auto p-[0.15rem] aspect-square">
+        <div className="h-8 my-auto p-[0.25rem] aspect-square">
           <PencilSvg />
         </div>
       }
