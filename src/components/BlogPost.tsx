@@ -24,9 +24,9 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <button
       onClick={()=> router.push(`/blogpost/${postId}/`)}
-      className="mx-auto shadow-lg dark:drop-shadow-post-dk border border-transparent dark:border-black w-full prose dark:prose-invert bg-bg-var hover:transition focus:transition dark:focus:invert dark:hover:invert hover:bg-black hover:text-white focus:bg-black hover:prose-invert focus:prose-invert focus:text-white dark:bg-bg-var-dk rounded p-2 min-w-[17.5rem] grid gap-2"
+      className="mx-auto shadow-lg dark:drop-shadow-post-dk border border-transparent dark:border-black prose dark:prose-invert w-full  bg-bg-var hover:transition focus:transition dark:focus:invert dark:hover:invert hover:bg-black hover:text-white focus:bg-black hover:prose-invert focus:prose-invert focus:text-white dark:bg-bg-var-dk rounded p-2 grid gap-2"
     >
-      <h2>{post.title}</h2>
+      <h2 className="break-words break-all">{post.title}</h2>
       <small className="font-bold">By {authorName}</small>
       <small>{post.updatedAt.toLocaleDateString("en-GB", {dateStyle:'long'})}</small>
     </button>

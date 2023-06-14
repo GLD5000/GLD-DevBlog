@@ -57,7 +57,7 @@ const Header = ({
           {session ? (
             <Link
               href="/create"
-              className={`rounded  text-center flex border-2 items-center justify-center h-10 my-auto w-28 hover:transition ${
+              className={`rounded hidden xs:flex text-center  border-2 items-center justify-center h-10 my-auto w-28 hover:transition ${
                 colourTheme
                   ? "  p-1 hover:text-black border-white hover:bg-white"
                   : "  text-black p-1 border-black hover:text-white hover:bg-black"
