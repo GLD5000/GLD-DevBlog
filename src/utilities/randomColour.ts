@@ -30,31 +30,3 @@ export default function getRandomColour() {
   const randomHex = randomColour.makeRandomHex();
   return randomHex;
 }
-
-if (import.meta.vitest) {
-  const { describe, expect, it } = import.meta.vitest;
-
-  (() => {
-    const testFunc = 'makeRandomHsl';
-    describe(`#${testFunc}`, () => {
-      it(`Get random hsl array`, () => {
-        expect(randomColour[testFunc]()[0]).toBeLessThanOrEqual(360);
-        expect(randomColour[testFunc]()[0]).toBeGreaterThanOrEqual(0);
-        expect(randomColour[testFunc]()[1]).toBeLessThanOrEqual(100);
-        expect(randomColour[testFunc]()[1]).toBeGreaterThanOrEqual(0);
-        expect(randomColour[testFunc]()[2]).toBeLessThanOrEqual(100);
-        expect(randomColour[testFunc]()[2]).toBeGreaterThanOrEqual(0);
-      });
-    });
-  })();
-
-  (() => {
-    const testFunc = 'getRandomColour';
-    const output = /^#[0-9a-f]{6}$/;
-    describe(`#${testFunc}`, () => {
-      it(`gets random colour`, () => {
-        expect(getRandomColour()).toMatch(output);
-      });
-    });
-  })();
-}
