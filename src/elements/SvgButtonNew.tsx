@@ -15,6 +15,7 @@ function getContent(reverse: boolean, showText: boolean, textElement: ReactEleme
 }
 
 export default function SvgButtonNew({
+  type="button",
   clickFunction,
   id,
   name,
@@ -28,6 +29,7 @@ export default function SvgButtonNew({
       rounded border border-solid whitespace-pre-wrap hover:transition
     `,
 }: {
+  type?:"button" | "submit" | "reset" | undefined;
   clickFunction: ((e: MouseEvent<HTMLButtonElement>) => void) | (() => void);
   id?: string | undefined;
   name?: string | undefined;
@@ -42,7 +44,7 @@ export default function SvgButtonNew({
 
   return (
     <button
-      type="button"
+      type={type}
       id={id}
       name={name}
       onClick={clickFunction}
