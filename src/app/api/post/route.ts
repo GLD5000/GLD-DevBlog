@@ -16,8 +16,10 @@ async function createTagOnPost(tagName: string, postId: string) {
     create: { ...newTag },
     update: {},
   });
-  const tagOnPostResult = await prisma.tagOnPosts.create({
-    data: { postId: postId, tagId: tagResult.id },
+  await prisma.tagOnPosts.upsert({
+    where: { unique_post_tag: {postId,tagId: tagResult.id}}, 
+    create: { postId: postId, tagId: tagResult.id },
+    update:{},
   });
 }
 
@@ -28,16 +30,22 @@ function addTags(tags: string[], postId: string) {
 }
 
 async function handler(req: Request, res: Response) {
-  const { title, content, publish, tags } = await req.json();
+  const { title, content, publish, tags, id } = await req.json();
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
-  const postResult = await prisma.post.create({
-    data: {
+  const postResult = await prisma.post.upsert({
+    where: {id:id },
+    create: {
       title: title,
       content: content,
       published: publish,
       author: { connect: { email } },
     },
+    update:{
+      title: title,
+      content: content,
+      published: publish,
+    }
   });
 
   if (!!tags.length) addTags(tags, postResult.id);

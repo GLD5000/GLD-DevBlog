@@ -34,12 +34,13 @@ model Tag {
 }
 
 model TagOnPosts {
-  id     Int   @id @default(autoincrement())
-  post   Post? @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  tag    Tag?  @relation(fields: [tagId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  postId String?
-  tagId  String?
+  id           Int    @id @default(autoincrement())
+  post         Post   @relation(fields: [postId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  tag          Tag    @relation(fields: [tagId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  postId       String
+  tagId        String
 
+  @@unique([postId, tagId], name: "unique_post_tag")
 }
 
 model User {

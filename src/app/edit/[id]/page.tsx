@@ -58,6 +58,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
         initialContent={post?.content}
         initialTags={tagNames}
         initialTitle={post?.title}
+        intialId={post?.id}
       />
     </div>
   );

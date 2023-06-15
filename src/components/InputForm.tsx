@@ -30,20 +30,24 @@ export default function InputForm({
   initialTitle,
   initialContent,
   initialTags,
+  intialId
 }: {
   initialTitle?: string;
   initialContent?: string | null;
   initialTags?: string[] | undefined | null;
+  intialId?: string;
 }) {
   const Router = useRouter();
 
   const [title, setTitle] = useState(initialTitle || "");
   const [content, setContent] = useState(initialContent || "");
   const [publish, setPublish] = useState(false);
+  // const [id, _] = useState<string | undefined>(intialId || undefined);
   const [tags, setTags] = useState<string[] | undefined>(
     initialTags || undefined
   );
   const [tagString, setTagString] = useState("");
+  const id = intialId || undefined;
 
   function closeTag(tagValue: string) {
     setTags((oldTags) => {
@@ -84,7 +88,7 @@ export default function InputForm({
     e.preventDefault();
 
     try {
-      const body = { title, content, publish, tags };
+      const body = { title, content, publish, tags, id };
       await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
