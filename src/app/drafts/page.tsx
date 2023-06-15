@@ -10,14 +10,19 @@ const getData = async (
 ): Promise<{
   published: PostProps[];
   drafts: PostProps[];
-  next:{revalidate: number};
+  next: { revalidate: number };
 }> => {
   const drafts: PostProps[] = await prisma.post.findMany({
     where: {
       author: { email: sessionData?.user?.email },
       published: false,
     },
+    orderBy: { createdAt: "desc" },
     include: {
+      tags: {
+        orderBy: { tag: { name: "asc" } },
+        select: { tag: true },
+      },
       author: {
         select: { name: true },
       },
@@ -28,7 +33,12 @@ const getData = async (
       author: { email: sessionData?.user?.email },
       published: true,
     },
+    orderBy: { createdAt: "desc" },
     include: {
+      tags: {
+        orderBy: { tag: { name: "asc" } },
+        select: { tag: true },
+      },
       author: {
         select: { name: true },
       },
@@ -38,7 +48,7 @@ const getData = async (
   return {
     published: published,
     drafts: drafts,
-    next: {revalidate: 10},
+    next: { revalidate: 10 },
   };
 };
 
@@ -48,20 +58,40 @@ const Drafts = async () => {
     return (
       <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
         <h1 className="text-black dark:text-white mx-auto">My Blogs</h1>
-        <div className="text-black dark:text-white mx-auto">You need to be authenticated to view this page.</div>
+        <div className="text-black dark:text-white mx-auto">
+          You need to be authenticated to view this page.
+        </div>
       </div>
     );
   }
   const { drafts, published } = await getData(session);
 
   return (
-      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-      {!!published.length?<><h1 className="text-black dark:text-white w-fit mx-auto">Published</h1>
-        <BlogPostList arrayIn={...published} /></>: <h2 className="text-black dark:text-white w-fit mx-auto">No Published Blogs Yet</h2>}
+    <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
+      {!!published.length ? (
+        <>
+          <h1 className="text-black dark:text-white w-fit mx-auto">
+            Published
+          </h1>
+          <BlogPostList arrayIn={...published} />
+        </>
+      ) : (
+        <h2 className="text-black dark:text-white w-fit mx-auto">
+          No Published Blogs Yet
+        </h2>
+      )}
 
-        {!!drafts.length?<><h1 className="text-black dark:text-white w-fit mx-auto">Drafts</h1>
-        <BlogPostList arrayIn={...drafts} /></>: <h2 className="text-black dark:text-white w-fit mx-auto">No Drafts Yet</h2>}
-      </div>
+      {!!drafts.length ? (
+        <>
+          <h1 className="text-black dark:text-white w-fit mx-auto">Drafts</h1>
+          <BlogPostList arrayIn={...drafts} />
+        </>
+      ) : (
+        <h2 className="text-black dark:text-white w-fit mx-auto">
+          No Drafts Yet
+        </h2>
+      )}
+    </div>
   );
 };
 

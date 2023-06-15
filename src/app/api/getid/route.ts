@@ -9,6 +9,7 @@ async function handler(
 
   const result = await prisma.post.findFirst({
     where: { id: postId },
+    orderBy: {createdAt: 'desc'},
     include: {
       author: {
         select: { name: true, email: true },

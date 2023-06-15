@@ -44,5 +44,5 @@ export default function TagSet({
   }[];
 }) {
   const returnArray = getArrayTags(tagsObject);
-  return <div className="flex flex-row flex-wrap gap-2 w-fit mx-auto p-4">{returnArray}</div>;
+  return <div className="flex flex-row flex-wrap gap-2 w-fit mx-auto p-2">{returnArray}</div>;
 }

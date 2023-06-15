@@ -7,8 +7,12 @@ import { DefaultSession, getServerSession } from "next-auth";
 const getData = async (idIn: string) => {
   const feed = await prisma.post.findFirst({
     where: { id: idIn },
+    orderBy: { createdAt: "desc" },
     include: {
-      tags: { select: { tag: true } },
+      tags: {
+        orderBy: { tag: { name: "asc" } },
+        select: { tag: true },
+      },
       author: {
         select: { name: true, email: true },
       },
