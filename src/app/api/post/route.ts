@@ -33,7 +33,7 @@ async function handler(req: Request, res: Response) {
   const { title, content, publish, tags, id } = await req.json();
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
-  const postResult = await prisma.post.upsert({
+  const postResult = !!id? await prisma.post.upsert({
     where: {id:id },
     create: {
       title: title,
@@ -46,6 +46,13 @@ async function handler(req: Request, res: Response) {
       content: content,
       published: publish,
     }
+  }): await prisma.post.create({
+    data: {
+      title: title,
+      content: content,
+      published: publish,
+      author: { connect: { email } },
+    },
   });
 
   if (!!tags.length) addTags(tags, postResult.id);

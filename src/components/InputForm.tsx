@@ -61,8 +61,6 @@ export default function InputForm({
   function pushToTags(stringIn: string) {
     console.log("stringIn:", stringIn);
     setTags((oldArray) => {
-      console.log("oldArray:", oldArray);
-
       const newArray =
         !!oldArray && oldArray.length > 0
           ? [...new Set([...oldArray, stringIn.trim()])]

@@ -26,7 +26,6 @@ const getData = async (idIn: string) => {
 
   return {
     props: { feed },
-    next: { revalidate: 10 },
   };
 };
 

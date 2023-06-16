@@ -10,7 +10,6 @@ const getData = async (
 ): Promise<{
   published: PostProps[];
   drafts: PostProps[];
-  next: { revalidate: number };
 }> => {
   const drafts: PostProps[] = await prisma.post.findMany({
     where: {
@@ -48,7 +47,6 @@ const getData = async (
   return {
     published: published,
     drafts: drafts,
-    next: { revalidate: 10 },
   };
 };
 

@@ -5,7 +5,6 @@ import { Session } from "next-auth";
 
 const getData = async (): Promise<{
   props: PostProps[];
-  revalidate: number;
 }> => {
   const drafts: PostProps[] = await prisma.post.findMany({
     where: {
@@ -25,7 +24,6 @@ const getData = async (): Promise<{
 
   return {
     props: drafts,
-    revalidate: 10,
   };
 };
 
