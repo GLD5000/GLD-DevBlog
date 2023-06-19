@@ -1,5 +1,21 @@
 import prisma from "@/lib/prisma";
 // DELETE /api/delete/:id
+
+async function deleteTagsWithEmptyTagOnPostsArray() {
+  try {
+    await prisma.tag.deleteMany({
+      where: {
+        posts: { none: {} },
+      },
+    });
+    console.log("Tags deleted successfully.");
+  } catch (error) {
+    console.error("Error deleting tags:", error);
+  } finally {
+    await prisma.$disconnect();
+  }
+}
+
 async function handler(req: Request, context: {[key:string]: {[key:string]: string}}) {
   // console.log("delete route")
   const postId = context.params.id;
@@ -7,6 +23,7 @@ async function handler(req: Request, context: {[key:string]: {[key:string]: stri
     const result = await prisma.post.delete({
       where: { id: postId },
     });
+    await deleteTagsWithEmptyTagOnPostsArray();
     return new Response(JSON.stringify(result));
   } else {
     throw new Error(

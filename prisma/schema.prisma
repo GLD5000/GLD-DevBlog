@@ -30,7 +30,6 @@ model Tag {
   name              String @unique
   textColour        String @default("#000000")
   backgroundColour  String @default("#FFFFFF")
-  postsCount        Int     @default(0)
   posts             TagOnPosts[]
 }
 
