@@ -13,7 +13,7 @@ function getArrayTags(
     return (
       <button
       key={tagObject.id}
-        className={`rounded border-2 border-transparent text-center flex hover:transition focus:transition  items-center justify-center h-fit my-auto w-fit px-2 `}
+        className={`rounded-full border-2 border-transparent text-center flex hover:transition focus:transition  items-center justify-center h-fit my-auto w-fit px-2 `}
         style={{
           textDecoration: `${tagObject.backgroundColour}`,
           textDecorationLine: `underline`,
