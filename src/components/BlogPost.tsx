@@ -37,13 +37,13 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
     <div className="mx-auto shadow-lg dark:drop-shadow-post-dk  w-full bg-bg-var dark:bg-bg-var-dk rounded  grid gap-2">
       <button
         className=" rounded-t rounded-b-none grid my-0 pb-2 text-txt-mid dark:text-txt-mid-dk dark:border-black w-fit mx-auto rounded bg-bg-var hover:transition focus:transition  
-        hover:text-txt-main dark:hover:text-txt-main-dk focus:text-txt-main dark:focus:text-txt-main-dk dark:bg-bg-var-dk"
+        hover:text-txt-main dark:hover:text-txt-main-dk focus:text-txt-main dark:focus:text-txt-main-dk dark:bg-bg-var-dk hover:grayscale focus:grayscale"
         onClick={() => router.push(`/blogpost/${postId}/`)}
       >
         <Image
           width={1000}
           height={400}
-          className="my-0"
+          className="my-0 rounded-t"
           src={sourceImage}
           alt={"Tech Image"}
         />
