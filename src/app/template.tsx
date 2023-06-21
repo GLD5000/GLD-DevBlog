@@ -22,27 +22,23 @@ export default function Template({ children }: { children: React.ReactNode }) {
   //     localStorage.getItem("theme") !== "false"
   //   );
   function toggleColourTheme() {
-    setColourTheme((currentTheme: boolean |null) => !currentTheme);
+    setColourTheme((currentTheme: boolean | null) => !currentTheme);
     setThemeToLocalStorage(!colourTheme);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     setColourTheme(getThemeFromSessionStorage());
   }, []);
-
 
   if (colourTheme === null) return null;
   return (
     <div
       id="theme-wrapper"
       className={`w-screen min-h-screen  ${
-        colourTheme ? "dark bg-black" : "bg-white"
+        colourTheme ? "dark bg-bg-dk" : "bg-bg"
       }`}
     >
-      <Header
-        toggleColourTheme={toggleColourTheme}
-        colourTheme={colourTheme}
-      />
+      <Header toggleColourTheme={toggleColourTheme} colourTheme={colourTheme} />
       <main
         className="relative mx-auto w-body-sm min-w-body  max-w-body items-center
                 sm:w-body"

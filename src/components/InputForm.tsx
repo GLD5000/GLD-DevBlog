@@ -115,7 +115,7 @@ export default function InputForm({
         placeholder="Title"
         type="text"
         value={title}
-        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
+        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk p-2"
       />
       <textarea
         cols={50}
@@ -123,9 +123,9 @@ export default function InputForm({
         placeholder="Content"
         rows={8}
         value={content}
-        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
+        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk p-2"
       />
-      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk ">
+      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk ">
         {tagButtons}
         <input
           onChange={(e) => handleTags(e.target.value)}
@@ -148,7 +148,7 @@ export default function InputForm({
           clickFunction={() => {
             setPublish(false);
           }}
-          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
         />
 
         <SvgButtonNew
@@ -163,11 +163,11 @@ export default function InputForm({
           clickFunction={() => {
             setPublish(true);
           }}
-          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
         />
 
         <Link
-          className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
+          className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
           href="/drafts/"
         >
           <div className="h-8 p-[0.15rem] aspect-square">

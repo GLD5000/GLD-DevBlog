@@ -27,7 +27,7 @@ export default function PublishButton({ postId }: { postId: string }) {
       textElement={<span>Publish</span>}
       showTextIn={true}
       clickFunction={() => handleClickPublish(postId, router)}
-      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
+      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
     />
   );
 }

@@ -26,7 +26,7 @@ export default function UserMenu({
         {session.user?.image ? (
           <div className="relative h-10 w-16 transition">
             <button
-              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-txt-main dark:hover:bg-white text-txt-main  hover:text-txt-main-dk hover:bg-black dark:text-txt-main-dk border-black dark:border-white hover:border-white dark:hover:border-black hover-transition focus-transition"
+              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-txt-main dark:hover:bg-bg text-txt-main  hover:text-txt-main-dk hover:bg-bg-dk dark:text-txt-main-dk border-txt-main dark:border-txt-main-dk hover:border-txt-main-dk dark:hover:border-txt-main hover-transition focus-transition"
               id="user-menu-button"
               {...buttonProps}
             >
@@ -46,8 +46,8 @@ export default function UserMenu({
                 isOpen ? "visible" : ""
               } ${
                 colourTheme
-                  ? " border-white bg-black "
-                  : " border-black bg-white"
+                  ? " border-txt-main-dk bg-bg-dk "
+                  : " border-txt-main bg-bg"
               }`}
               role="menu"
               aria-labelledby="user-menu-button"
@@ -57,8 +57,8 @@ export default function UserMenu({
                 href="/create"
                 className={`rounded  text-center flex xs:hidden justify-center items-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-white"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-bg"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
                 }`}
               >
                 <div className="h-8 p-[0.15rem] aspect-square">
@@ -72,8 +72,8 @@ export default function UserMenu({
                 href="/drafts"
                 className={`rounded  text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-white"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-bg"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
                 }`}
               >
                 My Blogs
@@ -82,8 +82,8 @@ export default function UserMenu({
                 {...itemProps[2]}
                 className={`rounded  text-center flex justify-center items-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-white"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-bg"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
                 }`}
                 onClick={() => signOut()}
               >
