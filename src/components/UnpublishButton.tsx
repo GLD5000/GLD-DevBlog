@@ -18,7 +18,6 @@ export default function UnpublishButton({ postId }: { postId: string }) {
   const router = useRouter();
 
   return (
-
     <SvgButtonNew
       svg={
         <div className="h-8 my-auto p-[0.15rem] aspect-square">
@@ -28,7 +27,7 @@ export default function UnpublishButton({ postId }: { postId: string }) {
       textElement={<span className="h-min my-auto">Unpublish</span>}
       showTextIn={true}
       clickFunction={() => handleClickUnpublish(postId, router)}
-      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
     />
   );
 }

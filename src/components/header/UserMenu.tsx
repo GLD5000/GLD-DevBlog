@@ -26,7 +26,7 @@ export default function UserMenu({
         {session.user?.image ? (
           <div className="relative h-10 w-16 transition">
             <button
-              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-black dark:hover:bg-white text-black  hover:text-white hover:bg-black dark:text-white border-black dark:border-white hover:border-white dark:hover:border-black hover-transition focus-transition"
+              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-txt-main dark:hover:bg-white text-txt-main  hover:text-txt-main-dk hover:bg-black dark:text-txt-main-dk border-black dark:border-white hover:border-white dark:hover:border-black hover-transition focus-transition"
               id="user-menu-button"
               {...buttonProps}
             >
@@ -38,8 +38,7 @@ export default function UserMenu({
                 alt={"User image"}
               />
               <div className="h-6 p-[0.35rem] aspect-square m-auto">
-
-              <ExpandSvg/>
+                <ExpandSvg />
               </div>
             </button>
             <div
@@ -58,14 +57,13 @@ export default function UserMenu({
                 href="/create"
                 className={`rounded  text-center flex xs:hidden justify-center items-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-black hover:bg-white"
-                    : "  text-black p-1 hover:text-white hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-white"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
                 }`}
               >
-                                        <div className="h-8 p-[0.15rem] aspect-square">
-            <WriteSvg />
-          </div>
-
+                <div className="h-8 p-[0.15rem] aspect-square">
+                  <WriteSvg />
+                </div>
                 Write
               </Link>
 
@@ -74,8 +72,8 @@ export default function UserMenu({
                 href="/drafts"
                 className={`rounded  text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-black hover:bg-white"
-                    : "  text-black p-1 hover:text-white hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-white"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
                 }`}
               >
                 My Blogs
@@ -84,8 +82,8 @@ export default function UserMenu({
                 {...itemProps[2]}
                 className={`rounded  text-center flex justify-center items-center h-10 my-auto w-28 hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-black hover:bg-white"
-                    : "  text-black p-1 hover:text-white hover:bg-black"
+                    ? "  p-1 hover:text-txt-main hover:bg-white"
+                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-black"
                 }`}
                 onClick={() => signOut()}
               >

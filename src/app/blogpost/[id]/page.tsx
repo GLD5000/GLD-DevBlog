@@ -41,7 +41,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!post) return <p>Uh oh! Blog post not found!</p>;
 
   return (
-    <div className="w-full grid text-black dark:text-white">
+    <div className="w-full grid text-txt-main dark:text-txt-main-dk">
       {isCorrectUser ? (
         <div className="flex flex-row flex-wrap items-center w-fit mx-auto p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk text-inherit bg-bg-var dark:bg-bg-var-dk my-8 gap-6">
           <div className="grid mx-auto">

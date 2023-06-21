@@ -42,8 +42,10 @@ export default async function Edit({ params }: { params: { id: string } }) {
   if (!isCorrectUser)
     return (
       <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-        <h1 className="text-black dark:text-white mx-auto">Edit Blog</h1>
-        <div className="text-black dark:text-white mx-auto">
+        <h1 className="text-txt-main dark:text-txt-main-dk mx-auto">
+          Edit Blog
+        </h1>
+        <div className="text-txt-main dark:text-txt-main-dk mx-auto">
           You need to be authenticated to view this page.
         </div>
       </div>

@@ -36,11 +36,10 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   return (
     <div className="mx-auto shadow-lg dark:drop-shadow-post-dk  w-full bg-bg-var dark:bg-bg-var-dk rounded  grid gap-2">
       <button
-        className="break-words break-all rounded-t rounded-b-none text-center my-0 pt-2 dark:border-black w-fit mx-auto rounded bg-bg-var hover:transition focus:transition  
-        border-2 border-transparent hover:border-black dark:hover:border-white focus:border-black dark:focus:border-white dark:bg-bg-var-dk"
+        className=" rounded-t rounded-b-none grid my-0 pb-2 text-txt-mid dark:text-txt-mid-dk dark:border-black w-fit mx-auto rounded bg-bg-var hover:transition focus:transition  
+        hover:text-txt-main dark:hover:text-txt-main-dk focus:text-txt-main dark:focus:text-txt-main-dk dark:bg-bg-var-dk"
         onClick={() => router.push(`/blogpost/${postId}/`)}
       >
-        <h2 className="text-inherit">{post.title}</h2>
         <Image
           width={1000}
           height={400}
@@ -48,14 +47,18 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
           src={sourceImage}
           alt={"Tech Image"}
         />
+        <div className="flex">
+          <small className="font-bold p-2">{`${authorName}`}</small>
+                <small className="p-2">
+          {post.updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
+                </small>
+        </div>
+        <h1 className="text-inherit break-words break-all text-center">{post.title}</h1>
+
       </button>
       {!!post.tags.length && !!post.tags ? (
         <TagSet tagsObject={post.tags} />
       ) : null}
-      <small className="font-bold mx-auto p-2">By {authorName}</small>
-      <small className="mx-auto p-2">
-        {post.updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
-      </small>
     </div>
   );
 };

@@ -30,7 +30,7 @@ export default function InputForm({
   initialTitle,
   initialContent,
   initialTags,
-  intialId
+  intialId,
 }: {
   initialTitle?: string;
   initialContent?: string | null;
@@ -103,10 +103,10 @@ export default function InputForm({
       onSubmit={submitData}
       className="flex w-full max-w-body mx-auto gap-4 flex-col p-4"
     >
-      <h1 className="text-black dark:text-white wfit mx-auto text-center text-2xl font-bold">
+      <h1 className="text-txt-main dark:text-txt-main-dk wfit mx-auto text-center text-2xl font-bold">
         Write Your Blog
       </h1>
-      <p className="text-black dark:text-white wfit mx-auto text-center text-base ">
+      <p className="text-txt-main dark:text-txt-main-dk wfit mx-auto text-center text-base ">
         Then publish it or save it for later!
       </p>
       <input
@@ -115,7 +115,7 @@ export default function InputForm({
         placeholder="Title"
         type="text"
         value={title}
-        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
+        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
       />
       <textarea
         cols={50}
@@ -123,16 +123,16 @@ export default function InputForm({
         placeholder="Content"
         rows={8}
         value={content}
-        className="bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
+        className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk p-2"
       />
-      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-black dark:text-white dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk ">
+      <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-black shadow-lg dark:drop-shadow-post-dk ">
         {tagButtons}
         <input
           onChange={(e) => handleTags(e.target.value)}
           placeholder="Tags (Max 5) e.g.: Typescript, React"
           type="text"
           value={tagString}
-          className="bg-bg-var text-black grow dark:text-white dark:bg-bg-var-dk rounded p-2"
+          className="bg-bg-var text-txt-main grow dark:text-txt-main-dk dark:bg-bg-var-dk rounded p-2"
         />
       </div>
       <div className="flex gap-2 ml-auto flex-row flex-wrap">
@@ -148,7 +148,7 @@ export default function InputForm({
           clickFunction={() => {
             setPublish(false);
           }}
-          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
         />
 
         <SvgButtonNew
@@ -163,11 +163,11 @@ export default function InputForm({
           clickFunction={() => {
             setPublish(true);
           }}
-          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
         />
 
         <Link
-          className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-black dark:text-white hover:text-white hover:bg-black dark:border-white dark:hover:text-black dark:hover:bg-white"
+          className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-black text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-black dark:border-white dark:hover:text-txt-main dark:hover:bg-white"
           href="/drafts/"
         >
           <div className="h-8 p-[0.15rem] aspect-square">

@@ -37,11 +37,11 @@ const Header = ({
     >
       <nav
         className={`mx-auto w-body-sm min-w-body  max-w-body items-center
-        sm:w-body text-white flex flex-row justify-between h-14 text-base`}
+        sm:w-body text-txt-main-dk flex flex-row justify-between h-14 text-base`}
       >
         <Link
           href="/"
-          className="rounded p-1 flex gap-2 items-center justify-center border-transparent border-2 text-center h-10 my-auto w-32 hover:transition  hover:border-black dark:text-white dark:hover:border-white  text-black"
+          className="rounded p-1 flex gap-2 items-center justify-center border-transparent border-2 text-center h-10 my-auto w-32 hover:transition  hover:border-black dark:text-txt-main-dk dark:hover:border-white  text-txt-main"
         >
           <div className="h-10 w-10">
             <GldSvg />
@@ -52,7 +52,7 @@ const Header = ({
           {session ? (
             <Link
               href="/create"
-              className="rounded hidden xs:flex text-center   items-center justify-center h-10 my-auto w-24 hover:transition dark:hover:text-black dark:hover:bg-white text-black dark:text-white p-1 hover:text-white hover:bg-black"
+              className="rounded hidden xs:flex text-center   items-center justify-center h-10 my-auto w-24 hover:transition dark:hover:text-txt-main dark:hover:bg-white text-txt-main dark:text-txt-main-dk p-1 hover:text-txt-main-dk hover:bg-black"
             >
               <div className="h-8 p-[0.15rem] aspect-square">
                 <WriteSvg />
@@ -62,7 +62,7 @@ const Header = ({
           ) : (
             <Link
               href="/api/auth/signin"
-              className="rounded  text-center flex  items-center justify-center h-10 my-auto w-24 p-1 hover:transition dark:hover:text-black dark:hover:bg-white text-black  hover:text-white hover:bg-black dark:text-white"
+              className="rounded  text-center flex  items-center justify-center h-10 my-auto w-24 p-1 hover:transition dark:hover:text-txt-main dark:hover:bg-white text-txt-main  hover:text-txt-main-dk hover:bg-black dark:text-txt-main-dk"
             >
               <div className="h-8 p-[0.15rem] aspect-square">
                 <SignInSvg />
@@ -79,7 +79,7 @@ const Header = ({
             clickFunction={toggleColourTheme}
             id="colour-theme-button"
             name="Dark Mode Button"
-            className="relative rounded text-xs w-fit h-fit overflow-visible flex-col flex text-black hover:text-white hover:transition  hover:bg-black   focus:transition dark:hover:bg-white  dark:text-white dark:hover:text-black  px-2 py-[0.85rem]"
+            className="relative rounded text-xs w-fit h-fit overflow-visible flex-col flex text-txt-main hover:text-txt-main-dk hover:transition  hover:bg-black   focus:transition dark:hover:bg-white  dark:text-txt-main-dk dark:hover:text-txt-main  px-2 py-[0.85rem]"
             textElement={
               <span className="absolute top-[calc(100%-0.95rem)] w-full rounded-t-none bg-transparent text-inherit ">
                 {colourTheme ? "Light" : "Dark"}
