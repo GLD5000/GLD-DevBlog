@@ -8,6 +8,8 @@ import DeleteButton from "@/components/DeleteButton";
 import UnpublishButton from "@/components/UnpublishButton";
 import TagSet from "@/components/TagSet";
 import EditButton from "@/components/EditButton";
+import Image from "next/image";
+
 
 const getData = async (idIn: string) => {
   const feed = await prisma.post.findFirst({
@@ -37,7 +39,17 @@ export default async function Page({ params }: { params: { id: string } }) {
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isPublished = post?.published;
   const isCorrectUser = session?.user?.email === post?.author?.email;
-
+  const tagNames = post?.tags
+    .map((tag) => {
+      if (!!!tag.tag) return null;
+      const tagObject = tag.tag;
+      return tagObject.name;
+    })
+    .join(",");
+  const sourceImage =
+    !Array.isArray(tagNames) || tagNames.length < 3
+      ? `https://source.unsplash.com/random/1000x400/?${tagNames},random`
+      : `https://source.unsplash.com/random/1000x400/?${tagNames}`;
   if (!post) return <p>Uh oh! Blog post not found!</p>;
 
   return (
@@ -60,6 +72,13 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
       ) : null}
       <div className="bg-bg-var dark:bg-bg-var-dk p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk">
+          <Image
+          width={1000}
+          height={400}
+          className="my-0 rounded-t"
+          src={sourceImage}
+          alt={"Tech Image"}
+        />
         <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-center">
           {post.title ? post.title : `no title`}
         </h1>
