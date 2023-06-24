@@ -1,14 +1,14 @@
 "use client";
 
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpicyLi from "@/elements/SpicyLi";
 import PaperPlaneSvg from "@/assets/icons/PaperPlaneSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
-import router from "next/router";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
+import getReadTime from "@/utilities/readTime";
 
 function getTagButtons(
   tags: string[] | undefined,
@@ -84,9 +84,9 @@ export default function InputForm({
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-
+    const readTime = getReadTime(content);
     try {
-      const body = { title, content, publish, tags, id };
+      const body = { title, content, publish, tags, id, readTime };
       await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
