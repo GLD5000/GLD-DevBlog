@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "GLD DevBlog",
-  description: "Catch up on the lates web developer trends and hot takes.",
+  description: "Catch up on the latest web developer trends and hot takes.",
   keywords:
     "Blog, React, web, coding, developer, HTML, CSS, JavaScript, TypeScript",
   authors: [{ name: "GLD", url: "https://github.com/GLD5000" }],

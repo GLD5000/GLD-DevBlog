@@ -3,7 +3,7 @@
   "version": "0.1",
   "short_name": "DevBlog",
   "name": "GLD DevBlog",
-  "description": "Catch up on the lates web developer trends and hot takes.",
+  "description": "Catch up on the latest web developer trends and hot takes.",
   "icons": [
     {
       "src": "GLD144.png",
