@@ -19,6 +19,7 @@ model Post {
   id        String    @id @default(cuid())
   title     String
   content   String?
+  readTime  Int  @default(1)
   published Boolean @default(false)
   author    User?   @relation(fields: [authorId], references: [id], onDelete: SetNull, onUpdate: Cascade)
   authorId  String?

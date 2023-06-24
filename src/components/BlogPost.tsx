@@ -47,13 +47,16 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
           src={sourceImage}
           alt={"Tech Image"}
         />
-        <div className="flex">
+        <div className="flex flex-wrap">
           <small className="font-bold p-2">{`${authorName}`}</small>
           <small className="p-2">
             {post.updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
+          </small>  
+          <small className="p-2">
+            {`${post.readTime} min read`}
           </small>
         </div>
-        <h1 className="text-inherit break-words break-all text-center">
+        <h1 className="text-inherit break-words break-all text-center p-2">
           {post.title}
         </h1>
       </button>

@@ -92,6 +92,9 @@ export default async function Page({ params }: { params: { id: string } }) {
           Written by{" "}
           {post.author?.name ? `${post.author.name}` : `Unknown author`}
         </small>
+        <small className="p-2 w-fit block mx-auto">
+            {`${post.readTime} min read`}
+          </small>
         {post.content ? (
           <ReactMarkdown
             className="my-6  w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  "
