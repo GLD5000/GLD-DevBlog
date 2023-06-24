@@ -111,6 +111,7 @@ export default function InputForm({
       </p>
       <input
         autoFocus
+        required
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         type="text"
@@ -118,6 +119,7 @@ export default function InputForm({
         className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk p-2"
       />
       <textarea
+        required
         cols={50}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Content"

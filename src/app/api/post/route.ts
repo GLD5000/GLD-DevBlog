@@ -70,7 +70,7 @@ async function cleanUpTags(postId: string, tags: string[]) {
 }
 
 async function handler(req: Request, res: Response) {
-  const { title, content, publish, tags, id } = await req.json();
+  const { title, content, publish, tags, id, readTime } = await req.json();
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = !!id
@@ -80,12 +80,14 @@ async function handler(req: Request, res: Response) {
           title: title,
           content: content,
           published: publish,
+          readTime: readTime,
           author: { connect: { email } },
         },
         update: {
           title: title,
           content: content,
           published: publish,
+          readTime: readTime,
         },
       })
     : await prisma.post.create({
@@ -93,11 +95,12 @@ async function handler(req: Request, res: Response) {
           title: title,
           content: content,
           published: publish,
+          readTime: readTime,
           author: { connect: { email } },
         },
       });
 
-  if (!!tags.length) addTags(tags, postResult.id);
+  if (!!tags && !!tags.length) addTags(tags, postResult.id);
 
   console.log("JSON.stringify(postResult):", JSON.stringify(postResult));
   return new Response(JSON.stringify(postResult));
