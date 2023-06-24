@@ -32,7 +32,6 @@ const getData = async (idIn: string) => {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-  // console.log("blogpost APPP");
   const {
     props: { feed: post },
   } = await getData(params.id);
