@@ -20,7 +20,7 @@ export interface PostEmailProps extends Post {
 const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   const postId = post.id;
-  // console.log('postId:', postId);
+  const updated = new Date(post.updatedAt);
   const router = useRouter();
   const tagNames = post.tags
     .map((tag) => {
@@ -50,7 +50,7 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
         <div className="flex flex-wrap">
           <small className="font-bold p-2">{`${authorName}`}</small>
           <small className="p-2">
-            {post.updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
+            {updated.toLocaleDateString("en-GB", { dateStyle: "long" })}
           </small>  
           <small className="p-2">
             {`${post.readTime} min read`}
