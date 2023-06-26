@@ -1,3 +1,4 @@
+export const revalidate = 86400;
 import prisma from "@/lib/prisma";
 import BlogPost, { PostProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
