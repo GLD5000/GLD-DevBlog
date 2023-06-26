@@ -39,7 +39,6 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
         posts: { none: {} },
       },
     });
-    console.log("Tags deleted successfully.");
   } catch (error) {
     console.error("Error deleting tags:", error);
   } finally {
@@ -102,7 +101,6 @@ async function handler(req: Request, res: Response) {
 
   if (!!tags && !!tags.length) addTags(tags, postResult.id);
 
-  console.log("JSON.stringify(postResult):", JSON.stringify(postResult));
   return new Response(JSON.stringify(postResult));
 }
 

@@ -59,7 +59,6 @@ export default function InputForm({
   const tagButtons = getTagButtons(tags, closeTag);
 
   function pushToTags(stringIn: string) {
-    console.log("stringIn:", stringIn);
     setTags((oldArray) => {
       const newArray =
         !!oldArray && oldArray.length > 0

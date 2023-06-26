@@ -4,7 +4,6 @@ import SvgButtonNew from "@/elements/SvgButtonNew";
 import { useRouter } from "next/navigation";
 
 export default function EditButton({ postId }: { postId: string }) {
-  // console.log("EditButton");
   const router = useRouter();
 
   return (

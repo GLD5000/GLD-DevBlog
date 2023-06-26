@@ -8,7 +8,6 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
         posts: { none: {} },
       },
     });
-    console.log("Tags deleted successfully.");
   } catch (error) {
     console.error("Error deleting tags:", error);
   } finally {
@@ -17,7 +16,6 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
 }
 
 async function handler(req: Request, context: {[key:string]: {[key:string]: string}}) {
-  // console.log("delete route")
   const postId = context.params.id;
   if (req.method === "DELETE") {
     const result = await prisma.post.delete({
