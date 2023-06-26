@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextRequest, res: NextResponse) {
   const { searchParams } = new URL(req.url ? req.url : "");
   const authorEmail = searchParams.get("authorEmail");
   try {
