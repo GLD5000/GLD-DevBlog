@@ -1,79 +1,49 @@
-import React from "react";
-import BlogPost, { PostProps } from "@/components/BlogPost";
-import { Session, getServerSession } from "next-auth";
-import prisma from "@/lib/prisma";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { PostProps } from "@/components/BlogPost";
+import { useSession } from "next-auth/react";
 import BlogPostList from "@/components/BlogPostList";
 
-const getData = async (
-  sessionData: Session
-): Promise<{
-  published: PostProps[];
-  drafts: PostProps[];
-}> => {
-  const drafts: PostProps[] = await prisma.post.findMany({
-    where: {
-      author: { email: sessionData?.user?.email },
-      published: false,
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-  const published: PostProps[] = await prisma.post.findMany({
-    where: {
-      author: { email: sessionData?.user?.email },
-      published: true,
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true },
-      },
-    },
-  });
+const Drafts = () => {
+  const { data: session } = useSession();
+  const [data, setData] = useState<{
+    drafts: PostProps[];
+    published: PostProps[];
+  }>();
 
-  return {
-    published: published,
-    drafts: drafts,
-  };
-};
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const response = await fetch(
+          `/api/get?authorEmail=${session!.user!.email}`
+        );
+        const data = await response.json();
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-const Drafts = async () => {
-  const session = await getServerSession(authOptions);
-  if (!session) {
+    if (session) {
+      getPosts();
+    }
+  }, [session]);
+  if (session === null)
     return (
-      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-        <h1 className="text-txt-main dark:text-txt-main-dk mx-auto">
-          My Blogs
-        </h1>
-        <div className="text-txt-main dark:text-txt-main-dk mx-auto">
-          You need to be authenticated to view this page.
-        </div>
-      </div>
+      <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+        You need to be authenticated to view this page.
+      </h1>
     );
-  }
-  const { drafts, published } = await getData(session);
 
   return (
     <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-      {!!published.length ? (
+      {data?.published && data?.published.length > 0 ? (
         <>
           <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
             Published
           </h1>
-          <BlogPostList arrayIn={...published} />
+          <BlogPostList arrayIn={data?.published} />
         </>
       ) : (
         <h2 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
@@ -81,12 +51,12 @@ const Drafts = async () => {
         </h2>
       )}
 
-      {!!drafts.length ? (
+      {data?.drafts && data?.drafts.length > 0 ? (
         <>
           <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
             Drafts
           </h1>
-          <BlogPostList arrayIn={...drafts} />
+          <BlogPostList arrayIn={data?.drafts} />
         </>
       ) : (
         <h2 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
