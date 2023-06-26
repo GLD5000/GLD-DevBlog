@@ -9,6 +9,8 @@ import SvgButtonNew from "@/elements/SvgButtonNew";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/readTime";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function getTagButtons(
   tags: string[] | undefined,
@@ -55,6 +57,7 @@ export default function InputForm({
       return newTags;
     });
   }
+  const post = {content, title};
 
   const tagButtons = getTagButtons(tags, closeTag);
 
@@ -97,7 +100,7 @@ export default function InputForm({
     }
   };
 
-  return (
+  return (<>
     <form
       onSubmit={submitData}
       className="flex w-full max-w-body mx-auto gap-4 flex-col p-4"
@@ -179,5 +182,21 @@ export default function InputForm({
         </Link>
       </div>
     </form>
+    <div className="bg-bg-var dark:bg-bg-var-dk p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk">
+
+<h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center">
+  {post.title ? post.title : `no title`}
+</h1>
+{post.content ? (
+  <ReactMarkdown
+    className="my-6 w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  "
+    remarkPlugins={[remarkGfm]}
+  >
+    {post.content}
+  </ReactMarkdown>
+) : null}
+</div>
+
+  </>
   );
 }
