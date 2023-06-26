@@ -1,8 +1,7 @@
 export const revalidate = 86400;
 import prisma from "@/lib/prisma";
-import BlogPost, { PostProps } from "@/components/BlogPost";
+import  { PostProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
-import { Session } from "next-auth";
 
 const getData = async (): Promise<{
   props: PostProps[];
