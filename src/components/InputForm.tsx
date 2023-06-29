@@ -8,7 +8,7 @@ import PaperPlaneSvg from "@/assets/icons/PaperPlaneSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
-import getReadTime from "@/utilities/readTime";
+import getReadTime from "@/utilities/number/readTime";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 

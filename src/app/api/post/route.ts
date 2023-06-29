@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "../../../lib/prisma";
-import makeNewTag from "@/utilities/newTagMaker";
+import makeNewTag from "@/utilities/colour/newTagMaker";
 
 // POST /api/post
 // Required fields in body: title
