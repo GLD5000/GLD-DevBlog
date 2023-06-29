@@ -9,7 +9,7 @@ import Image from "next/image";
 export interface PostProps extends Post {
   author: { name: string | null } | null;
   tags: {
-    tag: Tag | null;
+    tag: Tag;
   }[];
 }
 
@@ -19,20 +19,15 @@ export interface PostEmailProps extends Post {
 
 const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
+  const title = post!.title;
+  const readTime = post!.readTime;
+
   const postId = post.id;
   const updated = new Date(post.updatedAt);
   const router = useRouter();
-  const tagNames = post.tags
-    .map((tag) => {
-      if (!!!tag.tag) return null;
-      const tagObject = tag.tag;
-      return tagObject.name;
-    })
-    .join(",");
-  const sourceImage =
-    !Array.isArray(tagNames) || tagNames.length < 3
-      ? `https://source.unsplash.com/random/1000x400/?${tagNames},random`
-      : `https://source.unsplash.com/random/1000x400/?${tagNames}`;
+  const tags = post!.tags;
+  const gradientStyle = getGradient(tags);
+  const sourceImage = '/Bokeh.svg';
   return (
     <div className="mx-auto shadow-lg dark:drop-shadow-post-dk  w-full bg-bg-var dark:bg-bg-var-dk rounded  grid gap-2">
       <button
@@ -43,28 +38,43 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
         <Image
           width={1000}
           height={400}
+          style={gradientStyle}
           className="my-0 rounded-t"
           src={sourceImage}
           alt={"Tech Image"}
         />
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap ml-auto p-2 text-txt-mid dark:text-txt-mid-dk">
           <small className="font-bold p-2">{`${authorName}`}</small>
           <small className="p-2">
             {updated.toLocaleDateString("en-GB", { dateStyle: "long" })}
           </small>  
           <small className="p-2">
-            {`${post.readTime} min read`}
+            {`${readTime} min read`}
           </small>
         </div>
-        <h1 className="text-inherit break-words break-all text-center p-2">
-          {post.title}
+        <h1 className="text-inherit break-words break-all text-center p-4">
+          {title}
         </h1>
       </button>
-      {!!post.tags.length && !!post.tags ? (
-        <TagSet tagsObject={post.tags} />
+      {!!tags.length && !!tags ? (
+        <TagSet tagsObject={tags} />
       ) : null}
     </div>
   );
 };
 
 export default BlogPost;
+
+function getGradient(tags: {
+  tag: Tag;
+}[]) {
+  if (!!!tags.length) return {background: `linear-gradient(10deg, #934, #756)`}
+const coloursString =  tags
+  .map((tag) => {
+    if (!!!tag.tag) return null;
+    const tagObject = tag.tag;
+    return tagObject.backgroundColour;
+  }).join(',')
+  ;
+  return {background: `linear-gradient(90deg, #fff5, #fff0, #fff0, #fff0, #fff5), linear-gradient(#fff5, #fff0, #fff0, #fff0, #fff5), linear-gradient(35deg, ${coloursString})`};
+}
