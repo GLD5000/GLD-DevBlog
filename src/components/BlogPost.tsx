@@ -5,7 +5,7 @@ import { Post, Tag } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import TagSet from "./TagSet";
 import Image from "next/image";
-import getGradient from "@/utilities/getGradient";
+import getGradient from "@/utilities/colour/getGradient";
 
 export interface PostProps extends Post {
   author: { name: string | null } | null;

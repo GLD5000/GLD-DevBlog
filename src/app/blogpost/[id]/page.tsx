@@ -10,7 +10,7 @@ import TagSet from "@/components/TagSet";
 import EditButton from "@/components/EditButton";
 import Image from "next/image";
 import { Tag } from "@prisma/client";
-import getGradient from "@/utilities/getGradient";
+import getGradient from "@/utilities/colour/getGradient";
 
 const getData = async (idIn: string) => {
   const feed = await prisma.post.findFirst({
