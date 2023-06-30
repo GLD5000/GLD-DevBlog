@@ -174,6 +174,7 @@ export const autoContrast = {
   },
   adjustLuminanceFineHsl(originalHsl: number[], targetLuminance: number) {
     const originalLuminance = luminance.convertHslToLuminance(originalHsl);
+    console.log('originalLuminance:', originalLuminance);
     const targetContrast = contrast.getContrastRatioFloat([targetLuminance, originalLuminance]);
 
     const originalDirection = originalLuminance < targetLuminance ? 'up' : 'down';
@@ -192,7 +193,7 @@ export const autoContrast = {
     let changesMultipier = 1;
     let inRightDirection = false;
 
-    while (loopLimiter < loopLimit && equal === false && outOfBounds < 3) {
+    while (loopLimiter < loopLimit && equal === false && outOfBounds < 10) {
       const increment = directionUp ? changesMultipier * startIncrement : changesMultipier * startIncrement * -1;
       loopLimiter += 1;
       currentHsl = autoContrast.incrementLuminanceHsl(currentHsl, increment);

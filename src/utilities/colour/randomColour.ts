@@ -39,7 +39,10 @@ export default function getRandomColour(type?:string) {
     'dark': [4.7, 9.9] 
   }
   const randomHslArray = randomColour.makeRandomHslSafer();
+  console.log('randomHslArray:', randomHslArray);
   const luminance = getRandomNumberBetween(luminanceLookup[type]||[17.6, 18.1],2)
+  console.log('luminance:', luminance);
   const constrainedHslArray = setToTargetLuminanceHsl(randomHslArray,luminance);
+  console.log('constrainedHslArray:', constrainedHslArray);
   return colourSpace.convertHslArrayToHex(constrainedHslArray.resultingHsl);
 }

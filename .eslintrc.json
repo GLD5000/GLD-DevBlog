@@ -1,6 +1,10 @@
 {
-  "extends": "next/core-web-vitals",
-  "rules":{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ],
+  "rules": {
     "@next/next/no-img-element": "off"
   }
 }

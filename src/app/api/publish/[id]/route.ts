@@ -1,4 +1,4 @@
-import prisma from "../../../../lib/prisma";
+import prisma from "@/lib/prisma";
 // PUBLISH /api/publish/:id
 async function handler(req: Request,context: {[key:string]: {[key:string]: string}}) {
   const postId = context.params.id;
