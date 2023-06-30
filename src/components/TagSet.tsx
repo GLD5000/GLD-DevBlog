@@ -25,9 +25,9 @@ function getArrayTags(
         <style jsx>
           {`
             button:hover, button:focus {
-              color: ${tagObject.textColour};
+              color: #000;
               background-color: ${tagObject.backgroundColour};
-              border-color: ${tagObject.textColour};
+              border-color: #000;
             }
           `}
         </style>
