@@ -41,7 +41,7 @@ export const luminance = {
   constrainDecimal(value: number) {
     return Math.min(1, Math.max(0, value));
   },
-  convertLuminanceToSrgb(luminanceIn: number) {
+  convertLumToSrgbGreyscale(luminanceIn: number) {
     const constrainedLuminance = luminance.constrainDecimal(luminanceIn);
     const luminanceThreshold = 0.04045 / 12.92;
     const luminanceAboveThreshold = constrainedLuminance > luminanceThreshold;
@@ -53,12 +53,12 @@ export const luminance = {
     return [srgbDecimal, srgbDecimal, srgbDecimal];
   },
   convertLuminanceToRgb(luminanceIn: number) {
-    return luminance.convertLuminanceToSrgb(luminanceIn).map((x) => x * 255);
+    return luminance.convertLumToSrgbGreyscale(luminanceIn).map((x) => x * 255);
   },
 
   convertLuminanceToHex(luminanceIn: number) {
     return colourSpace.convertSrgbToHex(
-      luminance.convertLuminanceToSrgb(luminanceIn)
+      luminance.convertLumToSrgbGreyscale(luminanceIn)
     );
   },
   convertHexToLuminance(hex: string) {

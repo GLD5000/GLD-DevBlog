@@ -34,9 +34,9 @@ export default function getRandomColour(type?:string) {
     return randomHex;
   }
   const luminanceLookup: {[key:string]: number[]} = {
-    'mid': [17.6, 18.1],
-    'light': [30.1, 50.2],
-    'dark': [4.7, 9.9] 
+    'mid': [.176, .181],
+    'light': [.301, .502],
+    'dark': [.047, .099] 
   }
   const randomHslArray = randomColour.makeRandomHslSafer();
   console.log('randomHslArray:', randomHslArray);
