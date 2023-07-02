@@ -44,26 +44,29 @@ export function luminanceMatcherHsl(
     // lumLogger.push(currentRl);
     isMatch = checkForMatch(targetRl, currentRl, isMatch); // check for a relative luminance match
     if (isMatch) {
-      console.log("Loops: ",i);
+      // console.log("Loops: ",i);
       break;
     }
     ({ isCurrentDirectionUp, overshoots } = handleDirectionChanges(isMatch, isCurrentDirectionUp, currentRl, targetRl, overshoots));
   }
   // console.log('base:', base);
   // console.log("loopCounter:", loopCounter);
-  if (!isMatch) {
+  // if (!isMatch) {
     // console.log('base:', base);
     // console.log('overshoots:', overshoots);
     // console.log('currentRl:', currentRl);
-    console.log('originalHsl:',   originalHsl);
-    console.log('targetRl:',   targetRl);
-    console.log('Difference:',targetRl- currentRl);
+    // console.log('originalHsl:',   originalHsl);
+    // console.log('targetRl:',   targetRl);
+    // console.log('Difference:',targetRl- currentRl);
     // console.log('lumLogger:', lumLogger);
     // console.log('incrementLogger:', incrementLogger);
-  }
+  // }
   //loop end
-
-  return isMatch;
+  const returnObject = {
+    hslArray: [hue, sat, currentLum],
+    currentRl
+  };
+  return returnObject;
 }
 function handleDirectionChanges(isMatch: boolean, isCurrentDirectionUp: boolean, currentRl: number, targetRl: number, overshoots: number) {
   if (isMatch === false) {
