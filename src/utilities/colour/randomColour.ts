@@ -34,15 +34,15 @@ export default function getRandomColour(type?:string) {
     return randomHex;
   }
   const luminanceLookup: {[key:string]: number[]} = {
-    'mid': [.176, .181],
-    'light': [.301, .502],
-    'dark': [.047, .099] 
+    'mid': [0.176, 0.181],
+    'light': [0.301, 0.502],
+    'dark': [0.047, 0.099] 
   }
   const randomHslArray = randomColour.makeRandomHslSafer();
-  console.log('randomHslArray:', randomHslArray);
-  const luminance = getRandomNumberBetween(luminanceLookup[type]||[17.6, 18.1],2)
-  console.log('luminance:', luminance);
+  // console.log('randomHslArray:', randomHslArray);
+  const luminance = getRandomNumberBetween(luminanceLookup[type]||[0.176, 0.181],3)
+  // console.log('luminance:', luminance);
   const constrainedHslArray = setToTargetLuminanceHsl(randomHslArray,luminance);
-  console.log('constrainedHslArray:', constrainedHslArray);
+  // console.log('constrainedHslArray:', constrainedHslArray);
   return colourSpace.convertHslArrayToHex(constrainedHslArray.resultingHsl);
 }

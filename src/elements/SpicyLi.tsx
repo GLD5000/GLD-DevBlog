@@ -1,5 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import SvgButtonNew from "./SvgButtonNew";
 import CloseSvg from "@/assets/icons/CloseSvg";
+import getRandomColour from "@/utilities/colour/randomColour";
 
 export default function SpicyLi({
   content,
@@ -12,14 +16,18 @@ export default function SpicyLi({
   id: string;
   closeFunction: (tagValue: string) => void;
 }) {
+  const [colour, setColour] = useState(getRandomColour("mid"));
   return (
-    <li id={id} className={className}>
-      <span
+    <li id={id} className={className} style={{ backgroundColor: colour }}>
+      <button
         id={`${id}-tag-btn`}
-        className="m-0 h-full block w-full rounded-r-none p-1  "
+        className="m-0 h-full block w-full rounded-r-none p-1"
+        onClick={() => {
+          setColour(getRandomColour("mid"));
+        }}
       >
         {content.length > 15 ? `${content.slice(0, 12)}...` : content}
-      </span>
+      </button>
 
       <SvgButtonNew
         clickFunction={(e) => {

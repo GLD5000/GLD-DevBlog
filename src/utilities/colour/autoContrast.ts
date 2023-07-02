@@ -265,7 +265,7 @@ export const autoContrast = {
   },
   adjustLuminanceFineHsl(originalHsl: number[], targetLuminance: number) {
     const originalLuminance = luminance.convertHslToLuminance(originalHsl);
-    console.log("originalLuminance:", originalLuminance);
+    // console.log("originalLuminance:", originalLuminance);
     const targetContrast = contrast.getContrastRatioFloat([
       targetLuminance,
       originalLuminance,
@@ -340,6 +340,7 @@ export const autoContrast = {
       resultingContrastRatio,
       targetContrast
     );
+    console.log('currentLuminance:', currentLuminance);
     if (resultsAreGood)
       return {
         resultingContrastRatio,

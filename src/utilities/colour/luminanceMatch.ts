@@ -1,387 +1,124 @@
 import { luminance } from "./luminance";
 import { colourSpace } from "./colourSpace";
-import { contrast } from "./contrastRatio";
 
-export const luminanceMatch = {
-  getIncreasedLuminance(originalLuminance: number, targetContrast: number) {
-    return Math.min(
-      1,
-      targetContrast * 1.000000001 * (originalLuminance + 0.05) - 0.05
-    );
-  },
-  getDecreasedLuminance(originalLuminance: number, targetContrast: number) {
-    return Math.max(
-      0,
-      (-0.05 * targetContrast + originalLuminance + 0.05) / targetContrast
-    );
-  },
-  luminanceToLinear(luminanceIn: number) {
-    return Math.min(1, Math.max(0, 1.055 * luminanceIn ** (1 / 2.4) - 0.055));
-  },
-  getLinearRatio(target: number, original: number, weighting = 1) {
-    if (weighting === 1) return target / original;
-
-    const unweightedRatio = target / original;
-    const greaterThanOne = unweightedRatio > 1;
-    if (greaterThanOne) {
-      return (unweightedRatio - 1) * weighting + 1;
-    }
-
-    return 1 - (1 - unweightedRatio) * weighting;
-  },
-  setToTargetLuminanceGreyScale(
-    originalLuminance: number,
-    targetLuminance: number,
-    targetCr: number
-  ) {
-    const resultingSrgb = luminance.convertLumToSrgbGreyscale(targetLuminance);
-    const resultingHex = colourSpace.convertSrgbToHex(resultingSrgb);
-    const resultingLuminance = luminance.convertSrgbToLuminance(resultingSrgb);
-    const resultingContrastRatio = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      resultingLuminance,
-    ]);
-    const resultsAreGood = luminanceMatch.testResults(
-      resultingHex,
-      resultingContrastRatio,
-      targetCr
-    );
-    if (resultsAreGood) return { resultingHex, resultingContrastRatio };
-    return luminanceMatch.adjustLuminanceFine(
-      targetCr,
-      originalLuminance,
-      targetLuminance,
-      resultingSrgb
-    );
-  },
-  multiplyLuminanceSrgb(array: Array<number>, factor: number) {
-    const hslArray = colourSpace.convertSrgbToHslArray(array);
-    hslArray[2] = Math.max(0, Math.min(100, hslArray[2] * factor));
-    return colourSpace.convertHslArrayToSrgb(hslArray);
-  },
-
-  adjustLuminanceSrgb(array: Array<number>, increment: number) {
-    const hslArray = colourSpace.convertSrgbToHslArray(array);
-    hslArray[2] = Math.max(0, Math.min(100, hslArray[2] + increment));
-    return colourSpace.convertHslArrayToSrgb(hslArray);
-  },
-
-  getResults(resultingSrgb: number[], originalLuminance: number) {
-    const resultingHex = colourSpace.convertSrgbToHex(resultingSrgb);
-    const resultingLuminance = luminance.convertSrgbToLuminance(resultingSrgb);
-    const resultingContrastRatio = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      resultingLuminance,
-    ]);
-    return { resultingContrastRatio, resultingHex };
-  },
-
-  multiplySrgbRatio(originalSrgb: number[], linearRatio: number) {
-    return originalSrgb.map((x) => {
-      if (x > 0) return Math.max(0, Math.min(1, x * linearRatio));
-      return x;
-    });
-  },
-  getResultingSrgb(
-    originalLuminance: number,
-    targetLuminance: number,
-    originalSrgb: number[]
-  ) {
-    const linearRatio = luminanceMatch.luminancesToLinearRatio(
-      originalLuminance,
-      targetLuminance
-    );
-    const resultingSrgb = luminanceMatch.multiplySrgbRatio(
-      originalSrgb,
-      linearRatio
-    );
-    return resultingSrgb;
-  },
-
-  luminancesToLinearRatio(
-    originalLuminance: number,
-    targetLuminance: number,
-    weighting = 1
-  ) {
-    const originalLinearLum =
-      luminanceMatch.luminanceToLinear(originalLuminance);
-    const targetLinearLum = luminanceMatch.luminanceToLinear(targetLuminance);
-    const linearRatio = luminanceMatch.getLinearRatio(
-      targetLinearLum,
-      originalLinearLum,
-      weighting
-    );
-    return linearRatio;
-  },
-
-  getLuminances(
-    originalSrgb: number[],
-    direction: string,
-    targetContrast: number
-  ) {
-    const originalLuminance = luminance.convertSrgbToLuminance(originalSrgb);
-    const targetLuminance = luminanceMatch.getTargetLuminance(
-      direction,
-      originalLuminance,
-      targetContrast
-    );
-    return { targetLuminance, originalLuminance };
-  },
-
-  getTargetLuminance(
-    direction: string,
-    originalLuminance: number,
-    targetContrast: number
-  ) {
-    return direction === "up"
-      ? luminanceMatch.getIncreasedLuminance(originalLuminance, targetContrast)
-      : luminanceMatch.getDecreasedLuminance(originalLuminance, targetContrast);
-  },
-  adjustLuminanceWeighted(
-    targetContrast: number,
-    originalLuminance: number,
-    targetLuminance: number,
-    resultingSrgb: number[]
-  ) {
-    const weighting = luminance.getLuminanceWeighting(resultingSrgb);
-    let loopLimiter = 0;
-    const loopLimit = 10;
-    let currentSrgb = resultingSrgb;
-    let currentLuminance = luminance.convertSrgbToLuminance(currentSrgb);
-    let currentContrast = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      currentLuminance,
-    ]);
-
-    let equal = false;
-    while (loopLimiter < loopLimit && equal === false) {
-      loopLimiter += 1;
-      const ratio = luminanceMatch.luminancesToLinearRatio(
-        currentLuminance,
-        targetLuminance,
-        weighting
-      );
-      currentSrgb = luminanceMatch.multiplyLuminanceSrgb(currentSrgb, ratio);
-      currentLuminance = luminance.convertSrgbToLuminance(currentSrgb);
-      currentContrast = contrast.getContrastRatio2Dp([
-        originalLuminance,
-        currentLuminance,
-      ]);
-
-      equal = currentContrast === targetContrast;
-    }
-    let { resultingContrastRatio, resultingHex } = luminanceMatch.getResults(
-      currentSrgb,
-      originalLuminance
-    );
-    const resultsAreGood = luminanceMatch.testResults(
-      resultingHex,
-      resultingContrastRatio,
-      targetContrast
-    );
-    if (resultsAreGood) return { resultingContrastRatio, resultingHex };
-    ({ resultingContrastRatio, resultingHex } =
-      luminanceMatch.adjustLuminanceFine(
-        targetContrast,
-        originalLuminance,
-        targetLuminance,
-        currentSrgb
-      ));
-    return { resultingContrastRatio, resultingHex };
-  },
-  srgbIsWithinLimit(decimalArray: number[]) {
-    const total = decimalArray.reduce((a: number, b: number) => a + b);
-    return total > 0 && total < 3;
-  },
-  hslIsWithinLimit(arrayIn: number[]) {
-    return arrayIn[2] > 0 && arrayIn[2] < 100;
-  },
-  adjustLuminanceFine(
-    targetContrast: number,
-    originalLuminance: number,
-    targetLuminance: number,
-    resultingSrgb: number[]
-  ) {
-    const originalDirection =
-      originalLuminance < targetLuminance ? "up" : "down";
-    let loopLimiter = 0;
-    const loopLimit = 25;
-    let currentSrgb = resultingSrgb;
-    let currentLuminance = luminance.convertSrgbToLuminance(currentSrgb);
-    let currentContrast = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      currentLuminance,
-    ]);
-    let equal = false;
-
-    let directionUp = currentContrast < targetContrast;
-    const startIncrement = 10;
-    let changesOfDirection = 0;
-    let outOfBounds = 0;
-    let changesMultipier = 1;
-    let inRightDirection = false;
-
-    while (loopLimiter < loopLimit && equal === false && outOfBounds < 3) {
-      const increment = directionUp
-        ? changesMultipier * startIncrement
-        : changesMultipier * startIncrement * -1;
-      loopLimiter += 1;
-      currentSrgb = luminanceMatch.adjustLuminanceSrgb(currentSrgb, increment);
-      currentLuminance = luminance.convertSrgbToLuminance(currentSrgb);
-      currentContrast = contrast.getContrastRatio2Dp([
-        originalLuminance,
-        currentLuminance,
-      ]);
-      inRightDirection =
-        originalDirection === "up"
-          ? currentLuminance > originalLuminance
-          : currentLuminance < originalLuminance;
-      equal = inRightDirection && targetContrast === currentContrast;
-      if (directionUp !== currentLuminance < targetLuminance) {
-        directionUp = !directionUp;
-        changesOfDirection += 1;
-      }
-      changesMultipier = 1 / Math.max(1, 2 ** changesOfDirection);
-      const inBounds = luminanceMatch.srgbIsWithinLimit(currentSrgb);
-      if (inBounds) {
-        outOfBounds = 0;
-      }
-
-      if (!inBounds) {
-        outOfBounds += 1;
-      }
-    }
-    // if (loopLimiter === loopLimit) console.log('loopLimiter:', loopLimiter);
-    const { resultingContrastRatio, resultingHex } = luminanceMatch.getResults(
-      currentSrgb,
-      originalLuminance
-    );
-    const resultsAreGood = luminanceMatch.testResults(
-      resultingHex,
-      resultingContrastRatio,
-      targetContrast
-    );
-    if (resultsAreGood) return { resultingContrastRatio, resultingHex };
-    return { resultingContrastRatio, resultingHex, resultsAreGood };
-  },
-  getDirectionFromLuminances(startLuminance: number, endLuminance: number){
-    return startLuminance < endLuminance ? "up" : "down";
-  },
-  luminanceMatcherHsl(originalHsl: number[], targetLuminanceDecimal: number) {
-    const originalLuminance = luminance.convertHslToLuminance(originalHsl);
-    console.log('originalLuminance:', originalLuminance);
-    const originalDirection = luminanceMatch.getDirectionFromLuminances(originalLuminance, targetLuminanceDecimal);
-    let currentLum = luminance.convertLumToSrgbGreyscale(targetLuminanceDecimal)[2];
-    const [hue,sat] = originalHsl;
-    let currentRelativeLum = luminance.convertHslToLuminance([hue,sat,currentLum]);
-    return true;
-
-  },
-  adjustLuminanceFineHsl(originalHsl: number[], targetLuminance: number) {
-    const originalLuminance = luminance.convertHslToLuminance(originalHsl);
-    console.log("originalLuminance:", originalLuminance);
-    const targetContrast = contrast.getContrastRatioFloat([
-      targetLuminance,
-      originalLuminance,
-    ]);
-
-    const originalDirection =
-      originalLuminance < targetLuminance ? "up" : "down";
-    let loopLimiter = 0;
-    const loopLimit = 20;
-    let currentHsl = originalHsl;
-    let currentLuminance = originalLuminance;
-    let currentContrast = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      currentLuminance,
-    ]);
-    let equal = false;
-
-    let directionUp = currentContrast < targetContrast;
-    const targetContrast2dp = Math.floor(targetContrast * 100) / 100;
-    const startIncrement = 10;
-    let changesOfDirection = 0;
-    let outOfBounds = 0;
-    let changesMultipier = 1;
-    let inRightDirection = false;
-
-    while (loopLimiter < loopLimit && equal === false && outOfBounds < 10) {
-      const increment = directionUp
-        ? changesMultipier * startIncrement
-        : changesMultipier * startIncrement * -1;
-      loopLimiter += 1;
-      currentHsl = luminanceMatch.incrementLuminanceHsl(currentHsl, increment);
-      currentLuminance = luminance.convertHslToLuminance(currentHsl);
-      currentContrast = contrast.getContrastRatio2Dp([
-        originalLuminance,
-        currentLuminance,
-      ]);
-      inRightDirection =
-        originalDirection === "up"
-          ? currentLuminance > originalLuminance
-          : currentLuminance < originalLuminance;
-      equal = inRightDirection && currentContrast === targetContrast2dp;
-      // if (equal === true) console.log(inRightDirection, currentContrast, targetContrast2dp);
-      if (directionUp !== currentLuminance < targetLuminance) {
-        directionUp = !directionUp;
-        changesOfDirection += 1;
-      }
-      changesMultipier = 1 / Math.max(1, 2 ** changesOfDirection);
-      const inBounds = luminanceMatch.hslIsWithinLimit(currentHsl);
-      if (inBounds) {
-        outOfBounds = 0;
-      }
-
-      if (!inBounds) {
-        outOfBounds += 1;
-      }
-    }
-    const resultingContrastRatio = contrast.getContrastRatio2Dp([
-      originalLuminance,
-      luminance.convertHslToLuminance(currentHsl),
-    ]);
-    if (loopLimiter === loopLimit)
-      console.log(
-        "loopLimiter:",
-        loopLimiter,
-        resultingContrastRatio,
-        targetContrast2dp,
-        inRightDirection,
-        equal
-      );
-    const resultsAreGood = luminanceMatch.testResultsHsl(
-      currentHsl,
-      resultingContrastRatio,
-      targetContrast
-    );
-    if (resultsAreGood)
-      return {
-        resultingContrastRatio,
-        resultingHsl: currentHsl,
-        resultsAreGood,
-      };
-    return { resultingContrastRatio, resultingHsl: currentHsl, resultsAreGood };
-  },
-  testResults(hex: string, contrastA: number, contrastB: number) {
-    const boolean =
-      hex === "#000000" || hex === "#ffffff" || contrastA === contrastB;
-    return boolean;
-  },
-  testResultsHsl(hsl: number[], contrastA: number, contrastB: number) {
-    const boolean = hsl[2] === 0 || hsl[2] === 100 || contrastA === contrastB;
-    return boolean;
-  },
-
-  incrementLuminanceHsl(hslArray: Array<number>, increment: number, min = 0, max = 100) {
-    const copy = [...hslArray];
-    copy[2] = Math.max(min, Math.min(max, hslArray[2] + increment));
-    return copy;
-  },
-};
-
-export function setToTargetLuminanceHsl(
+export function luminanceMatcherHsl(
   originalHsl: number[],
-  targetLuminance: number
+  targetRl: number
 ) {
-  return luminanceMatch.adjustLuminanceFineHsl(originalHsl, targetLuminance);
+  const originalRl = luminance.convertHslToLuminance(originalHsl);
+  // console.log("originalRl:", originalRl);
+  const isOriginalDirectionUp = getDirectionFromLuminances(
+    originalRl,
+    targetRl
+  );
+  const { maxLum, minLum } = getMinMaxLum(isOriginalDirectionUp, originalHsl);
+  const [hue, sat] = originalHsl;
+  let currentLum = getInitialLum(targetRl);
+  // console.log('currentLum after greyscale:', currentLum);
+  let currentRl = getInitialRl(hue, sat, currentLum);
+  let isMatch = currentRl === targetRl;
+  let isCurrentDirectionUp = getDirectionFromLuminances(
+    currentRl,
+    targetRl
+  );
+  const startIncrement = 10;
+  let overshoots = 0;
+  //loop start
+  // console.log('currentRl:', currentRl);
+  // console.log('isCurrentDirectionUp:', isCurrentDirectionUp);
+  // const lumLogger = [];
+  // const incrementLogger = [];
+  const base = 2.775;
+  const loopLimit = 24;
+  for (let i = 0; i < loopLimit; i++){
+
+    const multiplier = 1 / Math.max(1, base ** overshoots);
+    const increment = calcIncrement(isCurrentDirectionUp, startIncrement, multiplier); 
+    // incrementLogger.push(increment);
+    currentLum = applyIncrement(currentLum, maxLum, minLum, increment); //increment / decrement
+    currentRl = luminance.convertHslToLuminance([
+      hue,
+      sat,
+      currentLum,
+    ]); // check Relative luminance
+    // lumLogger.push(currentRl);
+    isMatch = checkForMatch(targetRl, currentRl, isMatch); // check for a relative luminance match
+    if (isMatch) {
+      console.log("Loops: ",i);
+      break;
+    }
+    ({ isCurrentDirectionUp, overshoots } = handleDirectionChanges(isMatch, isCurrentDirectionUp, currentRl, targetRl, overshoots));
+  }
+  // console.log('base:', base);
+  // console.log("loopCounter:", loopCounter);
+  if (!isMatch) {
+    // console.log('base:', base);
+    // console.log('overshoots:', overshoots);
+    // console.log('currentRl:', currentRl);
+    console.log('originalHsl:',   originalHsl);
+    console.log('targetRl:',   targetRl);
+    console.log('Difference:',targetRl- currentRl);
+    // console.log('lumLogger:', lumLogger);
+    // console.log('incrementLogger:', incrementLogger);
+  }
+  //loop end
+
+  return isMatch;
+}
+function handleDirectionChanges(isMatch: boolean, isCurrentDirectionUp: boolean, currentRl: number, targetRl: number, overshoots: number) {
+  if (isMatch === false) {
+    //Check for over shoot / change of direction
+    const inWrongDirection = isCurrentDirectionUp !== currentRl < targetRl;
+    if (inWrongDirection) {
+      // Update direction / changes multiplier
+      overshoots += 1;
+      isCurrentDirectionUp = !isCurrentDirectionUp;
+    }
+    // increment loop counter
+  }
+  return { isCurrentDirectionUp, overshoots };
+}
+
+function checkForMatch(targetRl: number, currentRl: number, isMatch: boolean) {
+  const rlDifference = targetRl - currentRl;
+  isMatch = rlDifference > -0.000001 && rlDifference < 0.000001; // check for a relative luminance match
+  return isMatch;
+}
+
+function applyIncrement(currentLum: number, maxLum: number, minLum: number, increment: number) {
+  currentLum = Math.min(maxLum, Math.max(minLum, currentLum + increment)); //increment / decrement
+  return currentLum;
+}
+
+function calcIncrement(isCurrentDirectionUp: boolean, startIncrement: number, multiplier: number) {
+  return isCurrentDirectionUp
+    ? startIncrement * multiplier
+    : startIncrement * multiplier * -1;
+}
+
+function getInitialRl(hue: number, sat: number, currentLum: number) {
+  return luminance.convertHslToLuminance([
+    hue,
+    sat,
+    currentLum,
+  ]);
+}
+
+function getInitialLum(targetRl: number) {
+  return colourSpace.convertSrgbToHslArray(
+    luminance.convertLumToSrgbGreyscale(targetRl)
+  )[2];
+}
+
+function getMinMaxLum(isOriginalDirectionUp: boolean, originalHsl: number[]) {
+  const maxLum = isOriginalDirectionUp ? 100 : originalHsl[2];
+  const minLum = isOriginalDirectionUp ? originalHsl[2] : 0;
+  return { maxLum, minLum };
+}
+
+function getDirectionFromLuminances(
+  startLuminance: number,
+  endLuminance: number
+) {
+  return startLuminance < endLuminance;
 }
