@@ -101,7 +101,7 @@ export default function InputForm({
     e.preventDefault();
     const readTime = getReadTime(content);
     try {
-      const body = { title, content, publish, tags, id, readTime };
+      const body = { title, content, publish, tags: tags? Array.from(tags): undefined, id, readTime };
       await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

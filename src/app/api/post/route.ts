@@ -7,13 +7,13 @@ import makeNewTag from "@/utilities/colour/newTagMaker";
 // Required fields in body: title
 // Optional fields in body: content
 
-async function createTagOnPost(tagName: string, postId: string) {
-  const newTag = makeNewTag(tagName);
-
+async function createTagOnPost(tagArray: string[], postId: string) {
+  const newTag = makeNewTag(tagArray);
+console.log('newTag:', newTag);
   const tagResult = await prisma.tag.upsert({
-    where: { name: tagName.trim() },
+    where: { name: newTag.name },
     create: { ...newTag },
-    update: {},
+    update: {backgroundColour: newTag.backgroundColour},
   });
   await prisma.tagOnPosts.upsert({
     where: { unique_post_tag: { postId, tagId: tagResult.id } },
@@ -23,9 +23,9 @@ async function createTagOnPost(tagName: string, postId: string) {
 }
 
 
-async function addTags(tags: string[], postId: string) {
-  await cleanUpTags(postId, tags);
-  tags.forEach(async (tag) => {
+async function addTags(tagsMap: Map<string,string>, postId: string) {
+  await cleanUpTags(postId, tagsMap);
+  Array.from(tagsMap).forEach(async (tag) => {
     await createTagOnPost(tag, postId);
   });
   await deleteTagsWithEmptyTagOnPostsArray();
@@ -48,13 +48,13 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
 
 
 
-async function cleanUpTags(postId: string, tags: string[]) {
+async function cleanUpTags(postId: string, tagsMap: Map<string,string>) {
   const post = await prisma.post.findFirst({
     where: { id: postId },
     include: { tags: { select: { tag: true } } },
   });
 
-  const TagsToDelete = post?.tags.map(object => { return { name: object.tag.name, id: object.tag.id }; }).filter(tagObject => !tags.includes(tagObject.name));
+  const TagsToDelete = post?.tags.map(object => { return { name: object.tag.name, id: object.tag.id }; }).filter(tagObject => !tagsMap.has(tagObject.name));
 
   if (!!!TagsToDelete || TagsToDelete.length=== 0) return;
   
@@ -70,6 +70,7 @@ async function cleanUpTags(postId: string, tags: string[]) {
 
 async function handler(req: Request, res: Response) {
   const { title, content, publish, tags, id, readTime } = await req.json();
+  console.log('title, content, publish, tags, id, readTime:', title, content, publish, tags, id, readTime);
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = !!id
@@ -98,8 +99,8 @@ async function handler(req: Request, res: Response) {
           author: { connect: { email } },
         },
       });
-
-  if (!!tags && !!tags.length) addTags(tags, postResult.id);
+console.log('tags:', tags);
+  if (!!tags && !!tags.length) addTags(new Map(tags), postResult.id);
 
   return new Response(JSON.stringify(postResult));
 }
