@@ -54,12 +54,11 @@ export default async function Edit({ params }: { params: { id: string } }) {
     );
 
   const tagNames = !!post?.tags ? extractTagNames(post?.tags) : null;
-console.log('tagNames:', tagNames);
   return (
     <div>
       <InputForm
-        initialContent={post?.content}
-        initialTags={tagNames}
+        initialContent={post?.content|| undefined}
+        initialTags={tagNames || undefined}
         initialTitle={post?.title}
         intialId={post?.id}
       />

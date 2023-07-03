@@ -9,7 +9,6 @@ import makeNewTag from "@/utilities/colour/newTagMaker";
 
 async function createTagOnPost(tagArray: string[], postId: string) {
   const newTag = makeNewTag(tagArray);
-console.log('newTag:', newTag);
   const tagResult = await prisma.tag.upsert({
     where: { name: newTag.name },
     create: { ...newTag },
@@ -70,7 +69,6 @@ async function cleanUpTags(postId: string, tagsMap: Map<string,string>) {
 
 async function handler(req: Request, res: Response) {
   const { title, content, publish, tags, id, readTime } = await req.json();
-  console.log('title, content, publish, tags, id, readTime:', title, content, publish, tags, id, readTime);
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = !!id
@@ -99,7 +97,6 @@ async function handler(req: Request, res: Response) {
           author: { connect: { email } },
         },
       });
-console.log('tags:', tags);
   if (!!tags && !!tags.length) addTags(new Map(tags), postResult.id);
 
   return new Response(JSON.stringify(postResult));

@@ -44,6 +44,6 @@ export default function getRandomColour(type?:string) {
   const luminance = getRandomNumberBetween(luminanceLookup[type]||[0.176, 0.181],3)
   // console.log('luminance:', luminance);
   const result = luminanceMatcherHsl(randomHslArray,luminance);
-  console.log('Relativeluminance:', result.currentRl);
+  // console.log('Relativeluminance:', result.currentRl);
   return colourSpace.convertHslArrayToHex(result.hslArray);
 }
