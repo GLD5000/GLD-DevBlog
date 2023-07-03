@@ -11,7 +11,7 @@ async function handleClickUnpublish(
   await fetch(`/api/unpublish/${postId}`, {
     method: "POST",
   });
-  await fetch(`/api/revalidate/drafts`);
+  // await fetch(`/api/revalidate/drafts`);
   routerInstance.push("/drafts/");
 }
 export default function UnpublishButton({ postId }: { postId: string }) {

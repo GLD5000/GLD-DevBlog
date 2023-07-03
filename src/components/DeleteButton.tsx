@@ -8,7 +8,7 @@ async function handleClick(postId: string, routerInstance: AppRouterInstance) {
   await fetch(`/api/delete/${postId}`, {
     method: "DELETE",
   });
-  await fetch(`/api/revalidate/drafts`);
+  // await fetch(`/api/revalidate/drafts`);
   routerInstance.push("/drafts/");
 }
 export default function DeleteButton({ postId }: { postId: string }) {
