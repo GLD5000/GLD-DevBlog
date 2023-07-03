@@ -42,6 +42,80 @@ function getTagButtons(
     />
   ));
 }
+function formInitialiser({
+  initialTitle,
+  initialContent,
+  initialTags,
+}: {
+  initialTitle: string | undefined;
+  initialContent: string | undefined;
+  initialTags: Map<string, string> | undefined | null;
+}): FormState {
+  if (initialTitle || initialContent || initialTags) {
+    const initialObject = {
+      title: initialTitle || "",
+      content: initialContent || "",
+      publish: false,
+      tags: initialTags || undefined,
+      tagString: "",
+    };
+    return initialObject;
+  }
+  const returnedJson = localStorage.getItem("inputForm");
+
+  if (returnedJson) {
+    const returnedObj = JSON.parse(returnedJson);
+    const tagsArray = returnedObj.tags
+      ? Array.from(returnedObj.tags)
+      : undefined;
+    const tagsMap = tagsArray
+      ? new Map(tagsArray as [string, string][])
+      : undefined;
+    const initialObject = {
+      title: returnedObj.title || "",
+      content: returnedObj.content || "",
+      publish: false,
+      tags: tagsMap,
+      tagString: returnedObj.tagString || "",
+    };
+    return initialObject;
+  }
+  const initialObject = {
+    title: "",
+    content: "",
+    publish: false,
+    tags: undefined,
+    tagString: "",
+  };
+  return initialObject;
+}
+
+function formReducer(
+  state: FormState,
+  action: {
+    type?: string;
+    payload: FormPayload;
+  }
+) {
+  switch (action.type) {
+    default: {
+      const returnObject = { ...state, ...action.payload };
+      if (action.payload) {
+        localStorage.setItem(
+          "inputForm",
+          JSON.stringify({
+            title: returnObject.title,
+            content: returnObject.content,
+            publish: returnObject.publish,
+            tagString: returnObject.tagString,
+            tags: returnObject.tags ? Array.from(returnObject.tags) : undefined,
+          })
+        );
+      }
+      return returnObject;
+    }
+  }
+}
 
 export default function InputForm({
   initialTitle = undefined,
@@ -55,171 +129,19 @@ export default function InputForm({
   intialId?: string;
 }) {
   const Router = useRouter();
-
-
+  const id = intialId || undefined;
   const [formState, formDispatch] = useReducer(
     formReducer,
     { initialTitle, initialContent, initialTags },
     formInitialiser
   );
-
-  function formInitialiser({
-    initialTitle,
-    initialContent,
-    initialTags,
-  }: {
-    initialTitle: string | undefined;
-    initialContent: string | undefined;
-    initialTags: Map<string, string> | undefined | null;
-  }): FormState {
-    const returnedJson = localStorage.getItem("inputForm");
-    if (!!!returnedJson) {
-      const initialObject = {
-        title: initialTitle || "",
-        content: initialContent || "",
-        publish: false,
-        tags: initialTags || undefined,
-        tagString: "",
-      };
-      return initialObject;
-    }
-
-    const returnedObj = JSON.parse(returnedJson);
-    const tagsArray = returnedObj.tags
-      ? Array.from(returnedObj.tags)
-      : undefined;
-    const tagsMap =
-      initialTags || tagsArray
-        ? new Map(tagsArray as [string, string][])
-        : undefined;
-    const initialObject = {
-      title: initialTitle || returnedObj.title || "",
-      content: initialContent || returnedObj.content || "",
-      publish: false,
-      tags: tagsMap,
-      tagString: returnedObj.tagString || "",
-    };
-    return initialObject;
-  }
-
-  function formReducer(
-    state: FormState,
-    action: {
-      type?: string;
-      payload: FormPayload;
-    }
-  ) {
-    switch (action.type) {
-      default: {
-        
-        const returnObject = { ...state, ...action.payload };
-        if (action.payload){
-                localStorage.setItem(
-        "inputForm",
-        JSON.stringify({
-          title: returnObject.title,
-          content: returnObject.content,
-          publish:returnObject.publish,
-          tagString:returnObject.tagString,
-          tags: returnObject.tags ? Array.from(returnObject.tags) : undefined,
-        })
-      );
-        }
-        return returnObject;
-      }
-    }
-  }
-
-  const id = intialId || undefined;
-  // useEffect(() => {
-  //   let run = true;
-  //   let hasContent =
-  //     title.length > 0 || content.length > 0 || (!!tags && tags.size > 0);
-
-  //   if (run && hasContent) {
-  //     localStorage.setItem(
-  //       "inputForm",
-  //       JSON.stringify({
-  //         title,
-  //         content,
-  //         publish,
-  //         tags: tags ? Array.from(tags) : undefined,
-  //       })
-  //     );
-  //   } else if (run && !hasContent) {
-  //     const returnedJson = localStorage.getItem("inputForm");
-  //     if (!!!returnedJson) return;
-  //     const returnedObj = JSON.parse(returnedJson);
-  //   }
-  //   return () => {
-  //     run = false;
-  //   };
-  // }, [
-  //   title,
-  //   content,
-  //   publish,
-  //   tags,
-  //   setTitle,
-  //   setContent,
-  //   setPublish,
-  //   setTags,
-  // ]);
-
-  function closeTag(tagValue: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.delete(tagValue);
-    formDispatch({ payload: { tags: newTags } });
-  }
-  function recolourTag(tagValue: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.set(tagValue, getRandomColour("mid"));
-    formDispatch({ payload: { tags: newTags } });
-  }
-  const post = { content: formState.content, title: formState.title };
-
   const tagButtons = getTagButtons(formState.tags, closeTag, recolourTag);
-
-  function pushToTags(stringIn: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.set(stringIn.trim(), getRandomColour("mid"));
-    formDispatch({ payload: { tags: newTags, tagString: "" } });
+  let title = formState.title;
+  let subtitle = undefined;
+  const hasSubtitle = title.includes(":");
+  if (hasSubtitle) {
+    [title, subtitle] = title.split(":");
   }
-
-  function handleTags(currentValue: string) {
-    if (
-      /[ ,.]/.test(`${currentValue.at(-1)}`) &&
-      currentValue.length > 1 &&
-      (formState.tags === undefined || formState.tags.size < 5)
-    ) {
-      pushToTags(currentValue.slice(0, -1));
-      return;
-    }
-    formDispatch({ payload: { tagString: currentValue } });
-  }
-
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    const readTime = getReadTime(formState.content);
-    try {
-      const body = {
-        content: formState.content,
-        title: formState.title,
-        publish: formState.publish,
-        tags: formState.tags ? Array.from(formState.tags) : undefined,
-        id,
-        readTime,
-      };
-      await fetch("/api/post/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      Router.push("/drafts/");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
       <form
@@ -273,7 +195,7 @@ export default function InputForm({
             textElement={<span>Save</span>}
             showTextIn={true}
             clickFunction={() => {
-              formDispatch({ payload: { publish: false } })
+              formDispatch({ payload: { publish: false } });
             }}
             className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
           />
@@ -288,23 +210,30 @@ export default function InputForm({
             textElement={<span>Publish</span>}
             showTextIn={true}
             clickFunction={() => {
-              formDispatch({ payload: { publish: true } })
+              formDispatch({ payload: { publish: true } });
             }}
             className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
           />
 
-<SvgButtonNew
+          <SvgButtonNew
             type="button"
             svg={
               <div className="h-8 p-[0.15rem] aspect-square">
-              <DeleteSvg />
-            </div>
+                <DeleteSvg />
+              </div>
             }
             textElement={<span>Clear</span>}
             showTextIn={true}
             clickFunction={(e) => {
               e.preventDefault();
-              formDispatch({payload:{title:'',content:'',tagString:'',tags:undefined}})
+              formDispatch({
+                payload: {
+                  title: "",
+                  content: "",
+                  tagString: "",
+                  tags: undefined,
+                },
+              });
               localStorage.clear();
             }}
             className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
@@ -313,29 +242,90 @@ export default function InputForm({
           <Link
             className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
             href="/drafts/"
-            onClick={() => {localStorage.clear()}}
+            // onClick={() => {
+            //   localStorage.clear();
+            // }}
           >
             <div className="h-8 p-[0.15rem] aspect-square">
-              <CloseSvg/>
+              <CloseSvg />
             </div>
 
-            <span>Cancel</span>
+            <span>Exit</span>
           </Link>
         </div>
       </form>
       <div className="bg-bg-var dark:bg-bg-var-dk p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk">
-        <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-all">
-          {post.title ? post.title : `no title`}
-        </h1>
-        {post.content ? (
+        {hasSubtitle ? (
+          <>
+            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              {title ? `${title}` : `no title`}
+            </h1>
+            <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              {subtitle ? subtitle : ``}
+            </h2>
+          </>
+        ) : (
+          <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            {title ? title : `no title`}
+          </h1>
+        )}
+        {formState.content ? (
           <ReactMarkdown
             className="my-6 w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  "
             remarkPlugins={[remarkGfm]}
           >
-            {post.content}
+            {formState.content}
           </ReactMarkdown>
         ) : null}
       </div>
     </>
   );
+  function closeTag(tagValue: string) {
+    const newTags = formState.tags ? new Map(formState.tags) : new Map();
+    newTags.delete(tagValue);
+    formDispatch({ payload: { tags: newTags } });
+  }
+  function recolourTag(tagValue: string) {
+    const newTags = formState.tags ? new Map(formState.tags) : new Map();
+    newTags.set(tagValue, getRandomColour("mid"));
+    formDispatch({ payload: { tags: newTags } });
+  }
+  function pushToTags(stringIn: string) {
+    const newTags = formState.tags ? new Map(formState.tags) : new Map();
+    newTags.set(stringIn.trim(), getRandomColour("mid"));
+    formDispatch({ payload: { tags: newTags, tagString: "" } });
+  }
+  function handleTags(currentValue: string) {
+    if (
+      /[ ,.]/.test(`${currentValue.at(-1)}`) &&
+      currentValue.length > 1 &&
+      (formState.tags === undefined || formState.tags.size < 5)
+    ) {
+      pushToTags(currentValue.slice(0, -1));
+      return;
+    }
+    formDispatch({ payload: { tagString: currentValue } });
+  }
+  async function submitData(e: React.SyntheticEvent) {
+    e.preventDefault();
+    const readTime = getReadTime(formState.content);
+    try {
+      const body = {
+        content: formState.content,
+        title: formState.title,
+        publish: formState.publish,
+        tags: formState.tags ? Array.from(formState.tags) : undefined,
+        id,
+        readTime,
+      };
+      await fetch("/api/post/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      Router.push("/drafts/");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }

@@ -20,7 +20,12 @@ export interface PostEmailProps extends Post {
 
 const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
-  const title = post!.title;
+  let title = post!.title;
+  let subtitle = undefined;
+  const hasSubtitle = title.includes(":");
+  if (hasSubtitle) {
+    [title, subtitle] = title.split(":");
+  }
   const readTime = post!.readTime;
 
   const postId = post.id;
@@ -28,7 +33,7 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const router = useRouter();
   const tags = post!.tags;
   const gradientStyle = getGradient(tags);
-  const sourceImage = '/Bokeh.svg';
+  const sourceImage = "/Bokeh.svg";
   return (
     <div className="mx-auto shadow-lg dark:drop-shadow-post-dk  w-full bg-bg-var dark:bg-bg-var-dk rounded  grid gap-2">
       <button
@@ -48,22 +53,27 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
           <small className="font-bold p-2">{`${authorName}`}</small>
           <small className="p-2">
             {updated.toLocaleDateString("en-GB", { dateStyle: "long" })}
-          </small>  
-          <small className="p-2">
-            {`${readTime} min read`}
           </small>
+          <small className="p-2">{`${readTime} min read`}</small>
         </div>
-        <h1 className="text-inherit break-words break-all text-center p-4">
-          {title}
-        </h1>
+        {hasSubtitle ? (
+          <>
+            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              {title ? `${title}` : `no title`}
+            </h1>
+            <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              {subtitle ? subtitle : ``}
+            </h2>
+          </>
+        ) : (
+          <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            {title ? title : `no title`}
+          </h1>
+        )}
       </button>
-      {!!tags.length && !!tags ? (
-        <TagSet tagsObject={tags} />
-      ) : null}
+      {!!tags.length && !!tags ? <TagSet tagsObject={tags} /> : null}
     </div>
   );
 };
 
 export default BlogPost;
-
-

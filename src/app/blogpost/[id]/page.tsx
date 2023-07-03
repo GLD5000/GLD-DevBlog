@@ -40,7 +40,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isPublished = post?.published;
   const isCorrectUser = session?.user?.email === post?.author?.email;
-  const title = post!.title;
+  let title = post!.title;
+  let subtitle = undefined;
+  const hasSubtitle = title.includes(":");
+  if (hasSubtitle) {
+    [title, subtitle] = title.split(":");
+  }
   const author = post!.author!.name;
   const readTime = post!.readTime;
   const content = post!.content;
@@ -79,9 +84,21 @@ export default async function Page({ params }: { params: { id: string } }) {
           alt={"Tech Image"}
         />
         <div className="p-4 mx-auto">
-          <h1 className="mx-auto my-6 w-fit text-6xl font-bold text-center">
-            {title ? title : `no title`}
-          </h1>
+          {hasSubtitle ? (
+            <>
+              <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+                {title ? `${title}` : `no title`}
+              </h1>
+              <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+                {subtitle ? subtitle : ``}
+              </h2>
+            </>
+          ) : (
+            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              {title ? title : `no title`}
+            </h1>
+          )}
+
           {!!tags.length && !!tags ? <TagSet tagsObject={tags} /> : null}
           <p className="mx-auto w-fit block">
             {updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
@@ -89,9 +106,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           <p className="font-bold block w-fit mx-auto">
             Written by {author ? `${author}` : `Unknown author`}
           </p>
-          <p className="p-2 w-fit block mx-auto">
-            {`${readTime} min read`}
-          </p>
+          <p className="p-2 w-fit block mx-auto">{`${readTime} min read`}</p>
         </div>
         {content ? (
           <ReactMarkdown
