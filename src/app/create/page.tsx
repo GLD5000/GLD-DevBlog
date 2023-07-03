@@ -7,11 +7,11 @@ export default async function Create() {
   const isCorrectUser = !!session;
   if (!isCorrectUser)
     return (
-      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-        <h1 className="text-txt-main dark:text-txt-main-dk mx-auto">
+      <div className="prose mx-auto grid gap-8 py-8 dark:prose-invert">
+        <h1 className="mx-auto text-txt-main dark:text-txt-main-dk">
           New Post
         </h1>
-        <div className="text-txt-main dark:text-txt-main-dk mx-auto">
+        <div className="mx-auto text-txt-main dark:text-txt-main-dk">
           You need to be authenticated to view this page.
         </div>
       </div>

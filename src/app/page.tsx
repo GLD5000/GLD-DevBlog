@@ -1,7 +1,7 @@
-export const revalidate = 86400;
 import prisma from "@/lib/prisma";
-import  { PostProps } from "@/components/BlogPost";
+import { PostProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
+export const revalidate = 86400;
 
 const getData = async (): Promise<{
   props: PostProps[];
@@ -30,13 +30,13 @@ const getData = async (): Promise<{
 export default async function Page() {
   const data = await getData();
   return (
-    <section className="py-10 prose dark:prose-invert mx-auto">
-      <div className="grid gap-8 py-8  mx-auto">
-        <h1 className="text-txt-main dark:text-txt-main-dk mx-auto">
+    <section className="prose mx-auto py-10 dark:prose-invert">
+      <div className="mx-auto grid gap-8  py-8">
+        <h1 className="mx-auto text-txt-main dark:text-txt-main-dk">
           Latest Blogs
         </h1>
         {data.props.length === 0 ? (
-          <div className="text-txt-main dark:text-txt-main-dk mx-auto">
+          <div className="mx-auto text-txt-main dark:text-txt-main-dk">
             Why not log in and write your own?
           </div>
         ) : null}

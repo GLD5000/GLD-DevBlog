@@ -1,4 +1,3 @@
-import DownArrowSvg from "@/assets/icons/DownArrowSvg";
 import ExpandSvg from "@/assets/icons/ExpandSvg";
 import WriteSvg from "@/assets/icons/WriteSvg";
 import { Session } from "next-auth";
@@ -26,23 +25,23 @@ export default function UserMenu({
         {session.user?.image ? (
           <div className="relative h-10 w-16 transition">
             <button
-              className="h-10 w-16 p-1 rounded items-center grid grid-cols-autoAuto dark:hover:text-txt-main dark:hover:bg-bg text-txt-main  hover:text-txt-main-dk hover:bg-bg-dk dark:text-txt-main-dk border-txt-main dark:border-txt-main-dk hover:border-txt-main-dk dark:hover:border-txt-main hover-transition focus-transition"
+              className="hover-transition focus-transition grid h-10 w-16 grid-cols-autoAuto items-center rounded border-txt-main p-1  text-txt-main hover:border-txt-main-dk hover:bg-bg-dk hover:text-txt-main-dk dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:border-txt-main dark:hover:bg-bg dark:hover:text-txt-main"
               id="user-menu-button"
               {...buttonProps}
             >
               <img
-                className="rounded-full w-8 h-8 m-auto border-2 border-inherit"
+                className="m-auto h-8 w-8 rounded-full border-2 border-inherit"
                 src={session.user.image}
                 height={32}
                 width={32}
-                alt={"User image"}
+                alt={"User"}
               />
-              <div className="h-6 p-[0.35rem] aspect-square m-auto">
+              <div className="m-auto aspect-square h-6 p-[0.35rem]">
                 <ExpandSvg />
               </div>
             </button>
             <div
-              className={`absolute rounded right-0 top-[calc(100%+0.75rem)] border-2 grid gap-2 p-2 ${
+              className={`absolute right-0 top-[calc(100%+0.75rem)] grid gap-2 rounded border-2 p-2 ${
                 isOpen ? "visible" : ""
               } ${
                 colourTheme
@@ -55,13 +54,13 @@ export default function UserMenu({
               <Link
                 {...itemProps[0]}
                 href="/create"
-                className={`rounded  text-center flex xs:hidden justify-center items-center h-10 my-auto w-28 hover:transition ${
+                className={`my-auto  flex h-10 w-28 items-center justify-center rounded text-center hover:transition xs:hidden ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-bg"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
+                    ? "  p-1 hover:bg-bg hover:text-txt-main"
+                    : "  p-1 text-txt-main hover:bg-bg-dk hover:text-txt-main-dk"
                 }`}
               >
-                <div className="h-8 p-[0.15rem] aspect-square">
+                <div className="aspect-square h-8 p-[0.15rem]">
                   <WriteSvg />
                 </div>
                 Write
@@ -70,20 +69,20 @@ export default function UserMenu({
               <Link
                 {...itemProps[1]}
                 href="/drafts"
-                className={`rounded  text-center flex  items-center justify-center h-10 my-auto w-28 hover:transition ${
+                className={`my-auto  flex h-10  w-28 items-center justify-center rounded text-center hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-bg"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
+                    ? "  p-1 hover:bg-bg hover:text-txt-main"
+                    : "  p-1 text-txt-main hover:bg-bg-dk hover:text-txt-main-dk"
                 }`}
               >
                 My Blogs
               </Link>
               <a
                 {...itemProps[2]}
-                className={`rounded  text-center flex justify-center items-center h-10 my-auto w-28 hover:transition ${
+                className={`my-auto  flex h-10 w-28 items-center justify-center rounded text-center hover:transition ${
                   colourTheme
-                    ? "  p-1 hover:text-txt-main hover:bg-bg"
-                    : "  text-txt-main p-1 hover:text-txt-main-dk hover:bg-bg-dk"
+                    ? "  p-1 hover:bg-bg hover:text-txt-main"
+                    : "  p-1 text-txt-main hover:bg-bg-dk hover:text-txt-main-dk"
                 }`}
                 onClick={() => signOut()}
               >

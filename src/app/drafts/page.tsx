@@ -31,35 +31,35 @@ const Drafts = () => {
   }, [session]);
   if (session === null)
     return (
-      <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+      <h1 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
         You need to be authenticated to view this page.
       </h1>
     );
 
   return (
-    <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
+    <div className="prose mx-auto grid gap-8 py-8 dark:prose-invert">
       {data?.published && data?.published.length > 0 ? (
         <>
-          <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+          <h1 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
             Published
           </h1>
           <BlogPostList arrayIn={data?.published} />
         </>
       ) : (
-        <h2 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+        <h2 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
           No Published Blogs Yet
         </h2>
       )}
 
       {data?.drafts && data?.drafts.length > 0 ? (
         <>
-          <h1 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+          <h1 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
             Drafts
           </h1>
           <BlogPostList arrayIn={data?.drafts} />
         </>
       ) : (
-        <h2 className="text-txt-main dark:text-txt-main-dk w-fit mx-auto">
+        <h2 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
           No Drafts Yet
         </h2>
       )}

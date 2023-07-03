@@ -4,7 +4,9 @@ export default function ArrowReversedSvg({
 }) {
   return (
     <div
-      className={`pointer-events-none h-full w-full ${rotate ? "rotate-180" : ""}`}
+      className={`pointer-events-none h-full w-full ${
+        rotate ? "rotate-180" : ""
+      }`}
     >
       <svg
         style={{

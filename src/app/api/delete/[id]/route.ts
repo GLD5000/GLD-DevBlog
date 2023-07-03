@@ -15,7 +15,10 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
   }
 }
 
-async function handler(req: Request, context: {[key:string]: {[key:string]: string}}) {
+async function handler(
+  req: Request,
+  context: { [key: string]: { [key: string]: string } }
+) {
   const postId = context.params.id;
   if (req.method === "DELETE") {
     const result = await prisma.post.delete({

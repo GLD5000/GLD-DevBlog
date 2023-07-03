@@ -1,9 +1,7 @@
 "use client";
 
-// import { useState } from "react";
-import SvgButtonNew from "./SvgButtonNew";
 import CloseSvg from "@/assets/icons/CloseSvg";
-// import getRandomColour from "@/utilities/colour/randomColour";
+import SvgButtonNew from "./SvgButtonNew";
 
 export default function SpicyLi({
   content,
@@ -11,7 +9,7 @@ export default function SpicyLi({
   id,
   closeFunction,
   colourUpdateFunction,
-  inputcolour
+  inputcolour,
 }: {
   className: string;
   content: string;
@@ -24,8 +22,9 @@ export default function SpicyLi({
   return (
     <li id={id} className={className} style={{ backgroundColor: inputcolour }}>
       <button
+        type={"button"}
         id={`${id}-tag-btn`}
-        className="m-0 h-full block w-full rounded-r-none p-1 text-current"
+        className="m-0 block h-full w-full rounded-r-none p-1 text-current"
         onClick={(e) => {
           e.preventDefault();
           colourUpdateFunction(content);
@@ -42,7 +41,7 @@ export default function SpicyLi({
         id={`${id}-close-btn`}
         name={`${id}-close-btn`}
         showTextIn={false}
-        className="  h-full rounded-full rounded-l-none m-0 p-0 hover:transition aspect-square hover:bg-[#767676] hover:text-txt-main-dk focus:bg-[#767676] focus:text-txt-main-dk text-current items-center"
+        className="  m-0 aspect-square h-full items-center rounded-full rounded-l-none p-0 text-current hover:bg-[#767676] hover:text-txt-main-dk hover:transition focus:bg-[#767676] focus:text-txt-main-dk"
         reverse={false}
         textElement={null}
         svg={

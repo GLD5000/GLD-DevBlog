@@ -1,14 +1,11 @@
 import prisma from "@/lib/prisma";
 // PUBLISH /api/publish/:id
-async function handler(
-  req: Request
-  
-) {
+async function handler(req: Request) {
   const postId = `${req.json()}`;
 
   const result = await prisma.post.findFirst({
     where: { id: postId },
-    orderBy: {createdAt: 'desc'},
+    orderBy: { createdAt: "desc" },
     include: {
       author: {
         select: { name: true, email: true },

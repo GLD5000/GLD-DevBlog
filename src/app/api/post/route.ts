@@ -12,7 +12,7 @@ async function createTagOnPost(tagArray: string[], postId: string) {
   const tagResult = await prisma.tag.upsert({
     where: { name: newTag.name },
     create: { ...newTag },
-    update: {backgroundColour: newTag.backgroundColour},
+    update: { backgroundColour: newTag.backgroundColour },
   });
   await prisma.tagOnPosts.upsert({
     where: { unique_post_tag: { postId, tagId: tagResult.id } },
@@ -21,14 +21,12 @@ async function createTagOnPost(tagArray: string[], postId: string) {
   });
 }
 
-
-async function addTags(tagsMap: Map<string,string>, postId: string) {
+async function addTags(tagsMap: Map<string, string>, postId: string) {
   await cleanUpTags(postId, tagsMap);
   Array.from(tagsMap).forEach(async (tag) => {
     await createTagOnPost(tag, postId);
   });
   await deleteTagsWithEmptyTagOnPostsArray();
-
 }
 
 async function deleteTagsWithEmptyTagOnPostsArray() {
@@ -45,26 +43,25 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
   }
 }
 
-
-
-async function cleanUpTags(postId: string, tagsMap: Map<string,string>) {
+async function cleanUpTags(postId: string, tagsMap: Map<string, string>) {
   const post = await prisma.post.findFirst({
     where: { id: postId },
     include: { tags: { select: { tag: true } } },
   });
 
-  const TagsToDelete = post?.tags.map(object => { return { name: object.tag.name, id: object.tag.id }; }).filter(tagObject => !tagsMap.has(tagObject.name));
+  const TagsToDelete = post?.tags
+    .map((object) => {
+      return { name: object.tag.name, id: object.tag.id };
+    })
+    .filter((tagObject) => !tagsMap.has(tagObject.name));
 
-  if (!!!TagsToDelete || TagsToDelete.length=== 0) return;
-  
+  if (!TagsToDelete || TagsToDelete.length === 0) return;
+
   TagsToDelete.forEach(async (tag) => {
     await prisma.tagOnPosts.delete({
-      where: { unique_post_tag: { postId, tagId: tag.id } }
+      where: { unique_post_tag: { postId, tagId: tag.id } },
     });
   });
-
-  
-
 }
 
 async function handler(req: Request, res: Response) {

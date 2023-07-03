@@ -1,7 +1,16 @@
-export default function CloseSvg({ classes = 'stroke-current fill-none stroke-2' }) {
+export default function CloseSvg({
+  classes = "stroke-current fill-none stroke-2",
+}) {
   return (
     <div className="pointer-events-none h-full w-full p-1">
-      <svg id="add-svg" role="img" aria-label="Add Section" height="100%" width="100%" viewBox="0 0 16 16">
+      <svg
+        id="add-svg"
+        role="img"
+        aria-label="Add Section"
+        height="100%"
+        width="100%"
+        viewBox="0 0 16 16"
+      >
         <path
           d="M 2,2
       L 14,14 

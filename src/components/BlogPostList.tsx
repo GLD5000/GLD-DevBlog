@@ -1,11 +1,11 @@
 import BlogPost, { PostProps } from "./BlogPost";
 
-export default function BlogPostList({arrayIn}:{arrayIn: PostProps[]}) {
+export default function BlogPostList({ arrayIn }: { arrayIn: PostProps[] }) {
   return (
-    <section className="flex w-full mx-auto gap-6 flex-col">
-    {arrayIn.map((post: PostProps) => (
+    <section className="mx-auto flex w-full flex-col gap-6">
+      {arrayIn.map((post: PostProps) => (
         <BlogPost key={post.id} post={post} />
-    ))}
-  </section>
-  )
+      ))}
+    </section>
+  );
 }

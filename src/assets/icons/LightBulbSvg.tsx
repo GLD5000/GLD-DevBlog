@@ -6,7 +6,11 @@ export default function LightBulbSvg() {
           <g
             id="_x31_0_00000103985739418447932910000011866796215936490405_"
             className="fill-none stroke-current stroke-2"
-            style={{ strokeLinecap: 'round', strokeLinejoin: 'round', strokeMiterlimit: '10' }}
+            style={{
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              strokeMiterlimit: "10",
+            }}
           >
             <path
               d="M60,96.7V107c0,1.4,1.1,2.6,2.6,2.6h1.2l0.1,0.3c1,3.5,4.1,5.9,7.7,5.9h0c3.5,0,6.7-2.3,7.7-5.7l0.2-0.5h1.2

@@ -1,6 +1,11 @@
-import { type MouseEvent, type ReactElement, useState } from 'react';
-
-function getContent(reverse: boolean, showText: boolean, textElement: ReactElement | null, svg: ReactElement) {
+import { type MouseEvent, type ReactElement, useState } from "react";
+/* eslint-disable react/button-has-type */
+function getContent(
+  reverse: boolean,
+  showText: boolean,
+  textElement: ReactElement | null,
+  svg: ReactElement
+) {
   return reverse ? (
     <>
       {showText && textElement}
@@ -15,7 +20,7 @@ function getContent(reverse: boolean, showText: boolean, textElement: ReactEleme
 }
 
 export default function SvgButtonNew({
-  type="button",
+  type = "button",
   clickFunction,
   id,
   name,
@@ -29,8 +34,9 @@ export default function SvgButtonNew({
       rounded border border-solid whitespace-pre-wrap hover:transition
     `,
 }: {
-  type?:"button" | "submit" | "reset" | undefined;
-  clickFunction: ((e: MouseEvent<HTMLButtonElement>) => void) | (() => void);
+  type?: "button" | "submit" | "reset";
+
+  clickFunction: ((e: MouseEvent<HTMLButtonElement>) => void) | (() => void); // eslint-disable-line
   id?: string | undefined;
   name?: string | undefined;
   showTextIn?: boolean | undefined;
@@ -48,7 +54,10 @@ export default function SvgButtonNew({
       id={id}
       name={name}
       onClick={clickFunction}
-      className={`cursor-pointer items-center ${className.replaceAll(/[\s]+/g, ' ')}`}
+      className={`cursor-pointer items-center ${className.replaceAll(
+        /[\s]+/g,
+        " "
+      )}`}
       aria-label={name}
       onFocus={() => {
         if (showTextIn === undefined) setShowText(true);

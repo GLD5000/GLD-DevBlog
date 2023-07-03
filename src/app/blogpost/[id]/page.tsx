@@ -56,14 +56,14 @@ export default async function Page({ params }: { params: { id: string } }) {
   if (!post) return <p>Uh oh! Blog post not found!</p>;
 
   return (
-    <div className="w-full grid text-txt-main dark:text-txt-main-dk">
+    <div className="grid w-full text-txt-main dark:text-txt-main-dk">
       {isCorrectUser ? (
-        <div className="flex flex-row flex-wrap items-center w-fit mx-auto rounded-xl shadow-lg dark:drop-shadow-post-dk text-inherit bg-bg-var dark:bg-bg-var-dk my-8 gap-6">
-          <div className="grid mx-auto">
+        <div className="mx-auto my-8 flex w-fit flex-row flex-wrap items-center gap-6 rounded-xl bg-bg-var text-inherit shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
+          <div className="mx-auto grid">
             <h2 className="mx-auto w-fit text-2xl font-bold text-inherit">{`Hi ${author}!`}</h2>
-            <p className="mx-auto w-fit text-base text-inherit">{`Publish, Edit or Delete your post here...`}</p>
+            <p className="mx-auto w-fit text-base text-inherit">Publish, Edit or Delete your post here...</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-4 rounded mx-auto w-fit text-inherit">
+          <div className="mx-auto grid w-fit gap-4 rounded text-inherit sm:grid-cols-3">
             {!isPublished ? (
               <PublishButton postId={userId} />
             ) : (
@@ -74,7 +74,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       ) : null}
-      <div className="bg-bg-var dark:bg-bg-var-dk rounded-xl shadow-lg dark:drop-shadow-post-dk mt-6 mb-20 ">
+      <div className="mb-20 mt-6 rounded-xl bg-bg-var shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk ">
         <Image
           width={1000}
           height={400}
@@ -83,34 +83,34 @@ export default async function Page({ params }: { params: { id: string } }) {
           src={sourceImage}
           alt={"Tech Image"}
         />
-        <div className="p-4 mx-auto">
+        <div className="mx-auto p-4">
           {hasSubtitle ? (
             <>
-              <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
                 {title ? `${title}` : `no title`}
               </h1>
-              <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+              <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
                 {subtitle ? subtitle : ``}
               </h2>
             </>
           ) : (
-            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
               {title ? title : `no title`}
             </h1>
           )}
 
           {!!tags.length && !!tags ? <TagSet tagsObject={tags} /> : null}
-          <p className="mx-auto w-fit block">
+          <p className="mx-auto block w-fit">
             {updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
           </p>
-          <p className="font-bold block w-fit mx-auto">
+          <p className="mx-auto block w-fit font-bold">
             Written by {author ? `${author}` : `Unknown author`}
           </p>
-          <p className="p-2 w-fit block mx-auto">{`${readTime} min read`}</p>
+          <p className="mx-auto block w-fit p-2">{`${readTime} min read`}</p>
         </div>
         {content ? (
           <ReactMarkdown
-            className="mb-20 px-4 w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  "
+            className="prose mx-auto mb-20 w-full px-4 dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
             remarkPlugins={[remarkGfm]}
           >
             {content}

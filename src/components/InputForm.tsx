@@ -29,11 +29,11 @@ function getTagButtons(
   closeFunction: (tagValue: string) => void,
   colourUpdateFunction: (tagValue: string) => void
 ) {
-  if (!!!tags) return null;
+  if (!tags) return null;
   return Array.from(tags).map((tag) => (
     <SpicyLi
       key={tag[0]}
-      className="flex my-auto h-8 w-36 min-w-fit flex-row items-center justify-between rounded-full border-2 border-txt-main text-center text-sm hover:transition dark:border-neutral-300 overflow-clip"
+      className="my-auto flex h-8 w-36 min-w-fit flex-row items-center justify-between overflow-clip rounded-full border-2 border-txt-main text-center text-sm hover:transition dark:border-neutral-300"
       content={tag[0]}
       id={tag[0]}
       inputcolour={tag[1]}
@@ -146,12 +146,12 @@ export default function InputForm({
     <>
       <form
         onSubmit={submitData}
-        className="flex w-full max-w-body mx-auto gap-4 flex-col p-4"
+        className="mx-auto flex w-full max-w-body flex-col gap-4 p-4"
       >
-        <h1 className="text-txt-main dark:text-txt-main-dk wfit mx-auto text-center text-2xl font-bold">
+        <h1 className="wfit mx-auto text-center text-2xl font-bold text-txt-main dark:text-txt-main-dk">
           Write Your Blog
         </h1>
-        <p className="text-txt-main dark:text-txt-main-dk wfit mx-auto text-center text-base ">
+        <p className="wfit mx-auto text-center text-base text-txt-main dark:text-txt-main-dk ">
           Then publish it or save it for later!
         </p>
         <input
@@ -161,7 +161,7 @@ export default function InputForm({
           placeholder="Title"
           type="text"
           value={formState.title}
-          className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk p-2"
+          className="rounded border-2 border-transparent bg-bg-var p-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk"
         />
         <textarea
           required
@@ -172,23 +172,23 @@ export default function InputForm({
           placeholder="Content"
           rows={8}
           value={formState.content}
-          className="bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk p-2"
+          className="rounded border-2 border-transparent bg-bg-var p-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk"
         />
-        <div className="px-2 flex flex-row flex-wrap gap-2 bg-bg-var text-txt-main dark:text-txt-main-dk dark:bg-bg-var-dk rounded border-2 border-transparent dark:border-txt-main shadow-lg dark:drop-shadow-post-dk ">
+        <div className="flex flex-row flex-wrap gap-2 rounded border-2 border-transparent bg-bg-var px-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk ">
           {tagButtons}
           <input
             onChange={(e) => handleTags(e.target.value)}
             placeholder="Tags (Max 5) e.g.: Typescript, React"
             type="text"
             value={formState.tagString}
-            className="bg-bg-var text-txt-main grow dark:text-txt-main-dk dark:bg-bg-var-dk rounded p-2"
+            className="grow rounded bg-bg-var p-2 text-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk"
           />
         </div>
-        <div className="flex gap-2 ml-auto flex-row flex-wrap">
+        <div className="ml-auto flex flex-row flex-wrap gap-2">
           <SvgButtonNew
             type="submit"
             svg={
-              <div className="h-8 p-[0.15rem] aspect-square">
+              <div className="aspect-square h-8 p-[0.15rem]">
                 <SaveSvg />
               </div>
             }
@@ -197,13 +197,13 @@ export default function InputForm({
             clickFunction={() => {
               formDispatch({ payload: { publish: false } });
             }}
-            className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
+            className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
 
           <SvgButtonNew
             type="submit"
             svg={
-              <div className="h-8 p-[0.15rem] aspect-square">
+              <div className="aspect-square h-8 p-[0.15rem]">
                 <PaperPlaneSvg />
               </div>
             }
@@ -212,13 +212,13 @@ export default function InputForm({
             clickFunction={() => {
               formDispatch({ payload: { publish: true } });
             }}
-            className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
+            className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
 
           <SvgButtonNew
             type="button"
             svg={
-              <div className="h-8 p-[0.15rem] aspect-square">
+              <div className="aspect-square h-8 p-[0.15rem]">
                 <DeleteSvg />
               </div>
             }
@@ -236,17 +236,17 @@ export default function InputForm({
               });
               localStorage.clear();
             }}
-            className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
+            className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
 
           <Link
-            className="rounded-full border-2 text-center items-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
+            className="grid h-10 w-32 grid-cols-autoFr items-center rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
             href="/drafts/"
             // onClick={() => {
             //   localStorage.clear();
             // }}
           >
-            <div className="h-8 p-[0.15rem] aspect-square">
+            <div className="aspect-square h-8 p-[0.15rem]">
               <CloseSvg />
             </div>
 
@@ -254,24 +254,24 @@ export default function InputForm({
           </Link>
         </div>
       </form>
-      <div className="bg-bg-var dark:bg-bg-var-dk p-4 rounded-xl shadow-lg dark:drop-shadow-post-dk">
+      <div className="rounded-xl bg-bg-var p-4 shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
         {hasSubtitle ? (
           <>
-            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
               {title ? `${title}` : `no title`}
             </h1>
-            <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
               {subtitle ? subtitle : ``}
             </h2>
           </>
         ) : (
-          <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+          <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
             {title ? title : `no title`}
           </h1>
         )}
         {formState.content ? (
           <ReactMarkdown
-            className="my-6 w-full prose dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl mx-auto  "
+            className="prose mx-auto my-6 w-full dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
             remarkPlugins={[remarkGfm]}
           >
             {formState.content}

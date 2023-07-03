@@ -6,7 +6,11 @@ export default function MailSvg() {
           <g
             id="_x36__00000054976445856972853000000006826478978256187561_"
             className="fill-none stroke-current stroke-2"
-            style={{ strokeLinecap: 'round', strokeLinejoin: 'round', strokeMiterlimit: '10' }}
+            style={{
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              strokeMiterlimit: "10",
+            }}
           >
             <path
               d="M102.1,95H41.9c-2.4,0-4.4-2-4.4-4.4V53.4c0-2.4,2-4.4,4.4-4.4h60.2c2.4,0,4.4,2,4.4,4.4v37.2

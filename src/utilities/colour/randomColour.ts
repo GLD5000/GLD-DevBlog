@@ -1,7 +1,7 @@
 import getRandomNumberBetween from "../number/randomNumber";
-import { setToTargetLuminanceHsl } from "./autoContrast";
+// import { setToTargetLuminanceHsl } from "./autoContrast";
 import { colourSpace } from "./colourSpace";
-import { luminanceMatcherHsl } from "./luminanceMatch";
+import luminanceMatcherHsl from "./luminanceMatch";
 
 export const randomColour = {
   randomIntegerInRange(start: number, end: number): number {
@@ -29,21 +29,24 @@ export const randomColour = {
     return randomHex;
   },
 };
-export default function getRandomColour(type?:string) {
-  if (!!!type) {
+export default function getRandomColour(type?: string) {
+  if (!type) {
     const randomHex = randomColour.makeRandomHex();
     return randomHex;
   }
-  const luminanceLookup: {[key:string]: number[]} = {
-    'mid': [0.176, 0.181],
-    'light': [0.301, 0.502],
-    'dark': [0.047, 0.099] 
-  }
+  const luminanceLookup: { [key: string]: number[] } = {
+    mid: [0.176, 0.181],
+    light: [0.301, 0.502],
+    dark: [0.047, 0.099],
+  };
   const randomHslArray = randomColour.makeRandomHslSafer();
   // console.log('randomHslArray:', randomHslArray);
-  const luminance = getRandomNumberBetween(luminanceLookup[type]||[0.176, 0.181],3)
+  const luminance = getRandomNumberBetween(
+    luminanceLookup[type] || [0.176, 0.181],
+    3
+  );
   // console.log('luminance:', luminance);
-  const result = luminanceMatcherHsl(randomHslArray,luminance);
+  const result = luminanceMatcherHsl(randomHslArray, luminance);
   // console.log('Relativeluminance:', result.currentRl);
   return colourSpace.convertHslArrayToHex(result.hslArray);
 }

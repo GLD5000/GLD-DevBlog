@@ -1,9 +1,11 @@
-export default function RightArrowSvg({ classes = 'fill-none stroke-2 stroke-current ' }) {
+export default function RightArrowSvg({
+  classes = "fill-none stroke-2 stroke-current ",
+}) {
   return (
     <svg
       style={{
-        strokeLinecap: 'round',
-        strokeLinejoin: 'round',
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
       }}
       id="add-svg"
       role="img"

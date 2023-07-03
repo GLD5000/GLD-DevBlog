@@ -340,7 +340,7 @@ export const autoContrast = {
       resultingContrastRatio,
       targetContrast
     );
-    console.log('currentLuminance:', currentLuminance);
+    console.log("currentLuminance:", currentLuminance);
     if (resultsAreGood)
       return {
         resultingContrastRatio,

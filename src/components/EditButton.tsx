@@ -9,14 +9,14 @@ export default function EditButton({ postId }: { postId: string }) {
   return (
     <SvgButtonNew
       svg={
-        <div className="h-8 my-auto p-[0.25rem] aspect-square">
+        <div className="my-auto aspect-square h-8 p-[0.25rem]">
           <PencilSvg />
         </div>
       }
-      textElement={<span className="h-min my-auto">Edit</span>}
+      textElement={<span className="my-auto h-min">Edit</span>}
       showTextIn={true}
       clickFunction={() => router.push(`/edit/${postId}/`)}
-      className="rounded-full border-2 text-center grid grid-cols-autoFr h-10 px-2 w-32 hover:transition border-txt-main text-txt-main dark:text-txt-main-dk hover:text-txt-main-dk hover:bg-bg-dk dark:border-txt-main-dk dark:hover:text-txt-main dark:hover:bg-bg"
+      className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
     />
   );
 }

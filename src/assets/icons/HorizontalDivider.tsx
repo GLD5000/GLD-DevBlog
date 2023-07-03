@@ -1,4 +1,6 @@
-export default function HorizontalDivider({ classes = 'stroke-current fill-none stroke-1' }) {
+export default function HorizontalDivider({
+  classes = "stroke-current fill-none stroke-1",
+}) {
   return (
     <div className="pointer-events-none  h-full w-fit ">
       <svg

@@ -8,23 +8,24 @@ function getArrayTags(
   }[]
 ) {
   return arrayIn.map((tag) => {
-    if (!!!tag.tag) return null;
+    if (!tag.tag) return null;
     const tagObject = tag.tag;
     return (
       <button
-      key={tagObject.id}
-        className={`rounded-full border-2 border-transparent text-center flex hover:transition focus:transition  items-center justify-center h-fit my-auto w-fit px-2 `}
+        key={tagObject.id}
+        className={`my-auto flex h-fit w-fit items-center justify-center rounded-full  border-2 border-transparent px-2 text-center hover:transition focus:transition `}
         style={{
           textDecoration: `${tagObject.backgroundColour}`,
           textDecorationLine: `underline`,
           textDecorationThickness: `4px`,
-          textDecorationSkipInk: 'none',
+          textDecorationSkipInk: "none",
         }}
       >
         {`#${tagObject.name}`}
         <style jsx>
           {`
-            button:hover, button:focus {
+            button:hover,
+            button:focus {
               color: #000;
               background-color: ${tagObject.backgroundColour};
               border-color: #000;
@@ -44,5 +45,9 @@ export default function TagSet({
   }[];
 }) {
   const returnArray = getArrayTags(tagsObject);
-  return <div className="flex flex-row flex-wrap gap-2 w-fit mx-auto p-2">{returnArray}</div>;
+  return (
+    <div className="mx-auto flex w-fit flex-row flex-wrap gap-2 p-2">
+      {returnArray}
+    </div>
+  );
 }

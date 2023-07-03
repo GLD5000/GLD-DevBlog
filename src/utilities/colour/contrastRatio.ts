@@ -1,4 +1,4 @@
-import hexToLuminance from './luminance';
+import hexToLuminance from "./luminance";
 
 export const contrast = {
   getContrastRatioFloat(args: Array<number>) {
@@ -13,33 +13,33 @@ export const contrast = {
     return Math.floor(ratio * 100) / 100;
   },
   makeContrastRatingString(ratio: number) {
-    let rating = 'unrated';
-    if (ratio < 3) rating = 'Poor';
-    if (ratio >= 3 && ratio < 4.5) rating = 'Low';
-    if (ratio === 4.5) rating = 'AA';
-    if (ratio > 4.5 && ratio < 7) rating = 'AA+';
-    if (ratio === 7) rating = 'AAA';
-    if (ratio > 7) rating = 'AAA+';
+    let rating = "unrated";
+    if (ratio < 3) rating = "Poor";
+    if (ratio >= 3 && ratio < 4.5) rating = "Low";
+    if (ratio === 4.5) rating = "AA";
+    if (ratio > 4.5 && ratio < 7) rating = "AA+";
+    if (ratio === 7) rating = "AAA";
+    if (ratio > 7) rating = "AAA+";
 
     return `Contrast Ratio: ${ratio.toFixed(2)} ${rating}`;
   },
   makeContrastRating(ratio: number) {
-    let rating = 'unrated';
-    if (ratio < 3) rating = 'Poor';
-    if (ratio >= 3 && ratio < 4.5) rating = 'Low';
-    if (ratio === 4.5) rating = 'AA';
-    if (ratio > 4.5 && ratio < 7) rating = 'AA+';
-    if (ratio === 7) rating = 'AAA';
-    if (ratio > 7) rating = 'AAA+';
+    let rating = "unrated";
+    if (ratio < 3) rating = "Poor";
+    if (ratio >= 3 && ratio < 4.5) rating = "Low";
+    if (ratio === 4.5) rating = "AA";
+    if (ratio > 4.5 && ratio < 7) rating = "AA+";
+    if (ratio === 7) rating = "AAA";
+    if (ratio > 7) rating = "AAA+";
 
     return rating;
   },
   makeContrastSuitability(ratio: number) {
-    let rating = 'unrated';
-    if (ratio < 3) rating = 'None';
-    if (ratio >= 3 && ratio < 4.5) rating = 'Non-Txt';
-    if (ratio >= 4.5 && ratio < 7) rating = 'Lg-Txt';
-    if (ratio >= 7) rating = 'Any';
+    let rating = "unrated";
+    if (ratio < 3) rating = "None";
+    if (ratio >= 3 && ratio < 4.5) rating = "Non-Txt";
+    if (ratio >= 4.5 && ratio < 7) rating = "Lg-Txt";
+    if (ratio >= 7) rating = "Any";
 
     return rating;
   },
@@ -52,7 +52,8 @@ export const contrast = {
     return Math.min(1, Math.max(0, luminance));
   },
   calculateMinLuminance(maxLuminance: number, targetContrast: number) {
-    const minLuminance = (-0.05 * targetContrast + maxLuminance + 0.05) / targetContrast;
+    const minLuminance =
+      (-0.05 * targetContrast + maxLuminance + 0.05) / targetContrast;
     return contrast.clampLuminance(minLuminance);
   },
   calculateMaxLuminance(minLuminance: number, targetContrast: number) {
@@ -60,7 +61,9 @@ export const contrast = {
     return contrast.clampLuminance(maxLuminance);
   },
   luminanceToLinear(relativeLuminance: number) {
-    return contrast.clampLuminance(1.055 * relativeLuminance ** (1 / 2.4) - 0.055);
+    return contrast.clampLuminance(
+      1.055 * relativeLuminance ** (1 / 2.4) - 0.055
+    );
   },
 };
 export default function getContrastRatio(luminanceArray: Array<number>) {

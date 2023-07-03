@@ -26,10 +26,10 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-div[role='menu'] {
+div[role="menu"] {
   visibility: hidden;
 }
 
-div[role='menu'].visible {
+div[role="menu"].visible {
   visibility: visible;
 }

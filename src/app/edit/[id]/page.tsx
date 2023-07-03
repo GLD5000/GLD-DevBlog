@@ -22,16 +22,20 @@ const getData = async (idIn: string) => {
   return {
     props: { feed },
   };
-}
+};
 
 function extractTagNames(tagArray: { tag: Tag | null }[]) {
   const newArray: [string, string][] = tagArray
-  .map((tagObject):[string, string] => {
-    if (!!tagObject.tag) return [tagObject.tag.name as string, tagObject.tag.backgroundColour as string];
-    return ["",""];
-  })
-  .filter((x) => x.join().length !== 0);
-  const returnMap: Map<string,string> =  new Map(newArray);
+    .map((tagObject): [string, string] => {
+      if (!!tagObject.tag)
+        return [
+          tagObject.tag.name as string,
+          tagObject.tag.backgroundColour as string,
+        ];
+      return ["", ""];
+    })
+    .filter((x) => x.join().length !== 0);
+  const returnMap: Map<string, string> = new Map(newArray);
   return returnMap;
 }
 
@@ -43,21 +47,21 @@ export default async function Edit({ params }: { params: { id: string } }) {
   const isCorrectUser = session?.user?.email === post?.author?.email;
   if (!isCorrectUser)
     return (
-      <div className="grid gap-8 py-8 prose dark:prose-invert mx-auto">
-        <h1 className="text-txt-main dark:text-txt-main-dk mx-auto">
+      <div className="prose mx-auto grid gap-8 py-8 dark:prose-invert">
+        <h1 className="mx-auto text-txt-main dark:text-txt-main-dk">
           Edit Blog
         </h1>
-        <div className="text-txt-main dark:text-txt-main-dk mx-auto">
+        <div className="mx-auto text-txt-main dark:text-txt-main-dk">
           You need to be authenticated to view this page.
         </div>
       </div>
     );
 
-  const tagNames = !!post?.tags ? extractTagNames(post?.tags) : null;
+  const tagNames = post?.tags ? extractTagNames(post?.tags) : null;
   return (
     <div>
       <InputForm
-        initialContent={post?.content|| undefined}
+        initialContent={post?.content || undefined}
         initialTags={tagNames || undefined}
         initialTitle={post?.title}
         intialId={post?.id}

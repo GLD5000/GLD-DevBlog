@@ -35,10 +35,10 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
   const gradientStyle = getGradient(tags);
   const sourceImage = "/Bokeh.svg";
   return (
-    <div className="mx-auto shadow-lg dark:drop-shadow-post-dk  w-full bg-bg-var dark:bg-bg-var-dk rounded  grid gap-2">
+    <div className="mx-auto grid w-full  gap-2 rounded bg-bg-var shadow-lg  dark:bg-bg-var-dk dark:drop-shadow-post-dk">
       <button
-        className=" rounded-t rounded-b-none grid my-0 pb-2 text-txt-mid dark:text-txt-mid-dk dark:border-txt-main w-fit mx-auto rounded bg-bg-var hover:transition focus:transition  
-        hover:text-txt-main dark:hover:text-txt-main-dk focus:text-txt-main dark:focus:text-txt-main-dk dark:bg-bg-var-dk hover:grayscale focus:grayscale"
+        className=" mx-auto my-0 grid w-fit rounded rounded-b-none rounded-t bg-bg-var pb-2 text-txt-mid hover:text-txt-main hover:grayscale hover:transition focus:text-txt-main  
+        focus:grayscale focus:transition dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-mid-dk dark:hover:text-txt-main-dk dark:focus:text-txt-main-dk"
         onClick={() => router.push(`/blogpost/${postId}/`)}
       >
         <Image
@@ -49,8 +49,8 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
           src={sourceImage}
           alt={"Tech Image"}
         />
-        <div className="flex flex-wrap ml-auto p-2 text-txt-mid dark:text-txt-mid-dk">
-          <small className="font-bold p-2">{`${authorName}`}</small>
+        <div className="ml-auto flex flex-wrap p-2 text-txt-mid dark:text-txt-mid-dk">
+          <small className="p-2 font-bold">{`${authorName}`}</small>
           <small className="p-2">
             {updated.toLocaleDateString("en-GB", { dateStyle: "long" })}
           </small>
@@ -58,15 +58,15 @@ const BlogPost: React.FC<{ post: PostProps }> = ({ post }) => {
         </div>
         {hasSubtitle ? (
           <>
-            <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
               {title ? `${title}` : `no title`}
             </h1>
-            <h2 className="mx-auto my-4 w-fit text-4xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+            <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
               {subtitle ? subtitle : ``}
             </h2>
           </>
         ) : (
-          <h1 className="mx-auto my-4 w-fit text-6xl font-bold text-txt-main dark:text-txt-main-dk text-center break-words">
+          <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
             {title ? title : `no title`}
           </h1>
         )}
