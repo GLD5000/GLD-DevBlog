@@ -1,6 +1,6 @@
 import { luminance } from "./luminance";
 import { colourSpace } from "./colourSpace";
-
+/**Expects an HSL numeric array and Relative Luminance expressed as a decimal (0-1 inclusive) */
 export function luminanceMatcherHsl(
   originalHsl: number[],
   targetRl: number

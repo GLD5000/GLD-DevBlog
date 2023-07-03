@@ -11,19 +11,23 @@ import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/number/readTime";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import getRandomColour from "@/utilities/colour/randomColour";
 
 function getTagButtons(
-  tags: string[] | undefined,
-  closeFunction: (tagValue: string) => void
+  tags: Map<string,string> | undefined,
+  closeFunction: (tagValue: string) => void,
+  colourUpdateFunction: (tagValue: string) => void
 ) {
   if (!!!tags) return null;
-  return tags.map((tag) => (
+  return Array.from(tags).map((tag) => (
     <SpicyLi
-      key={tag}
+      key={tag[0]}
       className="flex my-auto h-8 w-36 min-w-fit flex-row items-center justify-between rounded-full border-2 border-txt-main text-center text-sm hover:transition dark:border-neutral-300 overflow-clip"
-      content={tag}
-      id={tag}
+      content={tag[0]}
+      id={tag[0]}
+      inputcolour={tag[1]}
       closeFunction={closeFunction}
+      colourUpdateFunction={colourUpdateFunction}
     />
   ));
 }
@@ -36,7 +40,7 @@ export default function InputForm({
 }: {
   initialTitle?: string;
   initialContent?: string | null;
-  initialTags?: string[] | undefined | null;
+  initialTags?: Map<string, string> | undefined | null;
   intialId?: string;
 }) {
   const Router = useRouter();
@@ -45,29 +49,38 @@ export default function InputForm({
   const [content, setContent] = useState(initialContent || "");
   const [publish, setPublish] = useState(false);
   // const [id, _] = useState<string | undefined>(intialId || undefined);
-  const [tags, setTags] = useState<string[] | undefined>(
+  const [tags, setTags] = useState<Map<string, string> | undefined>(
     initialTags || undefined
   );
   const [tagString, setTagString] = useState("");
   const id = intialId || undefined;
 
   function closeTag(tagValue: string) {
-    setTags((oldTags) => {
-      const newTags = oldTags?.filter((x) => x !== tagValue);
+    setTags((oldTags: Map<string, string> | undefined) => {
+      if (!!!oldTags) return undefined;
+      const newTags = new Map(oldTags);
+      newTags.delete(tagValue)
+      return newTags;
+    });
+  }
+  function recolourTag(tagValue: string) {
+    setTags((oldTags: Map<string, string> | undefined) => {
+      if (!!!oldTags) return undefined;
+      const newTags = new Map(oldTags);
+      newTags.set(tagValue,getRandomColour("mid"))
       return newTags;
     });
   }
   const post = {content, title};
 
-  const tagButtons = getTagButtons(tags, closeTag);
+  const tagButtons = getTagButtons(tags, closeTag, recolourTag);
 
   function pushToTags(stringIn: string) {
-    setTags((oldArray) => {
-      const newArray =
-        !!oldArray && oldArray.length > 0
-          ? [...new Set([...oldArray, stringIn.trim()])]
-          : [stringIn.trim()];
-      return newArray;
+
+    setTags((oldTags: Map<string, string> | undefined) => {
+      const newTags = oldTags? new Map(oldTags): new Map();
+      newTags.set(stringIn.trim(),getRandomColour("mid"))
+      return newTags;
     });
     setTagString("");
   }
@@ -76,7 +89,7 @@ export default function InputForm({
     if (
       /[ ,.]/.test(`${currentValue.at(-1)}`) &&
       currentValue.length > 1 &&
-      (tags === undefined || tags.length < 5)
+      (tags === undefined || tags.size < 5)
     ) {
       pushToTags(currentValue.slice(0, -1));
       return;

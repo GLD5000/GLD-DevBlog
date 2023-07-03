@@ -22,15 +22,17 @@ const getData = async (idIn: string) => {
   return {
     props: { feed },
   };
-};
+}
 
 function extractTagNames(tagArray: { tag: Tag | null }[]) {
-  return tagArray
-    .map((tagObject) => {
-      if (!!tagObject.tag) return tagObject.tag.name;
-      return "";
-    })
-    .filter((x) => x !== "");
+  const newArray: [string, string][] = tagArray
+  .map((tagObject):[string, string] => {
+    if (!!tagObject.tag) return [tagObject.tag.name as string, tagObject.tag.backgroundColour as string];
+    return ["",""];
+  })
+  .filter((x) => x.join().length !== 0);
+  const returnMap: Map<string,string> =  new Map(newArray);
+  return returnMap;
 }
 
 export default async function Edit({ params }: { params: { id: string } }) {
@@ -52,7 +54,7 @@ export default async function Edit({ params }: { params: { id: string } }) {
     );
 
   const tagNames = !!post?.tags ? extractTagNames(post?.tags) : null;
-
+console.log('tagNames:', tagNames);
   return (
     <div>
       <InputForm
