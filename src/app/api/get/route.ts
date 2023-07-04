@@ -19,7 +19,7 @@ async function handler(req: NextRequest) {
           select: { tag: true },
         },
         author: {
-          select: { name: true },
+          select: { name: true, email: true },
         },
       },
     });
@@ -36,7 +36,7 @@ async function handler(req: NextRequest) {
           select: { tag: true },
         },
         author: {
-          select: { name: true },
+          select: { name: true, email: true },
         },
       },
     });

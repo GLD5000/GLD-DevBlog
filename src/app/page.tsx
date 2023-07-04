@@ -1,13 +1,13 @@
 import prisma from "@/lib/prisma";
-import { PostProps } from "@/components/BlogPost";
+import { PostEmailProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
 
 export const revalidate = 86400;
 
 const getData = async (): Promise<{
-  props: PostProps[];
+  props: PostEmailProps[];
 }> => {
-  const drafts: PostProps[] = await prisma.post.findMany({
+  const drafts: PostEmailProps[] = await prisma.post.findMany({
     where: {
       published: true,
     },

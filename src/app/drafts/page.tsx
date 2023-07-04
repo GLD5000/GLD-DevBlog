@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { PostProps } from "@/components/BlogPost";
+import { PostEmailProps } from "@/components/BlogPost";
 import { useSession } from "next-auth/react";
 import BlogPostList from "@/components/BlogPostList";
 
 export default function Drafts() {
   const { data: session } = useSession();
   const [data, setData] = useState<{
-    drafts: PostProps[];
-    published: PostProps[];
+    drafts: PostEmailProps[];
+    published: PostEmailProps[];
   }>();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export default function Drafts() {
       {data?.published && data?.published.length > 0 ? (
         <>
           <h1 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
-            Published
+            My Published Blogs
           </h1>
           <BlogPostList arrayIn={data?.published} />
         </>
@@ -54,7 +54,7 @@ export default function Drafts() {
       {data?.drafts && data?.drafts.length > 0 ? (
         <>
           <h1 className="mx-auto w-fit text-txt-main dark:text-txt-main-dk">
-            Drafts
+            My Drafts
           </h1>
           <BlogPostList arrayIn={data?.drafts} />
         </>

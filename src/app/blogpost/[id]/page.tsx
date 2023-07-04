@@ -33,10 +33,10 @@ const getData = async (idIn: string) => {
 };
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const userId = params.id;
+  const postId = params.id;
   const {
     props: { feed: post },
-  } = await getData(userId);
+  } = await getData(postId);
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isPublished = post?.published;
   const isCorrectUser = session?.user?.email === post?.author?.email;
@@ -64,12 +64,12 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
           <div className="mx-auto grid w-fit gap-4 rounded text-inherit sm:grid-cols-3">
             {!isPublished ? (
-              <PublishButton postId={userId} />
+              <PublishButton postId={postId} />
             ) : (
-              <UnpublishButton postId={userId} />
+              <UnpublishButton postId={postId} />
             )}
-            <EditButton postId={userId} />
-            <DeleteButton postId={userId} />
+            <EditButton postId={postId} />
+            <DeleteButton postId={postId} />
           </div>
         </div>
       ) : null}

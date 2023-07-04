@@ -34,7 +34,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <div
       id="theme-wrapper"
-      className={`min-h-screen w-screen  ${
+      className={`min-h-screen w-full  ${
         colourTheme ? "dark bg-bg-dk" : "bg-bg"
       }`}
     >
