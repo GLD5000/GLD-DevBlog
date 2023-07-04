@@ -39,12 +39,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
       }`}
     >
       <Header toggleColourTheme={toggleColourTheme} colourTheme={colourTheme} />
-      <main
-        className="relative mx-auto w-body-sm min-w-body  max-w-body items-center
-                sm:w-body"
-      >
-        {children}
-      </main>
+      <main className="relative w-full">{children}</main>
     </div>
   );
 }
