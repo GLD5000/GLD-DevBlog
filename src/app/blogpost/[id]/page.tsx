@@ -55,14 +55,14 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div className="grid w-full text-txt-main dark:text-txt-main-dk">
       {isCorrectUser ? (
-        <div className="mx-auto my-8 flex w-fit flex-row flex-wrap items-center gap-6 rounded-xl bg-bg-var text-inherit shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
+        <div className="mx-auto my-8 flex w-fit flex-row flex-wrap items-center gap-6 rounded-xl bg-bg-var p-4 text-inherit shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
           <div className="mx-auto grid">
             <h2 className="mx-auto w-fit text-2xl font-bold text-inherit">{`Hi ${author}!`}</h2>
-            <p className="mx-auto w-fit text-base text-inherit">
+            <p className="mx-auto w-fit break-words text-base text-inherit">
               Publish, Edit or Delete your post here...
             </p>
           </div>
-          <div className="mx-auto grid w-fit gap-4 rounded text-inherit sm:grid-cols-3">
+          <div className="mx-auto grid w-fit gap-4  rounded text-inherit sm:grid-cols-3">
             {!isPublished ? (
               <PublishButton postId={postId} />
             ) : (
@@ -73,16 +73,16 @@ export default async function Page({ params }: { params: { id: string } }) {
           </div>
         </div>
       ) : null}
-      <div className="mb-20 mt-6 rounded-xl bg-bg-var shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk ">
+      <div className="mb-20 mt-6 w-full rounded-xl bg-bg-var shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk ">
         <Image
           width={1000}
           height={400}
           style={gradientStyle}
-          className="my-0 rounded-t-xl bg-gray-500"
+          className="my-0 w-full rounded-t-xl bg-gray-500"
           src={sourceImage}
-          alt="Tech Image"
+          alt="Bokeh"
         />
-        <div className="mx-auto p-4">
+        <div className="mx-auto w-fit p-4">
           {hasSubtitle ? (
             <>
               <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
@@ -109,7 +109,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         {content ? (
           <ReactMarkdown
-            className="prose mx-auto mb-20 w-full px-4 dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
+            className="prose-sm mx-auto w-body-sm dark:prose-invert xs:prose sm:prose-lg lg:prose-xl xl:prose-2xl xs:w-body  "
             remarkPlugins={[remarkGfm]}
           >
             {content}
