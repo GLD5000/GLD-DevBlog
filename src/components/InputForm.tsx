@@ -143,7 +143,7 @@ export default function InputForm({
     [title, subtitle] = title.split(":");
   }
   return (
-    <>
+    <div className="pb-24">
       <form
         onSubmit={submitData}
         className="mx-auto flex w-full max-w-body flex-col gap-4 p-4"
@@ -253,31 +253,33 @@ export default function InputForm({
           </Link>
         </div>
       </form>
-      <div className="rounded-xl bg-bg-var p-4 shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
-        {hasSubtitle ? (
-          <>
+      <div className="px-4">
+        <div className="max-h-[80vh] overflow-y-auto rounded-xl bg-bg-var p-4 shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
+          {hasSubtitle ? (
+            <>
+              <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+                {title || `no title`}
+              </h1>
+              <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
+                {subtitle || ``}
+              </h2>
+            </>
+          ) : (
             <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
               {title || `no title`}
             </h1>
-            <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
-              {subtitle || ``}
-            </h2>
-          </>
-        ) : (
-          <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
-            {title || `no title`}
-          </h1>
-        )}
-        {formState.content ? (
-          <ReactMarkdown
-            className="prose mx-auto my-6 max-h-screen w-full overflow-y-auto dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
-            remarkPlugins={[remarkGfm]}
-          >
-            {formState.content}
-          </ReactMarkdown>
-        ) : null}
+          )}
+          {formState.content ? (
+            <ReactMarkdown
+              className="prose mx-auto my-6  w-full  dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
+              remarkPlugins={[remarkGfm]}
+            >
+              {formState.content}
+            </ReactMarkdown>
+          ) : null}
+        </div>
       </div>
-    </>
+    </div>
   );
   function closeTag(tagValue: string) {
     const newTags = formState.tags ? new Map(formState.tags) : new Map();
