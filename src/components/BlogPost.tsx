@@ -58,7 +58,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
           style={gradientStyle}
           className="my-0 rounded-t"
           src={sourceImage}
-          alt="Tech Image"
+          alt="Bokeh"
         />
         <div className="ml-auto flex flex-wrap bg-transparent p-2 text-txt-mid dark:text-txt-mid-dk">
           <small className="p-2 font-bold">{`${authorName}`}</small>
