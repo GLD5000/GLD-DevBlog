@@ -12,6 +12,7 @@ function getArrayTags(
     const tagObject = tag.tag;
     return (
       <button
+        type="button"
         key={tagObject.id}
         className={`my-auto flex h-fit w-fit items-center justify-center rounded-full  border-2 border-transparent px-2 text-center hover:transition focus:transition `}
         style={{
@@ -22,7 +23,7 @@ function getArrayTags(
         }}
       >
         {`#${tagObject.name}`}
-        <style jsx>
+        <style>
           {`
             button:hover,
             button:focus {

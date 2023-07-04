@@ -1,7 +1,9 @@
 import prisma from "@/lib/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
-async function handler(req: NextRequest, res: NextResponse) {
+/* eslint-disable import/prefer-default-export */
+
+async function handler(req: NextRequest) {
   const { searchParams } = new URL(req.url ? req.url : "");
   const authorEmail = searchParams.get("authorEmail");
   try {
@@ -43,6 +45,7 @@ async function handler(req: NextRequest, res: NextResponse) {
     return new Response(JSON.stringify(data));
   } catch (err) {
     console.error(err);
+    return new Response(JSON.stringify(err));
   }
 }
 

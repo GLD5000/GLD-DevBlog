@@ -1,4 +1,5 @@
 "use client";
+
 import PencilSvg from "@/assets/icons/PencilSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import { useRouter } from "next/navigation";
@@ -14,7 +15,7 @@ export default function EditButton({ postId }: { postId: string }) {
         </div>
       }
       textElement={<span className="my-auto h-min">Edit</span>}
-      showTextIn={true}
+      showTextIn
       clickFunction={() => router.push(`/edit/${postId}/`)}
       className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
     />

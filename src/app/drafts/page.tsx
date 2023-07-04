@@ -5,7 +5,7 @@ import { PostProps } from "@/components/BlogPost";
 import { useSession } from "next-auth/react";
 import BlogPostList from "@/components/BlogPostList";
 
-const Drafts = () => {
+export default function Drafts() {
   const { data: session } = useSession();
   const [data, setData] = useState<{
     drafts: PostProps[];
@@ -16,10 +16,10 @@ const Drafts = () => {
     const getPosts = async () => {
       try {
         const response = await fetch(
-          `/api/get?authorEmail=${session!.user!.email}`
+          `/api/get?authorEmail=${session?.user?.email}`
         );
-        const data = await response.json();
-        setData(data);
+        const responseData = await response.json();
+        setData(responseData);
       } catch (error) {
         console.log(error);
       }
@@ -65,6 +65,4 @@ const Drafts = () => {
       )}
     </div>
   );
-};
-
-export default Drafts;
+}

@@ -4,7 +4,7 @@ import { DefaultSession, getServerSession } from "next-auth";
 
 export default async function Create() {
   const session: DefaultSession | null = await getServerSession(authOptions);
-  const isCorrectUser = !!session;
+  const isCorrectUser = Boolean(session);
   if (!isCorrectUser)
     return (
       <div className="prose mx-auto grid gap-8 py-8 dark:prose-invert">

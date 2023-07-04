@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 // DELETE /api/delete/:id
+/* eslint-disable import/prefer-default-export */
 
 async function deleteTagsWithEmptyTagOnPostsArray() {
   try {
@@ -26,11 +27,10 @@ async function handler(
     });
     await deleteTagsWithEmptyTagOnPostsArray();
     return new Response(JSON.stringify(result));
-  } else {
-    throw new Error(
-      `The HTTP ${req.method} method is not supported at this route.`
-    );
   }
+  throw new Error(
+    `The HTTP ${req.method} method is not supported at this route.`
+  );
 }
 
 export { handler as DELETE };

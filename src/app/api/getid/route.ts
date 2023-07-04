@@ -1,5 +1,7 @@
 import prisma from "@/lib/prisma";
 // PUBLISH /api/publish/:id
+/* eslint-disable import/prefer-default-export */
+
 async function handler(req: Request) {
   const postId = `${req.json()}`;
 

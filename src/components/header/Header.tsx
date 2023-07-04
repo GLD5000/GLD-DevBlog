@@ -7,17 +7,17 @@ import MoonSvg from "@/assets/icons/MoonSvg";
 import SunSvg from "@/assets/icons/SunSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import GldSvg from "@/assets/icons/GldSvg";
-import UserMenu from "./UserMenu";
 import WriteSvg from "@/assets/icons/WriteSvg";
 import SignInSvg from "@/assets/icons/SignInSvg";
+import UserMenu from "./UserMenu";
 
-const Header = ({
+export default function Header({
   toggleColourTheme,
   colourTheme,
 }: {
   toggleColourTheme: () => void;
   colourTheme: boolean;
-}) => {
+}) {
   const { data: session, status } = useSession();
   function getDarkToggleIcon(isDark: boolean) {
     const wrapper = (
@@ -91,6 +91,4 @@ const Header = ({
       </nav>
     </header>
   );
-};
-
-export default Header;
+}

@@ -1,4 +1,5 @@
 "use client";
+
 import PaperPlaneSvg from "@/assets/icons/PaperPlaneSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
@@ -25,7 +26,7 @@ export default function PublishButton({ postId }: { postId: string }) {
         </div>
       }
       textElement={<span>Publish</span>}
-      showTextIn={true}
+      showTextIn
       clickFunction={() => handleClickPublish(postId, router)}
       className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
     />

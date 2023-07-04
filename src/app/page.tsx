@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { PostProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
+
 export const revalidate = 86400;
 
 const getData = async (): Promise<{

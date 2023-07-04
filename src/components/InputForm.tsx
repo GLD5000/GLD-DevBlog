@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer, useState } from "react";
+import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpicyLi from "@/elements/SpicyLi";
@@ -136,8 +136,8 @@ export default function InputForm({
     formInitialiser
   );
   const tagButtons = getTagButtons(formState.tags, closeTag, recolourTag);
-  let title = formState.title;
-  let subtitle = undefined;
+  let { title } = formState;
+  let subtitle = "";
   const hasSubtitle = title.includes(":");
   if (hasSubtitle) {
     [title, subtitle] = title.split(":");
@@ -155,7 +155,6 @@ export default function InputForm({
           Then publish it or save it for later!
         </p>
         <input
-          autoFocus
           required
           onChange={(e) => formDispatch({ payload: { title: e.target.value } })}
           placeholder="Title"
@@ -193,7 +192,7 @@ export default function InputForm({
               </div>
             }
             textElement={<span>Save</span>}
-            showTextIn={true}
+            showTextIn
             clickFunction={() => {
               formDispatch({ payload: { publish: false } });
             }}
@@ -208,7 +207,7 @@ export default function InputForm({
               </div>
             }
             textElement={<span>Publish</span>}
-            showTextIn={true}
+            showTextIn
             clickFunction={() => {
               formDispatch({ payload: { publish: true } });
             }}
@@ -223,7 +222,7 @@ export default function InputForm({
               </div>
             }
             textElement={<span>Clear</span>}
-            showTextIn={true}
+            showTextIn
             clickFunction={(e) => {
               e.preventDefault();
               formDispatch({
@@ -258,15 +257,15 @@ export default function InputForm({
         {hasSubtitle ? (
           <>
             <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
-              {title ? `${title}` : `no title`}
+              {title || `no title`}
             </h1>
             <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
-              {subtitle ? subtitle : ``}
+              {subtitle || ``}
             </h2>
           </>
         ) : (
           <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
-            {title ? title : `no title`}
+            {title || `no title`}
           </h1>
         )}
         {formState.content ? (

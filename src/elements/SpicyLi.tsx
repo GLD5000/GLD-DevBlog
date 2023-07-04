@@ -22,7 +22,7 @@ export default function SpicyLi({
   return (
     <li id={id} className={className} style={{ backgroundColor: inputcolour }}>
       <button
-        type={"button"}
+        type="button"
         id={`${id}-tag-btn`}
         className="m-0 block h-full w-full rounded-r-none p-1 text-current"
         onClick={(e) => {

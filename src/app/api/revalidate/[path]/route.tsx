@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-
+/* eslint-disable import/prefer-default-export */
 export async function GET(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
 

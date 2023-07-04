@@ -1,4 +1,5 @@
 "use client";
+
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
@@ -21,7 +22,7 @@ export default function DeleteButton({ postId }: { postId: string }) {
         </div>
       }
       textElement={<span>Delete</span>}
-      showTextIn={true}
+      showTextIn
       clickFunction={() => handleClick(postId, router)}
       className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
     />

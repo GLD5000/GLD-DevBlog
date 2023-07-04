@@ -1,5 +1,5 @@
 import { type MouseEvent, type ReactElement, useState } from "react";
-/* eslint-disable react/button-has-type */
+
 function getContent(
   reverse: boolean,
   showText: boolean,
@@ -50,7 +50,7 @@ export default function SvgButtonNew({
 
   return (
     <button
-      type={type}
+      type={type === "button" ? "button" : "submit"}
       id={id}
       name={name}
       onClick={clickFunction}

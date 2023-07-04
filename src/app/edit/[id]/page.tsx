@@ -27,7 +27,7 @@ const getData = async (idIn: string) => {
 function extractTagNames(tagArray: { tag: Tag | null }[]) {
   const newArray: [string, string][] = tagArray
     .map((tagObject): [string, string] => {
-      if (!!tagObject.tag)
+      if (tagObject.tag)
         return [
           tagObject.tag.name as string,
           tagObject.tag.backgroundColour as string,

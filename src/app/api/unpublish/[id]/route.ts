@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 // UNPUBLISH /api/unpublish/:id
+/* eslint-disable import/prefer-default-export */
 async function handler(
   req: Request,
   context: { [key: string]: { [key: string]: string } }
