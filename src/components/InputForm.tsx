@@ -270,7 +270,7 @@ export default function InputForm({
         )}
         {formState.content ? (
           <ReactMarkdown
-            className="prose mx-auto my-6 w-full dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
+            className="prose mx-auto my-6 max-h-screen w-full overflow-y-auto dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
             remarkPlugins={[remarkGfm]}
           >
             {formState.content}

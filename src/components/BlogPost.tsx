@@ -38,8 +38,8 @@ export default function BlogPost({ post }: { post: PostProps }) {
     <div className="mx-auto grid w-full  gap-2 rounded bg-bg-var shadow-lg  dark:bg-bg-var-dk dark:drop-shadow-post-dk">
       <button
         type="button"
-        className=" mx-auto my-0 grid w-fit rounded rounded-b-none rounded-t bg-bg-var pb-2 text-txt-mid hover:text-txt-main hover:grayscale hover:transition focus:text-txt-main  
-        focus:grayscale focus:transition dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-mid-dk dark:hover:text-txt-main-dk dark:focus:text-txt-main-dk"
+        className=" mx-auto my-0 grid w-fit rounded rounded-b-none rounded-t bg-bg-var pb-2 text-txt-mid hover:bg-bg hover:text-txt-main hover:transition focus:bg-bg focus:text-txt-main focus:transition  
+        dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-mid-dk hover:dark:bg-bg-dk dark:hover:text-txt-main-dk focus:dark:bg-bg-dk dark:focus:text-txt-main-dk"
         onClick={() => router.push(`/blogpost/${postId}/`)}
       >
         <Image
@@ -50,7 +50,7 @@ export default function BlogPost({ post }: { post: PostProps }) {
           src={sourceImage}
           alt="Tech Image"
         />
-        <div className="ml-auto flex flex-wrap p-2 text-txt-mid dark:text-txt-mid-dk">
+        <div className="ml-auto flex flex-wrap bg-transparent p-2 text-txt-mid dark:text-txt-mid-dk">
           <small className="p-2 font-bold">{`${authorName}`}</small>
           <small className="p-2">
             {updated.toLocaleDateString("en-GB", { dateStyle: "long" })}
