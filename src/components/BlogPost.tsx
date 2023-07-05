@@ -38,7 +38,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
     [title, subtitle] = title.split(":");
   }
   const { readTime, published, id } = post;
-  const updated = new Date(post.updatedAt);
+  const updated = new Date(post.createdAt);
   const router = useRouter();
   const { tags } = post;
   const gradientStyle = getGradient(tags);

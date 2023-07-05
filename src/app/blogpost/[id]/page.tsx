@@ -47,7 +47,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     [title, subtitle] = title.split(":");
   }
   const author = post?.author?.name;
-  const { readTime, content, updatedAt, tags } = post as PostProps;
+  const { readTime, content, createdAt, tags } = post as PostProps;
   const gradientStyle = getGradient(tags);
   const sourceImage = "/Bokeh.svg";
   if (!post) return <p>Uh oh! Blog post not found!</p>;
@@ -101,7 +101,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
             {tags.length && tags ? <TagSet tagsObject={tags} /> : null}
             <p className="mx-auto block w-fit">
-              {updatedAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
+              {createdAt.toLocaleDateString("en-GB", { dateStyle: "long" })}
             </p>
             <p className="mx-auto block w-fit font-bold">
               Written by {author ? `${author}` : `Unknown author`}
