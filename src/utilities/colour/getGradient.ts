@@ -14,6 +14,6 @@ export default function getGradient(
     })
     .join(",");
   return {
-    background: `linear-gradient(90deg, #fff5, #fff0, #fff0, #fff0, #fff5), linear-gradient(#fff5, #fff0, #fff0, #fff0, #fff5), linear-gradient(35deg, ${coloursString})`,
+    background: `linear-gradient(90deg, #fff6, #fff1, #fff0, #fff1, #fff3), linear-gradient(#fff2, #fff1, #fff0, #fff1, #fff4), linear-gradient(35deg, ${coloursString})`,
   };
 }
