@@ -43,12 +43,9 @@ export default async function Page() {
   // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
   const data = await getData();
   return (
-    <section className="prose mx-auto py-10 dark:prose-invert">
+    <section className="prose mx-auto pb-10 dark:prose-invert">
       {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}
       <div className="mx-auto grid gap-8  py-8">
-        <h1 className="mx-auto text-txt-main dark:text-txt-main-dk">
-          Latest Blogs
-        </h1>
         <div className="flex flex-row flex-wrap gap-2 rounded border-2 border-transparent bg-bg-var px-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk ">
           {/* {tagButtons} */}
           <FilterTags />
