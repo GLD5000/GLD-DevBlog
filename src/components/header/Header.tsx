@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import MoonSvg from "@/assets/icons/MoonSvg";
 import SunSvg from "@/assets/icons/SunSvg";
 import SvgButtonNew from "@/elements/SvgButtonNew";
@@ -10,6 +11,8 @@ import GldSvg from "@/assets/icons/GldSvg";
 import WriteSvg from "@/assets/icons/WriteSvg";
 import SignInSvg from "@/assets/icons/SignInSvg";
 import UserMenu from "./UserMenu";
+
+const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
 
 export default function Header({
   toggleColourTheme,
@@ -41,12 +44,12 @@ export default function Header({
       >
         <Link
           href="/"
-          className="my-auto flex h-10 w-32 items-center justify-center gap-2 rounded border-2 border-transparent p-1 text-center text-txt-main  hover:border-txt-main hover:transition dark:text-txt-main-dk  dark:hover:border-txt-main-dk"
+          className={`my-auto flex h-10 w-44 content-center items-center justify-center gap-2 rounded border-2 border-transparent p-1 text-center text-3xl text-txt-main hover:border-txt-main hover:transition dark:text-txt-main-dk  dark:hover:border-txt-main-dk ${theGreat.className}`}
         >
           <div className="h-10 w-10">
             <GldSvg />
           </div>
-          DevBlog
+          <p className=" text-shadow-title mb-1">DevBlog</p>
         </Link>
         <div className="flex h-14 w-fit flex-row items-center gap-2 p-2">
           {session ? (
