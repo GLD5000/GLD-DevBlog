@@ -47,14 +47,14 @@ export default async function Page() {
   // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
   const data = await getData();
   return (
-    <section className="prose mx-auto pb-10 dark:prose-invert">
+    <section className="prose mx-auto w-fit max-w-[90%] p-2 pb-10 dark:prose-invert">
       {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}
       <h1
-        className={`mx-auto mb-0 mt-8 w-fit text-8xl text-current ${theGreat.className}`}
+        className={`mx-auto mb-0 mt-8 w-fit text-6xl text-current xs:text-8xl ${theGreat.className}`}
       >
         DevBlog
       </h1>
-      <h2 className={`mx-auto my-2 w-fit text-2xl text-current `}>
+      <h2 className={`mx-auto my-2 w-fit text-xl text-current sm:text-2xl `}>
         Find Your Story Here
       </h2>
       <div className="mx-auto grid gap-8  py-8">

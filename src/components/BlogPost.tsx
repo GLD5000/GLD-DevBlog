@@ -45,7 +45,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
   const sourceImage = "/Bokeh.svg";
 
   return (
-    <div className="mx-auto grid w-full  gap-2 rounded bg-bg-var shadow-lg  dark:bg-bg-var-dk dark:drop-shadow-post-dk">
+    <div className="mx-auto grid w-full gap-2 rounded bg-bg-var shadow-lg  dark:bg-bg-var-dk dark:drop-shadow-post-dk">
       <button
         type="button"
         className=" mx-auto my-0 grid w-fit rounded rounded-b-none rounded-t bg-bg-var pb-2 text-txt-mid hover:bg-bg hover:text-txt-main hover:transition focus:bg-bg focus:text-txt-main focus:transition  
@@ -69,15 +69,15 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
         </div>
         {hasSubtitle ? (
           <>
-            <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk xs:text-6xl">
               {title || `no title`}
             </h1>
-            <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
+            <h2 className="mx-auto my-4 w-fit break-words text-center text-2xl font-bold text-txt-main dark:text-txt-main-dk xs:text-4xl">
               {subtitle || ``}
             </h2>
           </>
         ) : (
-          <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+          <h1 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk xs:text-6xl">
             {title || `no title`}
           </h1>
         )}
