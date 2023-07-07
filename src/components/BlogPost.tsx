@@ -53,8 +53,8 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
         onClick={() => router.push(`/blogpost/${id}/`)}
       >
         <Image
-          width={650}
-          height={100}
+          width={1200}
+          height={210}
           style={gradientStyle}
           className="my-0 rounded-t"
           src={sourceImage}

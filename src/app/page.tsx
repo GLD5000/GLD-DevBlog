@@ -47,7 +47,7 @@ export default async function Page() {
   // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
   const data = await getData();
   return (
-    <section className="prose mx-auto w-fit max-w-[90%] p-2 pb-10 dark:prose-invert">
+    <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
       {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}
       <h1
         className={`mx-auto mb-0 mt-8 w-fit text-6xl text-current xs:text-8xl ${theGreat.className}`}

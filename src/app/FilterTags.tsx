@@ -10,7 +10,7 @@ export default function FilterTags() {
       placeholder="Filter Tags e.g.: Typescript React"
       type="text"
       value={searchTags}
-      className="grow rounded bg-bg-var p-2 text-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk"
+      className="w-full shrink grow break-words rounded bg-bg-var p-2 text-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk"
     />
   );
 }
