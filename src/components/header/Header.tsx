@@ -34,7 +34,7 @@ export default function Header({
 
   return (
     <header
-      className={`sticky left-0 top-0 z-[999] h-14 w-full border-b-2 ${
+      className={`sticky left-0 top-0 z-[997] h-14 w-full border-b-2 ${
         colourTheme ? "border-b-border-dk bg-bg-dk" : "border-b-border bg-bg"
       }`}
     >

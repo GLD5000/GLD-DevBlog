@@ -1,6 +1,7 @@
 "use client";
 
 import Header from "@/components/header/Header";
+import MainContentLink from "@/components/header/MainContentLink";
 import { useEffect, useState } from "react";
 
 export default function Template({ children }: { children: React.ReactNode }) {
@@ -38,8 +39,11 @@ export default function Template({ children }: { children: React.ReactNode }) {
         colourTheme ? "dark bg-bg-dk" : "bg-bg"
       }`}
     >
+      <MainContentLink />
       <Header toggleColourTheme={toggleColourTheme} colourTheme={colourTheme} />
-      <main className="relative w-full">{children}</main>
+      <main id="main" className="relative w-full">
+        {children}
+      </main>
     </div>
   );
 }
