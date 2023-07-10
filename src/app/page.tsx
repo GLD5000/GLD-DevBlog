@@ -14,7 +14,7 @@ export const revalidate = 86400;
 const getData = async (): Promise<{
   props: PostEmailProps[];
 }> => {
-  const drafts: PostEmailProps[] = await prisma.post.findMany({
+  const posts: PostEmailProps[] = await prisma.post.findMany({
     where: {
       published: true,
     },
@@ -32,13 +32,13 @@ const getData = async (): Promise<{
   // if (searchTags) {
   //   const searchTagsArray = searchTags.split(" ");
   //   return {
-  //     props: drafts.filter((post) =>
+  //     props: posts.filter((post) =>
   //       post.tags.some((tag) => searchTagsArray.includes(tag.tag.name))
   //     ),
   //   };
   // }
   return {
-    props: drafts,
+    props: posts,
   };
 };
 

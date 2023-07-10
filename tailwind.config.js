@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+/*  eslint-disable */
 module.exports = {
   darkMode: "class",
   content: ["./src/**/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -42,7 +43,7 @@ module.exports = {
         "border-dk": "#6b6b6b",
         "txt-mid-dk": "#ababab",
         "txt-main-dk": "#ffffff",
-        "txt-main": "#1c2434",
+        "txt-main": "#000000",
         "txt-mid": "#44587f",
         border: "#919191",
         deco: "#e0e0e0",
