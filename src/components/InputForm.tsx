@@ -257,15 +257,15 @@ export default function InputForm({
         <div className="max-h-[80vh] overflow-y-auto rounded-xl bg-bg-var p-4 shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
           {hasSubtitle ? (
             <>
-              <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+              <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
                 {title || `no title`}
               </h1>
-              <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
+              <h2 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl sm:text-4xl">
                 {subtitle || ``}
               </h2>
             </>
           ) : (
-            <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
               {title || `no title`}
             </h1>
           )}

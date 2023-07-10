@@ -86,15 +86,15 @@ export default async function Page({ params }: { params: { id: string } }) {
           <div className="mx-auto w-fit p-4">
             {hasSubtitle ? (
               <>
-                <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+                <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
                   {title || `no title`}
                 </h1>
-                <h2 className="mx-auto my-4 w-fit break-words text-center text-4xl font-bold text-txt-main dark:text-txt-main-dk">
+                <h2 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl sm:text-4xl">
                   {subtitle || ``}
                 </h2>
               </>
             ) : (
-              <h1 className="mx-auto my-4 w-fit break-words text-center text-6xl font-bold text-txt-main dark:text-txt-main-dk">
+              <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
                 {title || `no title`}
               </h1>
             )}
