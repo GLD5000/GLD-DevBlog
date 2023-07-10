@@ -69,7 +69,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
         </div>
         {hasSubtitle ? (
           <>
-            <h1 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl xs:text-6xl sm:text-4xl">
+            <h1 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl sm:text-4xl md:text-6xl">
               {title || `no title`}
             </h1>
             <h2 className="mx-auto my-4 w-fit break-words text-center text-2xl font-bold text-txt-main dark:text-txt-main-dk xs:text-4xl">
@@ -77,7 +77,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
             </h2>
           </>
         ) : (
-          <h1 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl xs:text-6xl sm:text-4xl">
+          <h1 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl sm:text-4xl md:text-6xl">
             {title || `no title`}
           </h1>
         )}
