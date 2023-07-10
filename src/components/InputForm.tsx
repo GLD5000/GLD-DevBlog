@@ -3,9 +3,9 @@
 import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import SpicyLi from "@/elements/SpicyLi";
+import SpicyLi from "@/components/elements/SpicyLi";
 import PaperPlaneSvg from "@/assets/icons/PaperPlaneSvg";
-import SvgButtonNew from "@/elements/SvgButtonNew";
+import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/number/readTime";

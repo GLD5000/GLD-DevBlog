@@ -1,7 +1,7 @@
 "use client";
 
 import DeleteSvg from "@/assets/icons/DeleteSvg";
-import SvgButtonNew from "@/elements/SvgButtonNew";
+import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { useRouter } from "next/navigation";
 

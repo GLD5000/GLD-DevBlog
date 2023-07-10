@@ -1,7 +1,7 @@
 "use client";
 
 import PencilSvg from "@/assets/icons/PencilSvg";
-import SvgButtonNew from "@/elements/SvgButtonNew";
+import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import { useRouter } from "next/navigation";
 
 export default function EditButton({ postId }: { postId: string }) {

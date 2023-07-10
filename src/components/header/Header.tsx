@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import MoonSvg from "@/assets/icons/MoonSvg";
 import SunSvg from "@/assets/icons/SunSvg";
-import SvgButtonNew from "@/elements/SvgButtonNew";
+import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import GldSvg from "@/assets/icons/GldSvg";
 import WriteSvg from "@/assets/icons/WriteSvg";
 import SignInSvg from "@/assets/icons/SignInSvg";

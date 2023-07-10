@@ -1,54 +1,8 @@
-import { PostProps } from "@/components/BlogPost";
-import { Session, getServerSession } from "next-auth";
-import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import BlogPostList from "@/components/BlogPostList";
+import getData from "@/lib/prismaFetch";
 import FilterTags from "../FilterTags";
-
-const getData = async (
-  sessionData: Session
-): Promise<{
-  published: PostProps[];
-  drafts: PostProps[];
-}> => {
-  const drafts: PostProps[] = await prisma.post.findMany({
-    where: {
-      author: { email: sessionData?.user?.email },
-      published: false,
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true, email: true },
-      },
-    },
-  });
-  const published: PostProps[] = await prisma.post.findMany({
-    where: {
-      author: { email: sessionData?.user?.email },
-      published: true,
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true, email: true },
-      },
-    },
-  });
-
-  return {
-    published,
-    drafts,
-  };
-};
 
 const Drafts = async () => {
   const session = await getServerSession(authOptions);

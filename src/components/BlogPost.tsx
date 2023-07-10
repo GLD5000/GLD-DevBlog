@@ -3,25 +3,14 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Post, Tag } from "@prisma/client";
 import getGradient from "@/utilities/colour/getGradient";
 import { useSession } from "next-auth/react";
+import { PostEmailProps } from "@/lib/prismaFetch";
 import TagSet from "./TagSet";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";
 import UnpublishButton from "./UnpublishButton";
 import PublishButton from "./publishButton";
-
-export interface PostProps extends Post {
-  author: { name: string | null } | null;
-  tags: {
-    tag: Tag;
-  }[];
-}
-
-export interface PostEmailProps extends PostProps {
-  author: { name: string | null; email?: string | null } | null;
-}
 
 export default function BlogPost({ post }: { post: PostEmailProps }) {
   const { data: session } = useSession();

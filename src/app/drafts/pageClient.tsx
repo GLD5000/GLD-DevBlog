@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { PostEmailProps } from "@/components/BlogPost";
 import { useSession } from "next-auth/react";
 import BlogPostList from "@/components/BlogPostList";
+import { PostEmailProps } from "@/lib/prismaFetch";
 
 export default function Drafts() {
   const { data: session } = useSession();

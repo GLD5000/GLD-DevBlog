@@ -1,7 +1,8 @@
 "use client";
 
+import { PostEmailProps } from "@/lib/prismaFetch";
 import { useStore } from "@/store/zustand";
-import BlogPost, { PostEmailProps } from "./BlogPost";
+import BlogPost from "./BlogPost";
 
 export default function BlogPostList({
   arrayIn,

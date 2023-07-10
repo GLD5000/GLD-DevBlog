@@ -1,9 +1,10 @@
 import React from "react";
-import BlogPost, { PostProps } from "@/components/BlogPost";
+import BlogPost from "@/components/BlogPost";
 import { Session, getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import BlogPostList from "@/components/BlogPostList";
+import { PostProps } from "@/lib/prismaFetch";
 
 const getData = async (
   sessionData: Session

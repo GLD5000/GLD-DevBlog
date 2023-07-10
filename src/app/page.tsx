@@ -1,7 +1,7 @@
 import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import prisma from "@/lib/prisma";
-import { PostEmailProps } from "@/components/BlogPost";
 import BlogPostList from "@/components/BlogPostList";
+import { PostEmailProps } from "@/lib/prismaFetch";
 import FilterTags from "./FilterTags";
 
 const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
