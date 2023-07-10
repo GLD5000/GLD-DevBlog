@@ -1,4 +1,3 @@
-import prisma from "@/lib/prisma";
 import PublishButton from "@/components/publishButton";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -10,33 +9,11 @@ import TagSet from "@/components/TagSet";
 import EditButton from "@/components/EditButton";
 import Image from "next/image";
 import getGradient from "@/utilities/colour/getGradient";
-import { PostProps } from "@/lib/prismaFetch";
-
-const getData = async (idIn: string) => {
-  const feed = await prisma.post.findFirst({
-    where: { id: idIn },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true, email: true },
-      },
-    },
-  });
-
-  return {
-    props: { feed },
-  };
-};
+import { PostProps, getBlog } from "@/lib/prismaFetch";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const postId = params.id;
-  const {
-    props: { feed: post },
-  } = await getData(postId);
+  const { post } = await getBlog(postId);
   const session: DefaultSession | null = await getServerSession(authOptions);
   const isPublished = post?.published;
   const isCorrectUser = session?.user?.email === post?.author?.email;

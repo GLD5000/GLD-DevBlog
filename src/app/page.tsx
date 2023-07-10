@@ -1,7 +1,6 @@
 import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
-import prisma from "@/lib/prisma";
 import BlogPostList from "@/components/BlogPostList";
-import { PostEmailProps } from "@/lib/prismaFetch";
+import getBlogs from "@/lib/prismaFetch";
 import FilterTags from "./FilterTags";
 
 const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
@@ -11,41 +10,10 @@ const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
 
 export const revalidate = 86400;
 
-const getData = async (): Promise<{
-  props: PostEmailProps[];
-}> => {
-  const posts: PostEmailProps[] = await prisma.post.findMany({
-    where: {
-      published: true,
-    },
-    orderBy: { createdAt: "desc" },
-    include: {
-      tags: {
-        orderBy: { tag: { name: "asc" } },
-        select: { tag: true },
-      },
-      author: {
-        select: { name: true },
-      },
-    },
-  });
-  // if (searchTags) {
-  //   const searchTagsArray = searchTags.split(" ");
-  //   return {
-  //     props: posts.filter((post) =>
-  //       post.tags.some((tag) => searchTagsArray.includes(tag.tag.name))
-  //     ),
-  //   };
-  // }
-  return {
-    props: posts,
-  };
-};
-
 export default async function Page() {
   // const searchTags = useStore.getState().searchTags;
   // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
-  const data = await getData();
+  const data = await getBlogs();
   return (
     <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
       {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}

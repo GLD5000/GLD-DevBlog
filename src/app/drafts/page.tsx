@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import BlogPostList from "@/components/BlogPostList";
-import getData from "@/lib/prismaFetch";
+import { getDrafts } from "@/lib/prismaFetch";
 import FilterTags from "../FilterTags";
 
 const Drafts = async () => {
@@ -18,7 +18,7 @@ const Drafts = async () => {
       </div>
     );
   }
-  const { drafts, published } = await getData(session);
+  const { drafts, published } = await getDrafts(session);
 
   return (
     <div className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
