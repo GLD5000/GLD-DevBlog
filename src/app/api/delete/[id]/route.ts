@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 // DELETE /api/delete/:id
 /* eslint-disable import/prefer-default-export */
 
@@ -26,6 +27,7 @@ async function handler(
       where: { id: postId },
     });
     await deleteTagsWithEmptyTagOnPostsArray();
+    revalidatePath("/");
     return new Response(JSON.stringify(result));
   }
   throw new Error(

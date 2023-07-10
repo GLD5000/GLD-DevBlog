@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 // UNPUBLISH /api/unpublish/:id
 /* eslint-disable import/prefer-default-export */
 async function handler(
@@ -10,6 +11,7 @@ async function handler(
     where: { id: postId },
     data: { published: false },
   });
+  revalidatePath("/");
   return new Response(JSON.stringify(result));
 }
 

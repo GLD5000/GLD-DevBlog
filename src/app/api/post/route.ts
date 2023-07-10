@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma";
 import makeNewTag from "@/utilities/colour/newTagMaker";
+import { revalidatePath } from "next/cache";
 
 /* eslint-disable import/prefer-default-export */
 
@@ -95,7 +96,7 @@ async function handler(req: Request) {
         },
       });
   if (tags && tags.length) addTags(new Map(tags), postResult.id);
-
+  revalidatePath("/");
   return new Response(JSON.stringify(postResult));
 }
 

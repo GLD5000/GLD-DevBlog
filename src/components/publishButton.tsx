@@ -12,8 +12,8 @@ async function handleClickPublish(
   await fetch(`/api/publish/${postId}`, {
     method: "POST",
   });
-  // await fetch(`/api/revalidate/drafts`);
   routerInstance.push("/drafts/");
+  window.location.reload();
 }
 export default function PublishButton({ postId }: { postId: string }) {
   const router = useRouter();
