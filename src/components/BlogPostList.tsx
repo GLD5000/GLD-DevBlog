@@ -10,7 +10,6 @@ export default function BlogPostList({
 }) {
   const { searchTags } = useStore();
   const searchTagsArray = searchTags.split(" ");
-  console.log("searchTags:", searchTags);
   const filteredArray = searchTags
     ? arrayIn.filter((post) =>
         post.tags.some((tag) => searchTagsArray.includes(tag.tag.name))

@@ -1,6 +1,5 @@
-"use client";
-
 import { Tag } from "@prisma/client";
+import PostTag from "./PostTag";
 
 function getArrayTags(
   arrayIn: {
@@ -10,28 +9,7 @@ function getArrayTags(
   return arrayIn.map((tag) => {
     if (!tag.tag) return null;
     const tagObject = tag.tag;
-    return (
-      <button
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = tagObject.backgroundColour;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = "transparent";
-        }}
-        type="button"
-        key={tagObject.id}
-        className={`my-auto flex h-fit w-fit items-center justify-center rounded-full  border-2 border-transparent px-2 text-center hover:border-current hover:transition focus:border-current focus:transition `}
-        style={{
-          textDecoration: `${tagObject.backgroundColour}`,
-          textDecorationLine: `underline`,
-          textDecorationThickness: `4px`,
-          textDecorationSkipInk: "none",
-          backgroundColor: `${tagObject.backgroundColour}00`,
-        }}
-      >
-        {`#${tagObject.name}`}
-      </button>
-    );
+    return <PostTag key={tagObject.id} tagObject={tagObject} />;
   });
 }
 
