@@ -1,19 +1,20 @@
 import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import BlogPostList from "@/components/BlogPostList";
 import getBlogs from "@/lib/prismaFetch";
+import { useStore } from "@/store/zustand";
 import FilterTags from "./FilterTags";
 
 const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
-
-// import { useStore } from "@/store/zustand";
 // import ZustandInitialiser from "@/store/ZustandInitialiser";
 
 export const revalidate = 86400;
 
 export default async function Page() {
-  // const searchTags = useStore.getState().searchTags;
   // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
-  const data = await getBlogs();
+  const { tags, posts } = await getBlogs();
+  useStore.setState({ allTags: tags });
+  // console.log('useStore.getState().allTags:', useStore.getState().allTags);
+  // console.log('tags:', tags);
   return (
     <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
       {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}
@@ -31,14 +32,14 @@ export default async function Page() {
           <FilterTags />
         </div>
 
-        {data.props.length === 0 ? (
+        {posts.length === 0 ? (
           <div className="mx-auto text-txt-main dark:text-txt-main-dk">
             Why not log in and write your own?
           </div>
         ) : null}
       </div>
 
-      <BlogPostList arrayIn={data.props} />
+      <BlogPostList arrayIn={posts} />
     </section>
   );
 }

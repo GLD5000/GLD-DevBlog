@@ -14,7 +14,8 @@ export interface PostEmailProps extends PostProps {
 }
 
 export default async function getBlogs(): Promise<{
-  props: PostEmailProps[];
+  tags: Tag[];
+  posts: PostEmailProps[];
 }> {
   const posts: PostEmailProps[] = await prisma.post.findMany({
     where: {
@@ -31,8 +32,10 @@ export default async function getBlogs(): Promise<{
       },
     },
   });
+  const tags: Tag[] = await prisma.tag.findMany({});
   return {
-    props: posts,
+    posts,
+    tags,
   };
 }
 
