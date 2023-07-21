@@ -2,10 +2,10 @@ import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import BlogPostList from "@/components/BlogPostList";
 import getBlogs from "@/lib/prismaFetch";
 import { useStore } from "@/store/zustand";
+import ZustandInitialiser from "@/store/ZustandInitialiser";
 import FilterTags from "./FilterTags";
 
 const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
-// import ZustandInitialiser from "@/store/ZustandInitialiser";
 
 export const revalidate = 86400;
 
@@ -17,7 +17,7 @@ export default async function Page() {
   // console.log('tags:', tags);
   return (
     <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
-      {/* <ZustandInitialiser searchTags={useStore.getState().searchTags} /> */}
+      <ZustandInitialiser searchTags="" allTags={useStore.getState().allTags} />
       <h1
         className={`mx-auto mb-0 mt-8 w-fit text-6xl text-current xs:text-8xl ${theGreat.className}`}
       >

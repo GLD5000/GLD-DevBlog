@@ -12,8 +12,9 @@ export default function ZustandInitialiser({
   searchTags: string;
 }) {
   const initialised = useRef(false);
+
   if (!initialised.current) {
-    useStore.setState({ searchTags });
+    useStore.setState({ allTags, searchTags });
     initialised.current = true;
   }
   return null;
