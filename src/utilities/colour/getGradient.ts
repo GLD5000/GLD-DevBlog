@@ -5,7 +5,10 @@ export default function getGradient(
     tag: Tag;
   }[]
 ) {
-  if (!tags.length) return { background: `linear-gradient(10deg, #934, #756)` };
+  if (!tags.length)
+    return {
+      background: `linear-gradient(90deg, #fff6, #fff1, #fff0, #fff1, #fff3), linear-gradient(#fff2, #fff1, #fff0, #fff1, #fff4), linear-gradient(10deg, #934, #756)`,
+    };
   const coloursString = tags
     .map((tag) => {
       if (!tag.tag) return null;
@@ -13,6 +16,10 @@ export default function getGradient(
       return tagObject.backgroundColour;
     })
     .join(",");
+  if (tags.length === 1)
+    return {
+      background: `linear-gradient(90deg, #fff6, #fff1, #fff0, #fff1, #fff3), linear-gradient(#fff2, #fff1, #fff0, #fff1, #fff4), linear-gradient(10deg, ${coloursString}, #756)`,
+    };
   return {
     background: `linear-gradient(90deg, #fff6, #fff1, #fff0, #fff1, #fff3), linear-gradient(#fff2, #fff1, #fff0, #fff1, #fff4), linear-gradient(35deg, ${coloursString})`,
   };
