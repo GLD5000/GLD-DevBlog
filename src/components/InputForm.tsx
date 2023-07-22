@@ -325,6 +325,7 @@ export default function InputForm({
         body: JSON.stringify(body),
       });
       Router.push("/drafts/");
+      window.location.reload();
     } catch (error) {
       console.error(error);
     }
