@@ -9,7 +9,7 @@ function getTagOptionList(tagList: Tag[]) {
 
 export default function FilterTags() {
   const { searchTags, allTags } = useStore();
-  console.log("allTags:", allTags);
+  // console.log("allTags:", allTags);
   const listOptions = getTagOptionList(allTags);
   return (
     <>
