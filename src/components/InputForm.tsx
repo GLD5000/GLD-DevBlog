@@ -9,10 +9,9 @@ import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/number/readTime";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import getRandomColour from "@/utilities/colour/randomColour";
 import CloseSvg from "@/assets/icons/CloseSvg";
+import PreviewPost from "./PreviewPost";
 
 interface FormState {
   title: string;
@@ -136,12 +135,7 @@ export default function InputForm({
     formInitialiser
   );
   const tagButtons = getTagButtons(formState.tags, closeTag, recolourTag);
-  let { title } = formState;
-  let subtitle = "";
-  const hasSubtitle = title.includes(":");
-  if (hasSubtitle) {
-    [title, subtitle] = title.split(":");
-  }
+
   return (
     <div className="pb-24">
       <form
@@ -241,9 +235,6 @@ export default function InputForm({
           <Link
             className="grid h-10 w-32 grid-cols-autoFr items-center rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
             href="/drafts/"
-            // onClick={() => {
-            //   localStorage.clear();
-            // }}
           >
             <div className="aspect-square h-8 p-[0.15rem]">
               <CloseSvg />
@@ -253,32 +244,7 @@ export default function InputForm({
           </Link>
         </div>
       </form>
-      <div className="px-4">
-        <div className="max-h-[80vh] overflow-y-auto rounded-xl bg-bg-var p-4 shadow-lg dark:bg-bg-var-dk dark:drop-shadow-post-dk">
-          {hasSubtitle ? (
-            <>
-              <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
-                {title || `no title`}
-              </h1>
-              <h2 className="mx-auto my-4 w-fit break-words text-center text-xl font-bold text-txt-main dark:text-txt-main-dk xs:text-3xl sm:text-4xl">
-                {subtitle || ``}
-              </h2>
-            </>
-          ) : (
-            <h1 className="mx-auto my-4 w-fit break-words text-center text-3xl font-bold text-txt-main dark:text-txt-main-dk xs:text-5xl sm:text-6xl">
-              {title || `no title`}
-            </h1>
-          )}
-          {formState.content ? (
-            <ReactMarkdown
-              className="prose mx-auto my-6  w-full  dark:prose-invert sm:prose-lg lg:prose-xl xl:prose-2xl  "
-              remarkPlugins={[remarkGfm]}
-            >
-              {formState.content}
-            </ReactMarkdown>
-          ) : null}
-        </div>
-      </div>
+      <PreviewPost formState={formState} />
     </div>
   );
   function closeTag(tagValue: string) {
