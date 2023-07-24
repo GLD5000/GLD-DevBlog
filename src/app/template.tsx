@@ -13,12 +13,12 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
   function getThemeFromSessionStorage() {
     if (typeof window !== "undefined") {
-      return sessionStorage.getItem("theme") === "true";
+      return sessionStorage.getItem("theme") !== "false";
     }
     return true;
   }
 
-  const [colourTheme, setColourTheme] = useState<boolean | null>(null);
+  const [colourTheme, setColourTheme] = useState(true);
   //     const [colourTheme, setColourTheme] = useState(
   //     localStorage.getItem("theme") !== "false"
   //   );
