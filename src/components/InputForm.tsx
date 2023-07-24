@@ -158,6 +158,7 @@ export default function InputForm({
         />
         <textarea
           required
+          spellCheck
           cols={50}
           onChange={(e) =>
             formDispatch({ payload: { content: e.target.value } })
