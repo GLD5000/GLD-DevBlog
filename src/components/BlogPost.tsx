@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import getGradient from "@/utilities/colour/getGradient";
 import { useSession } from "next-auth/react";
-import { PostEmailProps } from "@/lib/prismaFetch";
+import { PostEmailProps } from "@/lib/prisma/prismaFetch";
 import TagSet from "./TagSet";
 import DeleteButton from "./DeleteButton";
 import EditButton from "./EditButton";

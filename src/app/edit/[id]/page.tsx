@@ -1,5 +1,5 @@
 import InputForm from "@/components/InputForm";
-import { getBlog } from "@/lib/prismaFetch";
+import { getBlog } from "@/lib/prisma/prismaFetch";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { DefaultSession, getServerSession } from "next-auth";
 

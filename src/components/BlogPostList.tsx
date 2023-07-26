@@ -1,6 +1,6 @@
 "use client";
 
-import { PostEmailProps } from "@/lib/prismaFetch";
+import { PostEmailProps } from "@/lib/prisma/prismaFetch";
 import { useStore } from "@/store/zustand";
 import BlogPost from "./BlogPost";
 

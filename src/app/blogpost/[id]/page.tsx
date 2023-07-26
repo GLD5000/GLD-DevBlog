@@ -9,7 +9,7 @@ import TagSet from "@/components/TagSet";
 import EditButton from "@/components/EditButton";
 import Image from "next/image";
 import getGradient from "@/utilities/colour/getGradient";
-import { PostProps, getBlog } from "@/lib/prismaFetch";
+import { PostProps, getBlog } from "@/lib/prisma/prismaFetch";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const postId = params.id;

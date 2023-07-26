@@ -1,6 +1,6 @@
 import { Fredericka_the_Great as FredTheGreat } from "next/font/google";
 import BlogPostList from "@/components/BlogPostList";
-import getBlogs from "@/lib/prismaFetch";
+import getBlogs from "@/lib/prisma/prismaFetch";
 import { useStore } from "@/store/zustand";
 import ZustandInitialiser from "@/store/ZustandInitialiser";
 import FilterTags from "./FilterTags";

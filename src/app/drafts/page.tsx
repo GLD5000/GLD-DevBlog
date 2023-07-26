@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import BlogPostList from "@/components/BlogPostList";
-import { getDrafts } from "@/lib/prismaFetch";
+import { getDrafts } from "@/lib/prisma/prismaFetch";
 import FilterTags from "../FilterTags";
 
 const Drafts = async () => {

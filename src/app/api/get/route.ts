@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma/prisma";
 import { NextRequest } from "next/server";
 
 /* eslint-disable import/prefer-default-export */

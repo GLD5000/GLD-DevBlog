@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import prisma from "@/lib/prisma/prisma";
 import { revalidatePath } from "next/cache";
 // DELETE /api/delete/:id
 /* eslint-disable import/prefer-default-export */
