@@ -18,12 +18,12 @@ export default async function Edit({ params }: { params: { id: string } }) {
         </div>
       </div>
     );
-
+  console.log("tagNames:", tagNames);
   return (
     <div>
       <InputForm
         initialContent={post?.content || undefined}
-        initialTags={tagNames || undefined}
+        initialTags={tagNames && tagNames.size ? tagNames : undefined}
         initialTitle={post?.title}
         intialId={post?.id}
       />

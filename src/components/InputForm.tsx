@@ -55,7 +55,8 @@ function formInitialiser({
       title: initialTitle || "",
       content: initialContent || "",
       publish: false,
-      tags: initialTags || undefined,
+      tags:
+        initialTags && !Array.isArray(initialTags) ? initialTags : undefined,
       tagString: "",
     };
     return initialObject;
@@ -134,6 +135,9 @@ export default function InputForm({
     { initialTitle, initialContent, initialTags },
     formInitialiser
   );
+  console.log("initialTags:", initialTags);
+  console.log("formState:", formState);
+  console.log("Array.isArray(formState.tags):", Array.isArray(formState.tags));
   const tagButtons = getTagButtons(formState.tags, closeTag, recolourTag);
 
   return (
