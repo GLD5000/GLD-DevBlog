@@ -5,12 +5,14 @@ import { useState } from "react";
 
 /* Instruments */
 import {
-  counterSlice,
+  incrementByAmount,
   useSelector,
   useDispatch,
   selectCount,
   incrementAsync,
   incrementIfOddAsync,
+  decrement,
+  increment,
 } from "@/lib/redux";
 import styles from "./counter.module.css";
 
@@ -28,7 +30,7 @@ export function Counter() {
           type="button"
           className={styles.button}
           aria-label="Decrement value"
-          onClick={() => dispatch(counterSlice.actions.decrement())}
+          onClick={() => dispatch(decrement())}
         >
           -
         </button>
@@ -37,7 +39,7 @@ export function Counter() {
           type="button"
           className={styles.button}
           aria-label="Increment value"
-          onClick={() => dispatch(counterSlice.actions.increment())}
+          onClick={() => dispatch(increment())}
         >
           +
         </button>
@@ -52,9 +54,7 @@ export function Counter() {
         <button
           type="button"
           className={styles.button}
-          onClick={() =>
-            dispatch(counterSlice.actions.incrementByAmount(incrementAmount))
-          }
+          onClick={() => dispatch(incrementByAmount(incrementAmount))}
         >
           Add Amount
         </button>

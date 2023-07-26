@@ -2,7 +2,7 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 /* Instruments */
-import { incrementAsync } from "./thunks";
+import { incrementAsync } from "./asyncThunks";
 
 /* eslint-disable no-param-reassign */
 
@@ -22,10 +22,6 @@ export const counterSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
     increment: (state) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
       state.value += 1;
     },
     decrement: (state) => {
@@ -49,3 +45,10 @@ export const counterSlice = createSlice({
       });
   },
 });
+
+// Extract the action creators object and the reducer
+const { actions, reducer } = counterSlice;
+// Extract and export each action creator by name
+export const { increment, decrement, incrementByAmount } = actions;
+// Export the reducer, either as a default or named export
+export default reducer;

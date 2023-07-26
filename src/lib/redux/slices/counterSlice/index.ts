@@ -1,4 +1,4 @@
 export * from "./counterSlice";
-export * from "./thunks";
+export * from "./asyncThunks";
 export * from "./selectors";
-export * from "./middleware";
+export * from "./thunks";

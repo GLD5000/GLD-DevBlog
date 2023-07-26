@@ -1,14 +1,16 @@
-import { createAppAsyncThunk } from "@/lib/redux/createAppAsyncThunk";
-import { fetchIdentityCount } from "./fetchIdentityCount";
+/* Instruments */
+import type { ReduxThunkAction } from "@/lib/redux";
+import { selectCount } from "./selectors";
+import { incrementByAmount } from "./counterSlice";
 
 /* eslint-disable import/prefer-default-export */
 
-export const incrementAsync = createAppAsyncThunk(
-  "counter/fetchIdentityCount",
-  async (amount: number) => {
-    const response = await fetchIdentityCount(amount);
+export const incrementIfOddAsync =
+  (amount: number): ReduxThunkAction =>
+  (dispatch, getState) => {
+    const currentValue = selectCount(getState());
 
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
+    if (currentValue % 2 === 1) {
+      dispatch(incrementByAmount(amount));
+    }
+  };
