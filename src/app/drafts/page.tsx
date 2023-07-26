@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import BlogPostList from "@/components/BlogPostList";
 import { getDrafts } from "@/lib/prisma/prismaFetch";
+import { Counter } from "@/components/Counter/Counter";
 import FilterTags from "../FilterTags";
 
 const Drafts = async () => {
@@ -55,6 +56,7 @@ const Drafts = async () => {
           No Drafts Yet
         </h2>
       )}
+      <Counter />
     </div>
   );
 };
