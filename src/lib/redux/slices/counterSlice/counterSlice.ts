@@ -4,7 +4,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 /* Instruments */
 import { incrementAsync } from "./asyncThunks";
 
-/* eslint-disable no-param-reassign */
+/* eslint-disable no-param-reassign, import/prefer-default-export */
 
 /* Types */
 export interface CounterSliceState {
@@ -16,7 +16,7 @@ const initialState: CounterSliceState = {
   status: "idle",
 };
 
-export const counterSlice = createSlice({
+const counterSlice = createSlice({
   name: "counter",
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
@@ -51,4 +51,4 @@ const { actions, reducer } = counterSlice;
 // Extract and export each action creator by name
 export const { increment, decrement, incrementByAmount } = actions;
 // Export the reducer, either as a default or named export
-export default reducer;
+export { reducer as counterReducer };
