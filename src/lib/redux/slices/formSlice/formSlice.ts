@@ -1,16 +1,11 @@
 /* Core */
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { FormSliceState } from "./types";
 
 /* eslint-disable no-param-reassign, import/prefer-default-export */
 
 /* Types */
-export interface FormSliceState {
-  title: string;
-  content: string;
-  tags: Map<string, string> | undefined;
-  tagString: string;
-  publish: boolean;
-}
+
 const initialState: FormSliceState = {
   title: "",
   content: "",

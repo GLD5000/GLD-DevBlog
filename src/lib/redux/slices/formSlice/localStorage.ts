@@ -1,4 +1,4 @@
-import { FormSliceState } from "@/lib/redux/slices/formSlice";
+import { FormSliceState } from "./types";
 
 export function stringifyForm(formData: FormSliceState) {
   return JSON.stringify({
