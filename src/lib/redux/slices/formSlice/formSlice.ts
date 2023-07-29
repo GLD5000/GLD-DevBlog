@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getRandomColour from "@/utilities/colour/randomColour";
 import { FormSliceState } from "./types";
 import { saveField, saveTags } from "./localStorage";
@@ -35,26 +35,29 @@ const formSlice = createSlice({
   name: "counter",
   initialState,
   reducers: {
-    updateField: (state, action) => {
-      saveField(Object.keys(action.payload)[0], action.payload);
+    updateField: (
+      state,
+      action: PayloadAction<{ fieldName: string; fieldValue: string }>
+    ) => {
+      saveField(action.payload.fieldName, action.payload.fieldValue);
       return { ...state, ...action.payload };
     },
-    updateTags: (state, action) => {
+    updateTags: (state, action: PayloadAction<string>) => {
       const currentString = action.payload;
       const currentTags = state.tags;
       const shouldAddTag = testToAddTag(currentString, currentTags);
       if (shouldAddTag) {
         const { tags, tagString } = getUpdatedTags(currentString, currentTags);
-        saveField("tagString", { tagString });
+        saveField("tagString", tagString);
         saveTags(tags);
-        return { tags, tagString };
+        return { ...state, tags, tagString };
       }
-      saveField("tagString", action.payload);
-      return { ...state, ...action.payload };
+      saveField("tagString", currentString);
+      return { ...state, tagString: currentString };
     },
   },
 });
 
 const { actions, reducer } = formSlice;
-export const { updateField } = actions;
+export const { updateField, updateTags } = actions;
 export { reducer as FormReducer };

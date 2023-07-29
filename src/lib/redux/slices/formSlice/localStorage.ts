@@ -32,17 +32,14 @@ export function parseForm(formData: string) {
 export function saveForm(state: FormSliceState) {
   try {
     const serializedState = stringifyForm(state);
-    localStorage.setItem("inputForm", serializedState);
+    window.localStorage.setItem("inputForm", serializedState);
   } catch {
     // ignore write errors
   }
 }
-export function saveField(
-  fieldName: string,
-  fieldValue: Partial<FormSliceState>
-) {
-  const stringValue = stringifyField(fieldValue);
-  saveKeyValue(fieldName, stringValue);
+export function saveField(fieldName: string, fieldValue: string) {
+  // const stringValue = stringifyField(fieldValue);
+  saveKeyValue(fieldName, fieldValue);
 }
 export function saveTags(fieldValue: FormSliceState["tags"]) {
   const stringValue = stringifyTags(fieldValue);
@@ -50,7 +47,7 @@ export function saveTags(fieldValue: FormSliceState["tags"]) {
 }
 export function loadForm() {
   try {
-    const serializedState = localStorage.getItem("inputForm");
+    const serializedState = window.localStorage.getItem("inputForm");
     if (serializedState === null) {
       return undefined;
     }
@@ -62,7 +59,11 @@ export function loadForm() {
 
 function saveKeyValue(key: string, value: string) {
   try {
-    localStorage.setItem(key, value);
+    window.localStorage.setItem(key, value);
+    console.log(
+      `window.localStorage.getItem(${key}):`,
+      window.localStorage.getItem(key)
+    );
   } catch {
     // ignore write errors
   }
@@ -70,7 +71,7 @@ function saveKeyValue(key: string, value: string) {
 
 export function loadKey(key: string) {
   try {
-    const serializedState = localStorage.getItem(key);
+    const serializedState = window.localStorage.getItem(key);
     if (serializedState === null) {
       return undefined;
     }

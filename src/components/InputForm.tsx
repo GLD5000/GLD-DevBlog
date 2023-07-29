@@ -11,6 +11,8 @@ import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/number/readTime";
 import getRandomColour from "@/utilities/colour/randomColour";
 import CloseSvg from "@/assets/icons/CloseSvg";
+import { updateField, updateTags } from "@/lib/redux";
+import { useDispatch } from "react-redux";
 import PreviewPost from "./PreviewPost";
 
 interface FormState {
@@ -61,7 +63,7 @@ function formInitialiser({
     };
     return initialObject;
   }
-  const returnedJson = localStorage.getItem("inputForm");
+  const returnedJson = window.localStorage.getItem("inputForm");
 
   if (returnedJson) {
     const returnedObj = JSON.parse(returnedJson);
@@ -101,7 +103,7 @@ function formReducer(
     default: {
       const returnObject = { ...state, ...action.payload };
       if (action.payload) {
-        localStorage.setItem(
+        window.localStorage.setItem(
           "inputForm",
           JSON.stringify({
             title: returnObject.title,
@@ -128,6 +130,7 @@ export default function InputForm({
   initialTags?: Map<string, string>;
   intialId?: string;
 }) {
+  const dispatch = useDispatch();
   const Router = useRouter();
   const id = intialId || undefined;
   const [formState, formDispatch] = useReducer(
@@ -151,7 +154,12 @@ export default function InputForm({
         </p>
         <input
           required
-          onChange={(e) => formDispatch({ payload: { title: e.target.value } })}
+          onChange={(e) => {
+            dispatch(
+              updateField({ fieldName: "title", fieldValue: e.target.value })
+            );
+            formDispatch({ payload: { title: e.target.value } });
+          }}
           placeholder="Title"
           type="text"
           value={formState.title}
@@ -161,9 +169,12 @@ export default function InputForm({
           required
           spellCheck
           cols={50}
-          onChange={(e) =>
-            formDispatch({ payload: { content: e.target.value } })
-          }
+          onChange={(e) => {
+            dispatch(
+              updateField({ fieldName: "content", fieldValue: e.target.value })
+            );
+            formDispatch({ payload: { content: e.target.value } });
+          }}
           placeholder="Content"
           rows={8}
           value={formState.content}
@@ -172,7 +183,10 @@ export default function InputForm({
         <div className="flex flex-row flex-wrap gap-2 rounded border-2 border-transparent bg-bg-var px-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk ">
           {tagButtons}
           <input
-            onChange={(e) => handleTags(e.target.value)}
+            onChange={(e) => {
+              dispatch(updateTags(e.target.value));
+              handleTags(e.target.value);
+            }}
             placeholder="Tags (Max 5) e.g.: Typescript, React"
             type="text"
             value={formState.tagString}
@@ -229,7 +243,7 @@ export default function InputForm({
                   tags: undefined,
                 },
               });
-              localStorage.clear();
+              window.localStorage.clear();
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
