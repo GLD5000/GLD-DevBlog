@@ -34,6 +34,5 @@ const formSlice = createSlice({
 });
 
 const { actions, reducer } = formSlice;
-// Export individual Actions
-
+export const { updateField } = actions;
 export { reducer as FormReducer };
