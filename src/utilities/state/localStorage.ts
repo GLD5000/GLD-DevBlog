@@ -1,13 +1,13 @@
-import { FormSliceState } from "@/lib/redux/slices/inputFormSlice";
+import { FormSliceState } from "@/lib/redux/slices/formSlice";
 
-function stringifyForm(formData: FormSliceState) {
+export function stringifyForm(formData: FormSliceState) {
   return JSON.stringify({
     ...formData,
     tags: formData.tags ? Array.from(formData.tags) : undefined,
   });
 }
 
-function parseForm(formData: string) {
+export function parseForm(formData: string) {
   const returnedObj = JSON.parse(formData);
   const tagsArray = returnedObj.tags ? Array.from(returnedObj.tags) : undefined;
   const tagsMap = tagsArray
