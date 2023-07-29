@@ -1,12 +1,9 @@
-/* Core */
 import { createSlice } from "@reduxjs/toolkit";
 import getRandomColour from "@/utilities/colour/randomColour";
 import { FormSliceState } from "./types";
 import { saveField, saveTags } from "./localStorage";
 
 /* eslint-disable no-param-reassign, import/prefer-default-export */
-
-/* Types */
 
 const initialState: FormSliceState = {
   title: "",
