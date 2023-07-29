@@ -38,12 +38,6 @@ const formSlice = createSlice({
       return { ...state, ...action.payload };
     },
   },
-  // extraReducers: (builder) => {
-  //   builder.addDefaultCase((state, action) => ({
-  //     ...state,
-  //     ...action.payload,
-  //   }));
-  // },
 });
 
 const { actions, reducer } = formSlice;
