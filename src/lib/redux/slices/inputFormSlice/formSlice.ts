@@ -22,13 +22,15 @@ const initialState: FormSliceState = {
 const formSlice = createSlice({
   name: "counter",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addDefaultCase((state, action) => ({
-      ...state,
-      ...action.payload,
-    }));
+  reducers: {
+    updateField: (state, action) => ({ ...state, ...action.payload }),
   },
+  // extraReducers: (builder) => {
+  //   builder.addDefaultCase((state, action) => ({
+  //     ...state,
+  //     ...action.payload,
+  //   }));
+  // },
 });
 
 const { actions, reducer } = formSlice;
