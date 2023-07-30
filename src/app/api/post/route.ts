@@ -3,6 +3,7 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma/prisma";
 import makeNewTag from "@/utilities/colour/newTagMaker";
 import { revalidatePath } from "next/cache";
+import { Tag } from "@prisma/client";
 
 /* eslint-disable import/prefer-default-export */
 
@@ -24,9 +25,9 @@ async function createTagOnPost(tagArray: string[], postId: string) {
   });
 }
 
-async function addTags(tagsMap: Map<string, string>, postId: string) {
-  await cleanUpTags(postId, tagsMap);
-  Array.from(tagsMap).forEach(async (tag) => {
+async function addTags(tagsArray: [string, string][], postId: string) {
+  await cleanUpTags(postId, tagsArray);
+  Array.from(tagsArray).forEach(async (tag) => {
     await createTagOnPost(tag, postId);
   });
   await deleteTagsWithEmptyTagOnPostsArray();
@@ -46,12 +47,12 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
   }
 }
 
-async function cleanUpTags(postId: string, tagsMap: Map<string, string>) {
+async function cleanUpTags(postId: string, tagsArray: [string, string][]) {
   const post = await prisma.post.findFirst({
     where: { id: postId },
     include: { tags: { select: { tag: true } } },
   });
-
+  const tagsMap = new Map(tagsArray as [string, string][]);
   const TagsToDelete = post?.tags
     .map((object) => ({ name: object.tag.name, id: object.tag.id }))
     .filter((tagObject) => !tagsMap.has(tagObject.name));
@@ -95,7 +96,7 @@ async function handler(req: Request) {
           author: { connect: { email } },
         },
       });
-  if (tags && tags.length) addTags(new Map(tags), postResult.id);
+  if (tags && tags.length) addTags(tags, postResult.id);
   revalidatePath("/");
   return new Response(JSON.stringify(postResult));
 }
