@@ -16,14 +16,11 @@ export function stringifyTags(tagsIn: FormSliceState["tags"]) {
 export function parseForm(formData: string) {
   const returnedObj = JSON.parse(formData);
   const tagsArray = returnedObj.tags ? Array.from(returnedObj.tags) : undefined;
-  const tagsMap = tagsArray
-    ? new Map(tagsArray as [string, string][])
-    : undefined;
   const initialObject = {
     title: returnedObj.title || "",
     content: returnedObj.content || "",
     publish: returnedObj.publish || false,
-    tags: tagsMap,
+    tags: tagsArray || undefined,
     tagString: returnedObj.tagString || "",
   };
   return initialObject;

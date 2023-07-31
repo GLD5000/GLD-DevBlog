@@ -1,24 +1,27 @@
 "use client";
 
 import CloseSvg from "@/assets/icons/CloseSvg";
+import {
+  closeTag as closeFunction,
+  recolourTag as colourUpdateFunction,
+  useDispatch,
+} from "@/lib/redux";
+import getRandomColour from "@/utilities/colour/randomColour";
 import SvgButtonNew from "./SvgButtonNew";
 
 export default function SpicyLi({
   content,
   className = "m-2",
   id,
-  closeFunction,
-  colourUpdateFunction,
   inputcolour,
 }: {
   className: string;
   content: string;
   id: string;
-  closeFunction: (tagValue: string) => void;
-  colourUpdateFunction: (tagValue: string) => void;
   inputcolour: string;
 }) {
   // const [colour, setColour] = useState(inputcolour || getRandomColour("mid"));
+  const dispatch = useDispatch();
   return (
     <li id={id} className={className} style={{ backgroundColor: inputcolour }}>
       <button
@@ -27,7 +30,12 @@ export default function SpicyLi({
         className="m-0 block h-full w-full rounded-r-none p-1 text-current"
         onClick={(e) => {
           e.preventDefault();
-          colourUpdateFunction(content);
+          dispatch(
+            colourUpdateFunction({
+              name: content,
+              colour: getRandomColour("mid"),
+            })
+          );
         }}
       >
         {content.length > 15 ? `${content.slice(0, 12)}...` : content}
@@ -36,7 +44,7 @@ export default function SpicyLi({
       <SvgButtonNew
         clickFunction={(e) => {
           e.preventDefault();
-          closeFunction(content);
+          dispatch(closeFunction(content));
         }}
         id={`${id}-close-btn`}
         name={`${id}-close-btn`}

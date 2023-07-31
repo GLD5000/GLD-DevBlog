@@ -114,6 +114,5 @@ function extractTagNames(tagArray: { tag: Tag | null }[]) {
       return ["", ""];
     })
     .filter((x) => x.join().length !== 0);
-  const returnMap: Map<string, string> = new Map(newArray);
-  return returnMap;
+  return newArray;
 }

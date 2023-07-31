@@ -1,13 +1,11 @@
 import InputForm from "@/components/InputForm";
-import { getBlog } from "@/lib/prisma/prismaFetch";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { DefaultSession, getServerSession } from "next-auth";
 
-export default async function Edit({ params }: { params: { id: string } }) {
-  const { post, tagNames } = await getBlog(params.id);
+export default async function Edit() {
   const session: DefaultSession | null = await getServerSession(authOptions);
-  const isCorrectUser = session?.user?.email === post?.author?.email;
-  if (!isCorrectUser)
+
+  if (!session?.user)
     return (
       <div className="prose mx-auto grid gap-8 py-8 dark:prose-invert">
         <h1 className="mx-auto text-txt-main dark:text-txt-main-dk">
@@ -18,15 +16,9 @@ export default async function Edit({ params }: { params: { id: string } }) {
         </div>
       </div>
     );
-  console.log("tagNames:", tagNames);
   return (
     <div>
-      <InputForm
-        initialContent={post?.content || undefined}
-        initialTags={tagNames && tagNames.size ? tagNames : undefined}
-        initialTitle={post?.title}
-        intialId={post?.id}
-      />
+      <InputForm />
     </div>
   );
 }
