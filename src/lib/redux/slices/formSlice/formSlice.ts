@@ -35,14 +35,14 @@ const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    updateField: (
-      state,
-      action: PayloadAction<{ fieldName: string; fieldValue: string }>
-    ) => {
-      saveField(action.payload.fieldName, action.payload.fieldValue);
+    updateField: (state, action: PayloadAction<{ [key: string]: string }>) => {
+      Object.entries(action.payload).forEach((entry) => {
+        const [key, value] = entry;
+        saveField(key, value);
+      });
       return {
         ...state,
-        [action.payload.fieldName]: action.payload.fieldValue,
+        ...action.payload,
       };
     },
     closeTag: (state, action: PayloadAction<string>) => {
