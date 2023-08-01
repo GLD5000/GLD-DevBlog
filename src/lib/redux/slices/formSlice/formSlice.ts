@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getRandomColour from "@/utilities/colour/randomColour";
-import build from "next/dist/build";
 import { FormSliceState } from "./types";
 import { saveField, saveTags } from "./localStorage";
 import { updateFromBlogPost } from "./asyncThunks";
@@ -93,7 +92,7 @@ const formSlice = createSlice({
       .addCase(updateFromBlogPost.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(updateFromBlogPost.fulfilled, (_, action) => ({
+      .addCase(updateFromBlogPost.fulfilled, (state, action) => ({
         status: "idle",
         ...action.payload,
       }));

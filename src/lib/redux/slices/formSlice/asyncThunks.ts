@@ -1,4 +1,3 @@
-import { getBlog } from "@/lib/prisma/prismaFetch";
 import { createAppAsyncThunk } from "@/lib/redux/createAppAsyncThunk";
 import { saveFields } from "./localStorage";
 
@@ -7,15 +6,17 @@ import { saveFields } from "./localStorage";
 export const updateFromBlogPost = createAppAsyncThunk(
   "form/fetchBlogById",
   async (id: string) => {
-    const response = await getBlog(id);
-
+    const response = await fetch(`/api/getPostById/${id}`, {
+      method: "GET",
+    });
+    const { data } = await response.json();
     // validate post fields / set to defaults
     const returnObject = {
-      title: response.post?.title || "",
-      content: response.post?.content || "",
-      tags: response.tagNames || undefined,
+      title: data.title || "",
+      content: data.content || "",
+      tags: data.tags || undefined,
       tagString: "",
-      publish: response.post?.published || false,
+      publish: data.publish || false,
     };
     saveFields(returnObject);
     // The value we return becomes the `fulfilled` action payload

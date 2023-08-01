@@ -3,11 +3,9 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma/prisma";
 import makeNewTag from "@/utilities/colour/newTagMaker";
 import { revalidatePath } from "next/cache";
-import { Tag } from "@prisma/client";
 
 /* eslint-disable import/prefer-default-export */
 
-// POST /api/post
 // Required fields in body: title
 // Optional fields in body: content
 
