@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma/prisma";
-import makeNewTag from "@/utilities/colour/newTagMaker";
 import { revalidatePath } from "next/cache";
 
 /* eslint-disable import/prefer-default-export */
@@ -9,16 +8,29 @@ import { revalidatePath } from "next/cache";
 // Required fields in body: title
 // Optional fields in body: content
 
+function makeNewTag(tagArray: string[]) {
+  const backgroundColour = tagArray[1];
+  const newTag = {
+    name: tagArray[0].trim(),
+    backgroundColour,
+  };
+  return newTag;
+}
+
 async function createTagOnPost(tagArray: string[], postId: string) {
   const newTag = makeNewTag(tagArray);
+  console.log("newTag:", newTag);
   const tagResult = await prisma.tag.upsert({
     where: { name: newTag.name },
     create: { ...newTag },
     update: { backgroundColour: newTag.backgroundColour },
   });
+  console.log("tagResult:", tagResult);
+  const uniqueTagOnPostObject = { postId, tagId: tagResult.id };
+  console.log("uniqueTagOnPostObject:", uniqueTagOnPostObject);
   await prisma.tagOnPosts.upsert({
-    where: { unique_post_tag: { postId, tagId: tagResult.id } },
-    create: { postId, tagId: tagResult.id },
+    where: { unique_post_tag: uniqueTagOnPostObject },
+    create: uniqueTagOnPostObject,
     update: {},
   });
 }
