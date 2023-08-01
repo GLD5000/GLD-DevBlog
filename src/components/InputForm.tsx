@@ -23,6 +23,7 @@ import {
   updateField,
   updateTag,
 } from "@/lib/redux";
+import { checkHasSavedForm } from "@/lib/redux/slices/formSlice/localStorage";
 import PreviewPost from "./PreviewPost";
 
 function getTagButtons(tags: [string, string][] | undefined) {
@@ -43,8 +44,11 @@ export default function InputForm() {
 
   const Router = useRouter();
   const tagButtons = getTagButtons(useSelector(selectTags));
+  const hasSavedForm = checkHasSavedForm();
+  // Add useEffect to check if tings be blank and look for ting in local state blud
   return (
     <div className="pb-24">
+      {hasSavedForm ? "Load Saved Form" : null}
       <form
         onSubmit={submitData}
         className="mx-auto flex w-full max-w-body flex-col gap-4 p-4"

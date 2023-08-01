@@ -88,3 +88,12 @@ export function saveFields(stateIn: Partial<FormSliceState>) {
     }
   });
 }
+
+export function checkHasSavedForm() {
+  const { localStorage } = window;
+  return (
+    !!localStorage.getItem("tags")?.length ||
+    !!localStorage.getItem("title")?.length ||
+    !!localStorage.getItem("content")?.length
+  );
+}
