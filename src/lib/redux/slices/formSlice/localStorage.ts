@@ -19,9 +19,9 @@ export function parseForm(formData: string) {
   const initialObject = {
     title: returnedObj.title || "",
     content: returnedObj.content || "",
-    publish: returnedObj.publish || false,
+    publish: false,
     tags: tagsArray || undefined,
-    tagString: returnedObj.tagString || "",
+    tagString: "",
   };
   return initialObject;
 }
@@ -42,15 +42,44 @@ export function saveTags(fieldValue: FormSliceState["tags"]) {
   const stringValue = stringifyTags(fieldValue);
   saveKeyValue("tags", stringValue);
 }
-export function loadForm() {
+
+export interface LoadedForm {
+  title: string;
+  content: string;
+  tags: [string, string][] | undefined;
+  publish: false;
+  tagString: "";
+}
+
+export function loadForm(): LoadedForm {
   try {
-    const serializedState = window.localStorage.getItem("inputForm");
-    if (serializedState === null) {
-      return undefined;
+    const title = window.localStorage.getItem("title");
+    const content = window.localStorage.getItem("content");
+    const tags = window.localStorage.getItem("tags");
+    if (title === null && content === null && tags === null) {
+      return {
+        title: "",
+        content: "",
+        publish: false,
+        tags: undefined,
+        tagString: "",
+      };
     }
-    return parseForm(serializedState);
+    return {
+      title: title || "",
+      content: content || "",
+      publish: false,
+      tags: tags ? JSON.parse(tags) || undefined : undefined,
+      tagString: "",
+    };
   } catch (err) {
-    return undefined;
+    return {
+      title: "",
+      content: "",
+      publish: false,
+      tags: undefined,
+      tagString: "",
+    };
   }
 }
 

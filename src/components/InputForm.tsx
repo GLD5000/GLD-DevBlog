@@ -20,12 +20,14 @@ import {
   selectTagString,
   selectTags,
   selectTitle,
-  updateField,
+  updateFields,
   updateTag,
+  updateFormFromStorage,
 } from "@/lib/redux";
 import { checkHasSavedForm } from "@/lib/redux/slices/formSlice/localStorage";
 import PreviewPost from "./PreviewPost";
 
+let loaded = true;
 function getTagButtons(tags: [string, string][] | undefined) {
   if (!tags) return null;
   return Array.from(tags).map((tag) => (
@@ -41,14 +43,22 @@ function getTagButtons(tags: [string, string][] | undefined) {
 export default function InputForm() {
   const dispatch = useDispatch();
   const formState = useSelector(selectForm);
-
   const Router = useRouter();
   const tagButtons = getTagButtons(useSelector(selectTags));
-  const hasSavedForm = checkHasSavedForm();
-  // Add useEffect to check if tings be blank and look for ting in local state blud
+
+  if (loaded) {
+    loaded = false;
+    // console.log("formState:", formState);
+    const hasSavedForm = checkHasSavedForm();
+    const emptyForm =
+      formState.content.length === 0 && formState.title.length === 0;
+    // console.log("emptyForm:", emptyForm);
+    // console.log("hasSavedForm:", hasSavedForm);
+    if (hasSavedForm && emptyForm) dispatch(updateFormFromStorage());
+  }
+
   return (
     <div className="pb-24">
-      {hasSavedForm ? "Load Saved Form" : null}
       <form
         onSubmit={submitData}
         className="mx-auto flex w-full max-w-body flex-col gap-4 p-4"
@@ -62,7 +72,7 @@ export default function InputForm() {
         <input
           required
           onChange={(e) => {
-            dispatch(updateField({ title: e.target.value }));
+            dispatch(updateFields({ title: e.target.value }));
             // formDispatch({ payload: { title: e.target.value } });
           }}
           placeholder="Title"
@@ -75,7 +85,7 @@ export default function InputForm() {
           spellCheck
           cols={50}
           onChange={(e) => {
-            dispatch(updateField({ content: e.target.value }));
+            dispatch(updateFields({ content: e.target.value }));
           }}
           placeholder="Content"
           rows={8}

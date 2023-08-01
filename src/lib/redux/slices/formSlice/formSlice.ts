@@ -37,10 +37,11 @@ const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
-    // updateForm: (state, action: PayloadAction<FormSliceState>) => {
-
-    // },
-    updateField: (state, action: PayloadAction<{ [key: string]: string }>) => {
+    updateForm: (state, action: PayloadAction<Partial<FormSliceState>>) => ({
+      ...state,
+      ...action.payload,
+    }),
+    updateFields: (state, action: PayloadAction<{ [key: string]: string }>) => {
       Object.entries(action.payload).forEach((entry) => {
         const [key, value] = entry;
         saveField(key, value);
@@ -65,7 +66,7 @@ const formSlice = createSlice({
     },
     updateTag: (state, action: PayloadAction<string>) => {
       const currentString = action.payload;
-      const currentTags = state.tags;
+      const currentTags = state.tags ? deepCopyTags(state.tags) : state.tags;
       const shouldAddTag = testToAddTag(currentString, currentTags);
       if (shouldAddTag) {
         const { tags, tagString } = getUpdatedTags(currentString, currentTags);
@@ -101,7 +102,8 @@ const formSlice = createSlice({
 
 const { actions, reducer } = formSlice;
 export const {
-  updateField,
+  updateForm,
+  updateFields,
   updateTag,
   recolourTag,
   closeTag,
@@ -112,3 +114,7 @@ export const {
 export { reducer as FormReducer };
 // export type CloseTag = typeof closeTag;
 // export type RecolourTag = typeof recolourTag;
+
+function deepCopyTags(tags: [string, string][]): [string, string][] {
+  return tags.map((entry) => [...entry]);
+}
