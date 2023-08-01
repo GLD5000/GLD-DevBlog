@@ -12,6 +12,7 @@ export const updateFromBlogPost = createAppAsyncThunk(
     const { data } = await response.json();
     // validate post fields / set to defaults
     const returnObject = {
+      id,
       title: data.title || "",
       content: data.content || "",
       tags: data.tags || undefined,

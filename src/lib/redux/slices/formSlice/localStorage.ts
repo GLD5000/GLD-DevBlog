@@ -44,6 +44,7 @@ export function saveTags(fieldValue: FormSliceState["tags"]) {
 }
 
 export interface LoadedForm {
+  id: string | undefined;
   title: string;
   content: string;
   tags: [string, string][] | undefined;
@@ -53,11 +54,13 @@ export interface LoadedForm {
 
 export function loadForm(): LoadedForm {
   try {
+    const id = window.localStorage.getItem("id");
     const title = window.localStorage.getItem("title");
     const content = window.localStorage.getItem("content");
     const tags = window.localStorage.getItem("tags");
     if (title === null && content === null && tags === null) {
       return {
+        id: undefined,
         title: "",
         content: "",
         publish: false,
@@ -66,6 +69,7 @@ export function loadForm(): LoadedForm {
       };
     }
     return {
+      id: id || undefined,
       title: title || "",
       content: content || "",
       publish: false,
@@ -74,6 +78,7 @@ export function loadForm(): LoadedForm {
     };
   } catch (err) {
     return {
+      id: undefined,
       title: "",
       content: "",
       publish: false,

@@ -6,6 +6,7 @@ import { loadForm } from "./localStorage";
 
 export const updateFormFromStorage = (): ReduxThunkAction => (dispatch) => {
   const storedForm: {
+    id: string | undefined;
     title: string;
     content: string;
     tags: [string, string][] | undefined;

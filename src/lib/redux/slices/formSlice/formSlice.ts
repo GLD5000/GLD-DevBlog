@@ -7,6 +7,7 @@ import { updateFromBlogPost } from "./asyncThunks";
 /* eslint-disable no-param-reassign, import/prefer-default-export */
 
 const initialState: FormSliceState = {
+  id: undefined,
   title: "",
   content: "",
   publish: false,
@@ -80,6 +81,7 @@ const formSlice = createSlice({
     publishFalse: (state) => ({ ...state, publish: false }),
     publishTrue: (state) => ({ ...state, publish: true }),
     clearForm: (): FormSliceState => ({
+      id: undefined,
       title: "",
       content: "",
       publish: false,

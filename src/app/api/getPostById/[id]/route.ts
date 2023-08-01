@@ -15,6 +15,7 @@ export async function GET(
   console.log(">>>>>>>>>>>>>>>>>>>>>>>>>postId:", postId);
   const { post, tagNames } = await getBlog(postId);
   const data: FormSliceState = {
+    id: post?.id || "",
     title: post?.title || "",
     content: post?.content || "",
     tags: tagNames || undefined,
