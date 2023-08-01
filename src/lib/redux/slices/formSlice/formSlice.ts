@@ -1,7 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getRandomColour from "@/utilities/colour/randomColour";
+import build from "next/dist/build";
 import { FormSliceState } from "./types";
 import { saveField, saveTags } from "./localStorage";
+import { updateFromBlogPost } from "./asyncThunks";
 
 /* eslint-disable no-param-reassign, import/prefer-default-export */
 
@@ -11,6 +13,7 @@ const initialState: FormSliceState = {
   publish: false,
   tags: undefined,
   tagString: "",
+  status: "idle",
 };
 function testToAddTag(
   currentString: string,
@@ -35,6 +38,9 @@ const formSlice = createSlice({
   name: "form",
   initialState,
   reducers: {
+    // updateForm: (state, action: PayloadAction<FormSliceState>) => {
+
+    // },
     updateField: (state, action: PayloadAction<{ [key: string]: string }>) => {
       Object.entries(action.payload).forEach((entry) => {
         const [key, value] = entry;
@@ -73,13 +79,24 @@ const formSlice = createSlice({
     },
     publishFalse: (state) => ({ ...state, publish: false }),
     publishTrue: (state) => ({ ...state, publish: true }),
-    clearForm: () => ({
+    clearForm: (): FormSliceState => ({
       title: "",
       content: "",
       publish: false,
       tags: undefined,
       tagString: "",
+      status: "idle",
     }),
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(updateFromBlogPost.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateFromBlogPost.fulfilled, (_, action) => ({
+        status: "idle",
+        ...action.payload,
+      }));
   },
 });
 

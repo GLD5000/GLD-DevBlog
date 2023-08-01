@@ -4,4 +4,5 @@ export interface FormSliceState {
   tags: [string, string][] | undefined;
   tagString: string;
   publish: boolean;
+  status: "idle" | "loading" | "failed";
 }

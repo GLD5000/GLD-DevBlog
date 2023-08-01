@@ -34,9 +34,9 @@ export function saveForm(state: FormSliceState) {
     // ignore write errors
   }
 }
-export function saveField(fieldName: string, fieldValue: string) {
+export function saveField(fieldName: string, fieldValue: string | boolean) {
   // const stringValue = stringifyField(fieldValue);
-  saveKeyValue(fieldName, fieldValue);
+  saveKeyValue(fieldName, `${fieldValue}`);
 }
 export function saveTags(fieldValue: FormSliceState["tags"]) {
   const stringValue = stringifyTags(fieldValue);
@@ -76,4 +76,15 @@ export function loadKey(key: string) {
   } catch (err) {
     return undefined;
   }
+}
+
+export function saveFields(stateIn: Partial<FormSliceState>) {
+  Object.entries(stateIn).forEach((entry) => {
+    const [key, value] = entry;
+    if (Array.isArray(value)) {
+      saveTags(value);
+    } else {
+      saveField(key, value ?? "");
+    }
+  });
 }
