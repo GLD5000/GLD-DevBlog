@@ -1,6 +1,5 @@
 "use client";
 
-// import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpicyLi from "@/components/elements/SpicyLi";
@@ -13,7 +12,6 @@ import CloseSvg from "@/assets/icons/CloseSvg";
 import {
   useSelector,
   useDispatch,
-  // FormSliceState,
   clearForm,
   publishFalse,
   publishTrue,
@@ -27,8 +25,6 @@ import {
 } from "@/lib/redux";
 import PreviewPost from "./PreviewPost";
 
-// type FormPayload = Partial<FormSliceState>;
-
 function getTagButtons(tags: [string, string][] | undefined) {
   if (!tags) return null;
   return Array.from(tags).map((tag) => (
@@ -41,95 +37,12 @@ function getTagButtons(tags: [string, string][] | undefined) {
     />
   ));
 }
-// function formInitialiser({
-//   initialTitle,
-//   initialContent,
-//   initialTags,
-// }: {
-//   initialTitle: string | undefined;
-//   initialContent: string | undefined;
-//   initialTags: Map<string, string> | undefined | null;
-// }): FormState {
-//   if (initialTitle || initialContent || initialTags) {
-//     const initialObject = {
-//       title: initialTitle || "",
-//       content: initialContent || "",
-//       publish: false,
-//       tags:
-//         initialTags && !Array.isArray(initialTags) ? initialTags : undefined,
-//       tagString: "",
-//     };
-//     return initialObject;
-//   }
-//   const returnedJson = window.localStorage.getItem("inputForm");
-
-//   if (returnedJson) {
-//     const returnedObj = JSON.parse(returnedJson);
-//     const tagsArray = returnedObj.tags
-//       ? Array.from(returnedObj.tags)
-//       : undefined;
-//     const tagsMap = tagsArray
-//       ? new Map(tagsArray as [string, string][])
-//       : undefined;
-//     const initialObject = {
-//       title: returnedObj.title || "",
-//       content: returnedObj.content || "",
-//       publish: false,
-//       tags: tagsMap,
-//       tagString: returnedObj.tagString || "",
-//     };
-//     return initialObject;
-//   }
-//   const initialObject = {
-//     title: "",
-//     content: "",
-//     publish: false,
-//     tags: undefined,
-//     tagString: "",
-//   };
-//   return initialObject;
-// }
-
-// function formReducer(
-//   state: FormState,
-//   action: {
-//     type?: string;
-//     payload: FormPayload;
-//   }
-// ) {
-//   switch (action.type) {
-//     default: {
-//       const returnObject = { ...state, ...action.payload };
-//       if (action.payload) {
-//         window.localStorage.setItem(
-//           "inputForm",
-//           JSON.stringify({
-//             title: returnObject.title,
-//             content: returnObject.content,
-//             publish: returnObject.publish,
-//             tagString: returnObject.tagString,
-//             tags: returnObject.tags ? Array.from(returnObject.tags) : undefined,
-//           })
-//         );
-//       }
-//       return returnObject;
-//     }
-//   }
-// }
-
 export default function InputForm() {
   const dispatch = useDispatch();
   const formState = useSelector(selectForm);
 
   const Router = useRouter();
-  // const id = intialId || undefined;
-  // const [formState, formDispatch] = useReducer(
-  //   formReducer,
-  //   { initialTitle, initialContent, initialTags },
-  //   formInitialiser
-  // );
   const tagButtons = getTagButtons(useSelector(selectTags));
-  // console.log('useSelector(selectTitle):', useSelector(selectTitle));
   return (
     <div className="pb-24">
       <form
@@ -145,9 +58,7 @@ export default function InputForm() {
         <input
           required
           onChange={(e) => {
-            dispatch(
-              updateField({ fieldName: "title", fieldValue: e.target.value })
-            );
+            dispatch(updateField({ title: e.target.value }));
             // formDispatch({ payload: { title: e.target.value } });
           }}
           placeholder="Title"
@@ -160,10 +71,7 @@ export default function InputForm() {
           spellCheck
           cols={50}
           onChange={(e) => {
-            dispatch(
-              updateField({ fieldName: "content", fieldValue: e.target.value })
-            );
-            // formDispatch({ payload: { content: e.target.value } });
+            dispatch(updateField({ content: e.target.value }));
           }}
           placeholder="Content"
           rows={8}
@@ -175,7 +83,6 @@ export default function InputForm() {
           <input
             onChange={(e) => {
               dispatch(updateTag(e.target.value));
-              // handleTags(e.target.value);
             }}
             placeholder="Tags (Max 5) e.g.: Typescript, React"
             type="text"
@@ -195,8 +102,6 @@ export default function InputForm() {
             showTextIn
             clickFunction={() => {
               dispatch(publishFalse());
-
-              // formDispatch({ payload: { publish: false } });
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
@@ -212,8 +117,6 @@ export default function InputForm() {
             showTextIn
             clickFunction={() => {
               dispatch(publishTrue());
-
-              // formDispatch({ payload: { publish: true } });
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
@@ -230,14 +133,6 @@ export default function InputForm() {
             clickFunction={(e) => {
               e.preventDefault();
               dispatch(clearForm());
-              // formDispatch({
-              //   payload: {
-              //     title: "",
-              //     content: "",
-              //     tagString: "",
-              //     tags: undefined,
-              //   },
-              // });
               window.localStorage.clear();
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
@@ -258,32 +153,6 @@ export default function InputForm() {
       <PreviewPost />
     </div>
   );
-  // function closeTag(tagValue: string) {
-  //   const newTags = formState.tags ? new Map(formState.tags) : new Map();
-  //   newTags.delete(tagValue);
-  //   formDispatch({ payload: { tags: newTags } });
-  // }
-  // function recolourTag(tagValue: string) {
-  //   const newTags = formState.tags ? new Map(formState.tags) : new Map();
-  //   newTags.set(tagValue, getRandomColour("mid"));
-  //   formDispatch({ payload: { tags: newTags } });
-  // }
-  // function pushToTags(stringIn: string) {
-  //   const newTags = formState.tags ? new Map(formState.tags) : new Map();
-  //   newTags.set(stringIn.trim(), getRandomColour("mid"));
-  //   formDispatch({ payload: { tags: newTags, tagString: "" } });
-  // }
-  // function handleTags(currentValue: string) {
-  //   if (
-  //     /[ ,.]/.test(`${currentValue.at(-1)}`) &&
-  //     currentValue.length > 1 &&
-  //     (formState.tags === undefined || formState.tags.size < 5)
-  //   ) {
-  //     pushToTags(currentValue.slice(0, -1));
-  //     return;
-  //   }
-  //   formDispatch({ payload: { tagString: currentValue } });
-  // }
   async function submitData(e: React.SyntheticEvent) {
     e.preventDefault();
     const readTime = getReadTime(formState.content);
@@ -295,7 +164,6 @@ export default function InputForm() {
         body: JSON.stringify(body),
       });
       Router.push("/drafts/");
-      // window.location.reload();
     } catch (error) {
       console.error(error);
     }
