@@ -24,25 +24,6 @@ const formSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    updateFields: (
-      state,
-      action: PayloadAction<{ [key: string]: string | [string, string][] }>
-    ) =>
-      // Object.entries(action.payload).forEach((entry) => {
-      //   const [key, value] = entry;
-      //   saveField(key, value);
-      // });
-      ({
-        ...state,
-        ...action.payload,
-      }),
-    // updateTags: (state, action: PayloadAction<{ tags: [string,string][] }>) => {
-    //   return {
-    //     ...state,
-    //     ...action.payload,
-    //   };
-    // },
-
     closeTag: (state, action: PayloadAction<string>) => {
       const newTags = state.tags ? new Map(state.tags) : new Map();
       newTags.delete(action.payload);
@@ -56,8 +37,6 @@ const formSlice = createSlice({
       newTags.set(action.payload.name, action.payload.colour);
       return { ...state, tags: Array.from(newTags) };
     },
-    publishFalse: (state) => ({ ...state, publish: false }),
-    publishTrue: (state) => ({ ...state, publish: true }),
     clearForm: (): FormSliceState => ({
       id: undefined,
       title: "",
@@ -81,17 +60,7 @@ const formSlice = createSlice({
 });
 
 const { actions, reducer } = formSlice;
-export const {
-  updateForm,
-  updateFields,
-  // updateTags,
-  // updateTag,
-  recolourTag,
-  closeTag,
-  publishFalse,
-  publishTrue,
-  clearForm,
-} = actions;
+export const { updateForm, recolourTag, closeTag, clearForm } = actions;
 export { reducer as FormReducer };
 // export type CloseTag = typeof closeTag;
 // export type RecolourTag = typeof recolourTag;

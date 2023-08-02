@@ -13,16 +13,15 @@ import {
   useSelector,
   useDispatch,
   clearForm,
-  publishFalse,
-  publishTrue,
   selectContent,
   selectForm,
   selectTagString,
   selectTags,
   selectTitle,
-  updateFields,
   updateFormFromStorage,
   updateTagStringInput,
+  updateStringInput,
+  updateBooleanInput,
 } from "@/lib/redux";
 import { checkHasSavedForm } from "@/lib/redux/slices/formSlice/localStorage";
 import PreviewPost from "./PreviewPost";
@@ -46,14 +45,11 @@ export default function InputForm() {
   const Router = useRouter();
   const tagButtons = getTagButtons(useSelector(selectTags));
 
-  if (loaded) {
+  if (typeof window !== "undefined" && loaded) {
     loaded = false;
-    // console.log("formState:", formState);
     const hasSavedForm = checkHasSavedForm();
     const emptyForm =
       formState.content.length === 0 && formState.title.length === 0;
-    // console.log("emptyForm:", emptyForm);
-    // console.log("hasSavedForm:", hasSavedForm);
     if (hasSavedForm && emptyForm) dispatch(updateFormFromStorage());
   }
 
@@ -72,8 +68,9 @@ export default function InputForm() {
         <input
           required
           onChange={(e) => {
-            dispatch(updateFields({ title: e.target.value }));
-            // formDispatch({ payload: { title: e.target.value } });
+            dispatch(
+              updateStringInput({ key: "title", value: e.target.value })
+            );
           }}
           placeholder="Title"
           type="text"
@@ -85,7 +82,9 @@ export default function InputForm() {
           spellCheck
           cols={50}
           onChange={(e) => {
-            dispatch(updateFields({ content: e.target.value }));
+            dispatch(
+              updateStringInput({ key: "content", value: e.target.value })
+            );
           }}
           placeholder="Content"
           rows={8}
@@ -117,7 +116,7 @@ export default function InputForm() {
             textElement={<span>Save</span>}
             showTextIn
             clickFunction={() => {
-              dispatch(publishFalse());
+              dispatch(updateBooleanInput({ key: "publish", value: false }));
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
@@ -132,7 +131,7 @@ export default function InputForm() {
             textElement={<span>Publish</span>}
             showTextIn
             clickFunction={() => {
-              dispatch(publishTrue());
+              dispatch(updateBooleanInput({ key: "publish", value: true }));
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />

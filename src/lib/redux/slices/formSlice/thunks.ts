@@ -1,9 +1,8 @@
-/* Instruments */
 import { type ReduxThunkAction } from "@/lib/redux";
 import getRandomColour from "@/utilities/colour/randomColour";
 import { FormSliceState } from "./types";
 import { selectTags } from "./selectors";
-import { updateFields, updateForm } from "./formSlice";
+import { updateForm } from "./formSlice";
 import { loadForm, saveField, saveTags } from "./localStorage";
 /* eslint-disable import/prefer-default-export */
 
@@ -16,18 +15,33 @@ export const updateFormFromStorage = (): ReduxThunkAction => (dispatch) => {
     publish: false;
     tagString: "";
   } = loadForm();
-  dispatch(updateForm(storedForm)); // change to update fields
+  dispatch(updateForm(storedForm));
 };
 
-// export function updateStringInput(inputObject: {[key:string]: string}): ReduxThunkAction {
-//   return function (dispatch, getState) {
-
-//       saveField("tagString", currentString);
-//       dispatch(updateFields({ tagString: currentString }));
-//     }
-//   };
-// }
-
+export function updateStringInput({
+  key,
+  value,
+}: {
+  key: string;
+  value: string;
+}): ReduxThunkAction {
+  return function (dispatch) {
+    saveField(key, value);
+    dispatch(updateForm({ [key]: value }));
+  };
+}
+export function updateBooleanInput({
+  key,
+  value,
+}: {
+  key: string;
+  value: boolean;
+}): ReduxThunkAction {
+  return function (dispatch) {
+    saveField(key, `${value}`);
+    dispatch(updateForm({ [key]: value }));
+  };
+}
 export function updateTagStringInput(currentString: string): ReduxThunkAction {
   return function (dispatch, getState) {
     const tagsFromState = selectTags(getState());
@@ -41,13 +55,12 @@ export function updateTagStringInput(currentString: string): ReduxThunkAction {
     const shouldAddTag = stringComplete && tagsHaveSpace;
     if (shouldAddTag) {
       const { tags, tagString } = getUpdatedTags(currentString, currentTags);
-      // dispatch(updateTags({ tags }));
-      dispatch(updateFields({ tagString, tags }));
+      dispatch(updateForm({ tagString, tags }));
       saveField("tagString", tagString);
       saveTags(tags);
     } else if (tagsHaveSpace) {
       saveField("tagString", currentString);
-      dispatch(updateFields({ tagString: currentString }));
+      dispatch(updateForm({ tagString: currentString }));
     }
   };
 }
