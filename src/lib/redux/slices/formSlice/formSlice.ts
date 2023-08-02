@@ -15,24 +15,6 @@ const initialState: FormSliceState = {
   tagString: "",
   status: "idle",
 };
-function testToAddTag(
-  currentString: string,
-  currentTags: [string, string][] | undefined
-) {
-  const stringComplete =
-    /[ ,.]/.test(`${currentString.at(-1)}`) && currentString.length > 1;
-  const tagsHaveSpace = currentTags === undefined || currentTags.length < 5;
-  return stringComplete && tagsHaveSpace;
-}
-
-function getUpdatedTags(
-  stringIn: string,
-  tagsFromState: FormSliceState["tags"]
-) {
-  const newTags = tagsFromState || [];
-  newTags.push([stringIn.trim(), getRandomColour("mid")]);
-  return { tags: newTags, tagString: "" };
-}
 
 const formSlice = createSlice({
   name: "form",
@@ -42,16 +24,25 @@ const formSlice = createSlice({
       ...state,
       ...action.payload,
     }),
-    updateFields: (state, action: PayloadAction<{ [key: string]: string }>) => {
-      Object.entries(action.payload).forEach((entry) => {
-        const [key, value] = entry;
-        saveField(key, value);
-      });
-      return {
+    updateFields: (
+      state,
+      action: PayloadAction<{ [key: string]: string | [string, string][] }>
+    ) =>
+      // Object.entries(action.payload).forEach((entry) => {
+      //   const [key, value] = entry;
+      //   saveField(key, value);
+      // });
+      ({
         ...state,
         ...action.payload,
-      };
-    },
+      }),
+    // updateTags: (state, action: PayloadAction<{ tags: [string,string][] }>) => {
+    //   return {
+    //     ...state,
+    //     ...action.payload,
+    //   };
+    // },
+
     closeTag: (state, action: PayloadAction<string>) => {
       const newTags = state.tags ? new Map(state.tags) : new Map();
       newTags.delete(action.payload);
@@ -64,19 +55,6 @@ const formSlice = createSlice({
       const newTags = state.tags ? new Map(state.tags) : new Map();
       newTags.set(action.payload.name, action.payload.colour);
       return { ...state, tags: Array.from(newTags) };
-    },
-    updateTag: (state, action: PayloadAction<string>) => {
-      const currentString = action.payload;
-      const currentTags = state.tags ? deepCopyTags(state.tags) : state.tags;
-      const shouldAddTag = testToAddTag(currentString, currentTags);
-      if (shouldAddTag) {
-        const { tags, tagString } = getUpdatedTags(currentString, currentTags);
-        saveField("tagString", tagString);
-        saveTags(tags);
-        return { ...state, tags, tagString };
-      }
-      saveField("tagString", currentString);
-      return { ...state, tagString: currentString };
     },
     publishFalse: (state) => ({ ...state, publish: false }),
     publishTrue: (state) => ({ ...state, publish: true }),
@@ -106,7 +84,8 @@ const { actions, reducer } = formSlice;
 export const {
   updateForm,
   updateFields,
-  updateTag,
+  // updateTags,
+  // updateTag,
   recolourTag,
   closeTag,
   publishFalse,

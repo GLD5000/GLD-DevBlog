@@ -21,8 +21,8 @@ import {
   selectTags,
   selectTitle,
   updateFields,
-  updateTag,
   updateFormFromStorage,
+  updateTagStringInput,
 } from "@/lib/redux";
 import { checkHasSavedForm } from "@/lib/redux/slices/formSlice/localStorage";
 import PreviewPost from "./PreviewPost";
@@ -96,7 +96,9 @@ export default function InputForm() {
           {tagButtons}
           <input
             onChange={(e) => {
-              dispatch(updateTag(e.target.value));
+              e.preventDefault();
+
+              dispatch(updateTagStringInput(e.target.value));
             }}
             placeholder="Tags (Max 5) e.g.: Typescript, React"
             type="text"
