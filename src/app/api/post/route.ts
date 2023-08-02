@@ -1,35 +1,48 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/lib/prisma/prisma";
-import makeNewTag from "@/utilities/colour/newTagMaker";
 import { revalidatePath } from "next/cache";
 
 /* eslint-disable import/prefer-default-export */
 
-// POST /api/post
 // Required fields in body: title
 // Optional fields in body: content
 
+function makeNewTag(tagArray: string[]) {
+  const backgroundColour = tagArray[1];
+  const newTag = {
+    name: tagArray[0].trim(),
+    backgroundColour,
+  };
+  return newTag;
+}
+
 async function createTagOnPost(tagArray: string[], postId: string) {
   const newTag = makeNewTag(tagArray);
+  console.log("newTag:", newTag);
   const tagResult = await prisma.tag.upsert({
     where: { name: newTag.name },
     create: { ...newTag },
     update: { backgroundColour: newTag.backgroundColour },
   });
+  console.log("tagResult:", tagResult);
+  const uniqueTagOnPostObject = { postId, tagId: tagResult.id };
+  console.log("uniqueTagOnPostObject:", uniqueTagOnPostObject);
+  // Check tag has been created before upsert
+  // Fetch new tag
   await prisma.tagOnPosts.upsert({
-    where: { unique_post_tag: { postId, tagId: tagResult.id } },
-    create: { postId, tagId: tagResult.id },
+    where: { unique_post_tag: uniqueTagOnPostObject },
+    create: uniqueTagOnPostObject,
     update: {},
   });
 }
 
-async function addTags(tagsMap: Map<string, string>, postId: string) {
-  await cleanUpTags(postId, tagsMap);
-  Array.from(tagsMap).forEach(async (tag) => {
+async function addTags(tagsArray: [string, string][], postId: string) {
+  await deleteTagsWithEmptyTagOnPostsArray(); // Could be causing an issue- unlikely as we are awaiting
+  await cleanUpTags(postId, tagsArray); // possibly an issue
+  Array.from(tagsArray).forEach(async (tag) => {
     await createTagOnPost(tag, postId);
   });
-  await deleteTagsWithEmptyTagOnPostsArray();
 }
 
 async function deleteTagsWithEmptyTagOnPostsArray() {
@@ -46,12 +59,12 @@ async function deleteTagsWithEmptyTagOnPostsArray() {
   }
 }
 
-async function cleanUpTags(postId: string, tagsMap: Map<string, string>) {
+async function cleanUpTags(postId: string, tagsArray: [string, string][]) {
   const post = await prisma.post.findFirst({
     where: { id: postId },
     include: { tags: { select: { tag: true } } },
   });
-
+  const tagsMap = new Map(tagsArray as [string, string][]);
   const TagsToDelete = post?.tags
     .map((object) => ({ name: object.tag.name, id: object.tag.id }))
     .filter((tagObject) => !tagsMap.has(tagObject.name));
@@ -67,6 +80,10 @@ async function cleanUpTags(postId: string, tagsMap: Map<string, string>) {
 
 async function handler(req: Request) {
   const { title, content, publish, tags, id, readTime } = await req.json();
+  console.log(
+    ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+    JSON.stringify({ title, content, publish, tags, id, readTime })
+  );
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = id
@@ -95,7 +112,7 @@ async function handler(req: Request) {
           author: { connect: { email } },
         },
       });
-  if (tags && tags.length) addTags(new Map(tags), postResult.id);
+  if (tags && tags.length) addTags(tags, postResult.id);
   revalidatePath("/");
   return new Response(JSON.stringify(postResult));
 }

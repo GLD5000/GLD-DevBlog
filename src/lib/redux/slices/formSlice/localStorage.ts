@@ -16,15 +16,12 @@ export function stringifyTags(tagsIn: FormSliceState["tags"]) {
 export function parseForm(formData: string) {
   const returnedObj = JSON.parse(formData);
   const tagsArray = returnedObj.tags ? Array.from(returnedObj.tags) : undefined;
-  const tagsMap = tagsArray
-    ? new Map(tagsArray as [string, string][])
-    : undefined;
   const initialObject = {
     title: returnedObj.title || "",
     content: returnedObj.content || "",
-    publish: returnedObj.publish || false,
-    tags: tagsMap,
-    tagString: returnedObj.tagString || "",
+    publish: false,
+    tags: tagsArray || undefined,
+    tagString: "",
   };
   return initialObject;
 }
@@ -37,23 +34,57 @@ export function saveForm(state: FormSliceState) {
     // ignore write errors
   }
 }
-export function saveField(fieldName: string, fieldValue: string) {
+export function saveField(fieldName: string, fieldValue: string | boolean) {
   // const stringValue = stringifyField(fieldValue);
-  saveKeyValue(fieldName, fieldValue);
+  saveKeyValue(fieldName, `${fieldValue}`);
 }
 export function saveTags(fieldValue: FormSliceState["tags"]) {
   const stringValue = stringifyTags(fieldValue);
   saveKeyValue("tags", stringValue);
 }
-export function loadForm() {
+
+export interface LoadedForm {
+  id: string | undefined;
+  title: string;
+  content: string;
+  tags: [string, string][] | undefined;
+  publish: false;
+  tagString: "";
+}
+
+export function loadForm(): LoadedForm {
   try {
-    const serializedState = window.localStorage.getItem("inputForm");
-    if (serializedState === null) {
-      return undefined;
+    const id = window.localStorage.getItem("id");
+    const title = window.localStorage.getItem("title");
+    const content = window.localStorage.getItem("content");
+    const tags = window.localStorage.getItem("tags");
+    if (title === null && content === null && tags === null) {
+      return {
+        id: undefined,
+        title: "",
+        content: "",
+        publish: false,
+        tags: undefined,
+        tagString: "",
+      };
     }
-    return parseForm(serializedState);
+    return {
+      id: id || undefined,
+      title: title || "",
+      content: content || "",
+      publish: false,
+      tags: tags ? JSON.parse(tags) || undefined : undefined,
+      tagString: "",
+    };
   } catch (err) {
-    return undefined;
+    return {
+      id: undefined,
+      title: "",
+      content: "",
+      publish: false,
+      tags: undefined,
+      tagString: "",
+    };
   }
 }
 
@@ -79,4 +110,24 @@ export function loadKey(key: string) {
   } catch (err) {
     return undefined;
   }
+}
+
+export function saveFields(stateIn: Partial<FormSliceState>) {
+  Object.entries(stateIn).forEach((entry) => {
+    const [key, value] = entry;
+    if (Array.isArray(value)) {
+      saveTags(value);
+    } else {
+      saveField(key, value ?? "");
+    }
+  });
+}
+
+export function checkHasSavedForm() {
+  const { localStorage } = window;
+  return (
+    !!localStorage.getItem("tags")?.length ||
+    !!localStorage.getItem("title")?.length ||
+    !!localStorage.getItem("content")?.length
+  );
 }

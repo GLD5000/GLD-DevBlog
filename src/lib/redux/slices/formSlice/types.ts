@@ -1,7 +1,9 @@
 export interface FormSliceState {
+  id: string | undefined;
   title: string;
   content: string;
-  tags: Map<string, string> | undefined;
+  tags: [string, string][] | undefined;
   tagString: string;
   publish: boolean;
+  status: "idle" | "loading" | "failed";
 }

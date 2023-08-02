@@ -1,17 +1,9 @@
+import { selectForm, useSelector } from "@/lib/redux";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
-export default function PreviewPost({
-  formState,
-}: {
-  formState: {
-    title: string;
-    content: string;
-    tags: Map<string, string> | undefined;
-    tagString: string;
-    publish: boolean;
-  };
-}) {
+export default function PreviewPost() {
+  const formState = useSelector(selectForm);
   let { title } = formState;
   let subtitle = "";
   const hasSubtitle = title.includes(":");

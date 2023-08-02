@@ -1,6 +1,5 @@
 "use client";
 
-import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import SpicyLi from "@/components/elements/SpicyLi";
@@ -9,27 +8,26 @@ import SvgButtonNew from "@/components/elements/SvgButtonNew";
 import DeleteSvg from "@/assets/icons/DeleteSvg";
 import SaveSvg from "@/assets/icons/SaveSvg";
 import getReadTime from "@/utilities/number/readTime";
-import getRandomColour from "@/utilities/colour/randomColour";
 import CloseSvg from "@/assets/icons/CloseSvg";
-import { updateField, updateTags } from "@/lib/redux";
-import { useDispatch } from "react-redux";
+import {
+  useSelector,
+  useDispatch,
+  clearForm,
+  selectContent,
+  selectForm,
+  selectTagString,
+  selectTags,
+  selectTitle,
+  updateFormFromStorage,
+  updateTagStringInput,
+  updateStringInput,
+  updateBooleanInput,
+} from "@/lib/redux";
+import { checkHasSavedForm } from "@/lib/redux/slices/formSlice/localStorage";
 import PreviewPost from "./PreviewPost";
 
-interface FormState {
-  title: string;
-  content: string;
-  tags: Map<string, string> | undefined;
-  tagString: string;
-  publish: boolean;
-}
-
-type FormPayload = Partial<FormState>;
-
-function getTagButtons(
-  tags: Map<string, string> | undefined,
-  closeFunction: (tagValue: string) => void,
-  colourUpdateFunction: (tagValue: string) => void
-) {
+let loaded = true;
+function getTagButtons(tags: [string, string][] | undefined) {
   if (!tags) return null;
   return Array.from(tags).map((tag) => (
     <SpicyLi
@@ -38,107 +36,22 @@ function getTagButtons(
       content={tag[0]}
       id={tag[0]}
       inputcolour={tag[1]}
-      closeFunction={closeFunction}
-      colourUpdateFunction={colourUpdateFunction}
     />
   ));
 }
-function formInitialiser({
-  initialTitle,
-  initialContent,
-  initialTags,
-}: {
-  initialTitle: string | undefined;
-  initialContent: string | undefined;
-  initialTags: Map<string, string> | undefined | null;
-}): FormState {
-  if (initialTitle || initialContent || initialTags) {
-    const initialObject = {
-      title: initialTitle || "",
-      content: initialContent || "",
-      publish: false,
-      tags:
-        initialTags && !Array.isArray(initialTags) ? initialTags : undefined,
-      tagString: "",
-    };
-    return initialObject;
-  }
-  const returnedJson = window.localStorage.getItem("inputForm");
-
-  if (returnedJson) {
-    const returnedObj = JSON.parse(returnedJson);
-    const tagsArray = returnedObj.tags
-      ? Array.from(returnedObj.tags)
-      : undefined;
-    const tagsMap = tagsArray
-      ? new Map(tagsArray as [string, string][])
-      : undefined;
-    const initialObject = {
-      title: returnedObj.title || "",
-      content: returnedObj.content || "",
-      publish: false,
-      tags: tagsMap,
-      tagString: returnedObj.tagString || "",
-    };
-    return initialObject;
-  }
-  const initialObject = {
-    title: "",
-    content: "",
-    publish: false,
-    tags: undefined,
-    tagString: "",
-  };
-  return initialObject;
-}
-
-function formReducer(
-  state: FormState,
-  action: {
-    type?: string;
-    payload: FormPayload;
-  }
-) {
-  switch (action.type) {
-    default: {
-      const returnObject = { ...state, ...action.payload };
-      if (action.payload) {
-        window.localStorage.setItem(
-          "inputForm",
-          JSON.stringify({
-            title: returnObject.title,
-            content: returnObject.content,
-            publish: returnObject.publish,
-            tagString: returnObject.tagString,
-            tags: returnObject.tags ? Array.from(returnObject.tags) : undefined,
-          })
-        );
-      }
-      return returnObject;
-    }
-  }
-}
-
-export default function InputForm({
-  initialTitle = undefined,
-  initialContent = undefined,
-  initialTags = undefined,
-  intialId = undefined,
-}: {
-  initialTitle?: string;
-  initialContent?: string;
-  initialTags?: Map<string, string>;
-  intialId?: string;
-}) {
+export default function InputForm() {
   const dispatch = useDispatch();
+  const formState = useSelector(selectForm);
   const Router = useRouter();
-  const id = intialId || undefined;
-  const [formState, formDispatch] = useReducer(
-    formReducer,
-    { initialTitle, initialContent, initialTags },
-    formInitialiser
-  );
-  const tagButtons = getTagButtons(formState.tags, closeTag, recolourTag);
+  const tagButtons = getTagButtons(useSelector(selectTags));
+
+  if (typeof window !== "undefined" && loaded) {
+    loaded = false;
+    const hasSavedForm = checkHasSavedForm();
+    const emptyForm =
+      formState.content.length === 0 && formState.title.length === 0;
+    if (hasSavedForm && emptyForm) dispatch(updateFormFromStorage());
+  }
 
   return (
     <div className="pb-24">
@@ -156,13 +69,12 @@ export default function InputForm({
           required
           onChange={(e) => {
             dispatch(
-              updateField({ fieldName: "title", fieldValue: e.target.value })
+              updateStringInput({ key: "title", value: e.target.value })
             );
-            formDispatch({ payload: { title: e.target.value } });
           }}
           placeholder="Title"
           type="text"
-          value={formState.title}
+          value={useSelector(selectTitle)}
           className="rounded border-2 border-transparent bg-bg-var p-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk"
         />
         <textarea
@@ -171,25 +83,25 @@ export default function InputForm({
           cols={50}
           onChange={(e) => {
             dispatch(
-              updateField({ fieldName: "content", fieldValue: e.target.value })
+              updateStringInput({ key: "content", value: e.target.value })
             );
-            formDispatch({ payload: { content: e.target.value } });
           }}
           placeholder="Content"
           rows={8}
-          value={formState.content}
+          value={useSelector(selectContent)}
           className="rounded border-2 border-transparent bg-bg-var p-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk"
         />
         <div className="flex flex-row flex-wrap gap-2 rounded border-2 border-transparent bg-bg-var px-2 text-txt-main shadow-lg dark:border-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk dark:drop-shadow-post-dk ">
           {tagButtons}
           <input
             onChange={(e) => {
-              dispatch(updateTags(e.target.value));
-              handleTags(e.target.value);
+              e.preventDefault();
+
+              dispatch(updateTagStringInput(e.target.value));
             }}
             placeholder="Tags (Max 5) e.g.: Typescript, React"
             type="text"
-            value={formState.tagString}
+            value={useSelector(selectTagString)}
             className="grow rounded bg-bg-var p-2 text-txt-main dark:bg-bg-var-dk dark:text-txt-main-dk"
           />
         </div>
@@ -204,7 +116,7 @@ export default function InputForm({
             textElement={<span>Save</span>}
             showTextIn
             clickFunction={() => {
-              formDispatch({ payload: { publish: false } });
+              dispatch(updateBooleanInput({ key: "publish", value: false }));
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
@@ -219,7 +131,7 @@ export default function InputForm({
             textElement={<span>Publish</span>}
             showTextIn
             clickFunction={() => {
-              formDispatch({ payload: { publish: true } });
+              dispatch(updateBooleanInput({ key: "publish", value: true }));
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
           />
@@ -235,14 +147,7 @@ export default function InputForm({
             showTextIn
             clickFunction={(e) => {
               e.preventDefault();
-              formDispatch({
-                payload: {
-                  title: "",
-                  content: "",
-                  tagString: "",
-                  tags: undefined,
-                },
-              });
+              dispatch(clearForm());
               window.localStorage.clear();
             }}
             className="grid h-10 w-32 grid-cols-autoFr rounded-full border-2 border-txt-main px-2 text-center text-txt-main hover:bg-bg-dk hover:text-txt-main-dk hover:transition dark:border-txt-main-dk dark:text-txt-main-dk dark:hover:bg-bg dark:hover:text-txt-main"
@@ -260,54 +165,20 @@ export default function InputForm({
           </Link>
         </div>
       </form>
-      <PreviewPost formState={formState} />
+      <PreviewPost />
     </div>
   );
-  function closeTag(tagValue: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.delete(tagValue);
-    formDispatch({ payload: { tags: newTags } });
-  }
-  function recolourTag(tagValue: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.set(tagValue, getRandomColour("mid"));
-    formDispatch({ payload: { tags: newTags } });
-  }
-  function pushToTags(stringIn: string) {
-    const newTags = formState.tags ? new Map(formState.tags) : new Map();
-    newTags.set(stringIn.trim(), getRandomColour("mid"));
-    formDispatch({ payload: { tags: newTags, tagString: "" } });
-  }
-  function handleTags(currentValue: string) {
-    if (
-      /[ ,.]/.test(`${currentValue.at(-1)}`) &&
-      currentValue.length > 1 &&
-      (formState.tags === undefined || formState.tags.size < 5)
-    ) {
-      pushToTags(currentValue.slice(0, -1));
-      return;
-    }
-    formDispatch({ payload: { tagString: currentValue } });
-  }
   async function submitData(e: React.SyntheticEvent) {
     e.preventDefault();
     const readTime = getReadTime(formState.content);
     try {
-      const body = {
-        content: formState.content,
-        title: formState.title,
-        publish: formState.publish,
-        tags: formState.tags ? Array.from(formState.tags) : undefined,
-        id,
-        readTime,
-      };
+      const body = { ...formState, readTime };
       await fetch("/api/post/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       });
       Router.push("/drafts/");
-      // window.location.reload();
     } catch (error) {
       console.error(error);
     }

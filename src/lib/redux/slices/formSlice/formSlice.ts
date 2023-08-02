@@ -2,62 +2,69 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import getRandomColour from "@/utilities/colour/randomColour";
 import { FormSliceState } from "./types";
 import { saveField, saveTags } from "./localStorage";
+import { updateFromBlogPost } from "./asyncThunks";
 
 /* eslint-disable no-param-reassign, import/prefer-default-export */
 
 const initialState: FormSliceState = {
+  id: undefined,
   title: "",
   content: "",
   publish: false,
   tags: undefined,
   tagString: "",
+  status: "idle",
 };
-function testToAddTag(
-  currentString: any,
-  currentTags: Map<string, string> | undefined
-) {
-  const stringComplete =
-    /[ ,.]/.test(`${currentString.at(-1)}`) && currentString.length > 1;
-  const tagsHaveSpace = currentTags === undefined || currentTags.size < 5;
-  return stringComplete && tagsHaveSpace;
-}
-
-function getUpdatedTags(
-  stringIn: string,
-  tagsFromState: FormSliceState["tags"]
-) {
-  const newTags = tagsFromState ? new Map(tagsFromState) : new Map();
-  newTags.set(stringIn.trim(), getRandomColour("mid"));
-  return { tags: newTags, tagString: "" };
-}
 
 const formSlice = createSlice({
-  name: "counter",
+  name: "form",
   initialState,
   reducers: {
-    updateField: (
+    updateForm: (state, action: PayloadAction<Partial<FormSliceState>>) => ({
+      ...state,
+      ...action.payload,
+    }),
+    closeTag: (state, action: PayloadAction<string>) => {
+      const newTags = state.tags ? new Map(state.tags) : new Map();
+      newTags.delete(action.payload);
+      return { ...state, tags: Array.from(newTags) };
+    },
+    recolourTag: (
       state,
-      action: PayloadAction<{ fieldName: string; fieldValue: string }>
+      action: PayloadAction<{ name: string; colour: string }>
     ) => {
-      saveField(action.payload.fieldName, action.payload.fieldValue);
-      return { ...state, ...action.payload };
+      const newTags = state.tags ? new Map(state.tags) : new Map();
+      newTags.set(action.payload.name, action.payload.colour);
+      return { ...state, tags: Array.from(newTags) };
     },
-    updateTags: (state, action: PayloadAction<string>) => {
-      const currentString = action.payload;
-      const currentTags = state.tags;
-      const shouldAddTag = testToAddTag(currentString, currentTags);
-      if (shouldAddTag) {
-        const { tags, tagString } = getUpdatedTags(currentString, currentTags);
-        saveField("tagString", tagString);
-        saveTags(tags);
-        return { ...state, tags, tagString };
-      }
-      saveField("tagString", currentString);
-      return { ...state, tagString: currentString };
-    },
+    clearForm: (): FormSliceState => ({
+      id: undefined,
+      title: "",
+      content: "",
+      publish: false,
+      tags: undefined,
+      tagString: "",
+      status: "idle",
+    }),
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(updateFromBlogPost.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateFromBlogPost.fulfilled, (state, action) => ({
+        status: "idle",
+        ...action.payload,
+      }));
   },
 });
 
 const { actions, reducer } = formSlice;
-export const { updateField, updateTags } = actions;
+export const { updateForm, recolourTag, closeTag, clearForm } = actions;
 export { reducer as FormReducer };
+// export type CloseTag = typeof closeTag;
+// export type RecolourTag = typeof recolourTag;
+
+function deepCopyTags(tags: [string, string][]): [string, string][] {
+  return tags.map((entry) => [...entry]);
+}

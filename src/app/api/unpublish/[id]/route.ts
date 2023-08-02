@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma/prisma";
 import { revalidatePath } from "next/cache";
-// UNPUBLISH /api/unpublish/:id
 /* eslint-disable import/prefer-default-export */
 async function handler(
   req: Request,
