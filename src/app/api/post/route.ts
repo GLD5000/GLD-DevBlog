@@ -28,6 +28,8 @@ async function createTagOnPost(tagArray: string[], postId: string) {
   console.log("tagResult:", tagResult);
   const uniqueTagOnPostObject = { postId, tagId: tagResult.id };
   console.log("uniqueTagOnPostObject:", uniqueTagOnPostObject);
+  // Check tag has been created before upsert
+  // Fetch new tag
   await prisma.tagOnPosts.upsert({
     where: { unique_post_tag: uniqueTagOnPostObject },
     create: uniqueTagOnPostObject,
@@ -36,11 +38,11 @@ async function createTagOnPost(tagArray: string[], postId: string) {
 }
 
 async function addTags(tagsArray: [string, string][], postId: string) {
-  await cleanUpTags(postId, tagsArray);
+  await deleteTagsWithEmptyTagOnPostsArray(); // Could be causing an issue- unlikely as we are awaiting
+  await cleanUpTags(postId, tagsArray); // possibly an issue
   Array.from(tagsArray).forEach(async (tag) => {
     await createTagOnPost(tag, postId);
   });
-  await deleteTagsWithEmptyTagOnPostsArray();
 }
 
 async function deleteTagsWithEmptyTagOnPostsArray() {
@@ -78,6 +80,10 @@ async function cleanUpTags(postId: string, tagsArray: [string, string][]) {
 
 async function handler(req: Request) {
   const { title, content, publish, tags, id, readTime } = await req.json();
+  console.log(
+    ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+    JSON.stringify({ title, content, publish, tags, id, readTime })
+  );
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = id
