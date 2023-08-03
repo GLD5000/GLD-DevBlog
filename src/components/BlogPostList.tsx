@@ -19,8 +19,8 @@ export default function BlogPostList({
 
   return (
     <section className="mx-auto flex w-full flex-col gap-6">
-      {filteredArray.map((post: PostEmailProps) => (
-        <BlogPost key={post.id} post={post} />
+      {filteredArray.map((post: PostEmailProps, index) => (
+        <BlogPost key={post.id} post={post} indexIn={index} />
       ))}
     </section>
   );

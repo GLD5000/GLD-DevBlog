@@ -12,7 +12,13 @@ import EditButton from "./EditButton";
 import UnpublishButton from "./UnpublishButton";
 import PublishButton from "./publishButton";
 
-export default function BlogPost({ post }: { post: PostEmailProps }) {
+export default function BlogPost({
+  post,
+  indexIn,
+}: {
+  post: PostEmailProps;
+  indexIn: number;
+}) {
   const { data: session } = useSession();
   const isUserMatch =
     session?.user?.email && post.author?.email
@@ -32,6 +38,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
   const { tags } = post;
   const gradientStyle = getGradient(tags);
   const sourceImage = "/Bokeh.svg";
+  const isPriority = indexIn < 1;
 
   return (
     <div className="mx-auto grid w-full gap-2 rounded bg-bg-var shadow-lg  dark:bg-bg-var-dk dark:drop-shadow-post-dk">
@@ -42,6 +49,7 @@ export default function BlogPost({ post }: { post: PostEmailProps }) {
         onClick={() => router.push(`/blogpost/${id}/`)}
       >
         <Image
+          priority={isPriority}
           width={1200}
           height={210}
           style={gradientStyle}
