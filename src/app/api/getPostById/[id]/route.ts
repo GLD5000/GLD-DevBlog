@@ -12,7 +12,6 @@ export async function GET(
   }
 ) {
   const postId = context.params.id;
-  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>postId:", postId);
   const { post, tagNames } = await getBlog(postId);
   const data: FormSliceState = {
     id: post?.id || "",

@@ -6,7 +6,6 @@ export default function luminanceMatcherHsl(
   targetRl: number
 ) {
   const originalRl = luminance.convertHslToLuminance(originalHsl);
-  // console.log("originalRl:", originalRl);
   const isOriginalDirectionUp = getDirectionFromLuminances(
     originalRl,
     targetRl
@@ -14,17 +13,11 @@ export default function luminanceMatcherHsl(
   const { maxLum, minLum } = getMinMaxLum(isOriginalDirectionUp, originalHsl);
   const [hue, sat] = originalHsl;
   let currentLum = getInitialLum(targetRl);
-  // console.log('currentLum after greyscale:', currentLum);
   let currentRl = getInitialRl(hue, sat, currentLum);
   let isMatch = currentRl === targetRl;
   let isCurrentDirectionUp = getDirectionFromLuminances(currentRl, targetRl);
   const startIncrement = 10;
   let overshoots = 0;
-  // loop start
-  // console.log('currentRl:', currentRl);
-  // console.log('isCurrentDirectionUp:', isCurrentDirectionUp);
-  // const lumLogger = [];
-  // const incrementLogger = [];
   const base = 2.775;
   const loopLimit = 24;
   for (let i = 0; i < loopLimit; i += 1) {
@@ -34,13 +27,10 @@ export default function luminanceMatcherHsl(
       startIncrement,
       multiplier
     );
-    // incrementLogger.push(increment);
     currentLum = getIncrementedLum(currentLum, maxLum, minLum, increment); // increment / decrement
     currentRl = luminance.convertHslToLuminance([hue, sat, currentLum]); // check Relative luminance
-    // lumLogger.push(currentRl);
     isMatch = checkForMatch(targetRl, currentRl); // check for a relative luminance match
     if (isMatch) {
-      // console.log("Loops: ",i);
       break;
     }
     if (!isMatch) {
@@ -51,19 +41,6 @@ export default function luminanceMatcherHsl(
       }
     }
   }
-  // console.log('base:', base);
-  // console.log("loopCounter:", loopCounter);
-  // if (!isMatch) {
-  // console.log('base:', base);
-  // console.log('overshoots:', overshoots);
-  // console.log('currentRl:', currentRl);
-  // console.log('originalHsl:',   originalHsl);
-  // console.log('targetRl:',   targetRl);
-  // console.log('Difference:',targetRl- currentRl);
-  // console.log('lumLogger:', lumLogger);
-  // console.log('incrementLogger:', incrementLogger);
-  // }
-  // loop end
   const returnObject = {
     hslArray: [hue, sat, currentLum],
     currentRl,

@@ -15,7 +15,8 @@ const middleware = [
       nextState: () => "#A47104",
       error: () => "#ff0005",
     },
-    predicate: () => typeof window !== "undefined",
+    predicate: () =>
+      typeof window !== "undefined" && process.env.NODE_ENV === "development",
   }),
 ];
 

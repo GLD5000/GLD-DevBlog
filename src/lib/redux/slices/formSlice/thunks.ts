@@ -25,7 +25,7 @@ export function updateStringInput({
   key: string;
   value: string;
 }): ReduxThunkAction {
-  return function (dispatch) {
+  return (dispatch) => {
     saveField(key, value);
     dispatch(updateForm({ [key]: value }));
   };
@@ -37,13 +37,13 @@ export function updateBooleanInput({
   key: string;
   value: boolean;
 }): ReduxThunkAction {
-  return function (dispatch) {
+  return (dispatch) => {
     saveField(key, `${value}`);
     dispatch(updateForm({ [key]: value }));
   };
 }
 export function updateTagStringInput(currentString: string): ReduxThunkAction {
-  return function (dispatch, getState) {
+  return (dispatch, getState) => {
     const tagsFromState = selectTags(getState());
     const currentTags = tagsFromState
       ? deepCopyTags(tagsFromState)

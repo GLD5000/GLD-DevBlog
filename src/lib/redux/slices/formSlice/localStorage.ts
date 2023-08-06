@@ -91,10 +91,6 @@ export function loadForm(): LoadedForm {
 function saveKeyValue(key: string, value: string) {
   try {
     window.localStorage.setItem(key, value);
-    console.log(
-      `window.localStorage.getItem(${key}):`,
-      window.localStorage.getItem(key)
-    );
   } catch {
     // ignore write errors
   }

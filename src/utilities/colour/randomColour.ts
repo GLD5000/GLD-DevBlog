@@ -40,13 +40,10 @@ export default function getRandomColour(type?: string) {
     dark: [0.047, 0.099],
   };
   const randomHslArray = randomColour.makeRandomHslSafer();
-  // console.log('randomHslArray:', randomHslArray);
   const luminance = getRandomNumberBetween(
     luminanceLookup[type] || [0.176, 0.181],
     3
   );
-  // console.log('luminance:', luminance);
   const result = luminanceMatcherHsl(randomHslArray, luminance);
-  // console.log('Relativeluminance:', result.currentRl);
   return colourSpace.convertHslArrayToHex(result.hslArray);
 }
