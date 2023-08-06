@@ -19,15 +19,12 @@ function makeNewTag(tagArray: string[]) {
 
 async function createTagOnPost(tagArray: string[], postId: string) {
   const newTag = makeNewTag(tagArray);
-  console.log("newTag:", newTag);
   const tagResult = await prisma.tag.upsert({
     where: { name: newTag.name },
     create: { ...newTag },
     update: { backgroundColour: newTag.backgroundColour },
   });
-  console.log("tagResult:", tagResult);
   const uniqueTagOnPostObject = { postId, tagId: tagResult.id };
-  console.log("uniqueTagOnPostObject:", uniqueTagOnPostObject);
   // Check tag has been created before upsert
   // Fetch new tag
   await prisma.tagOnPosts.upsert({
@@ -80,10 +77,6 @@ async function cleanUpTags(postId: string, tagsArray: [string, string][]) {
 
 async function handler(req: Request) {
   const { title, content, publish, tags, id, readTime } = await req.json();
-  console.log(
-    ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-    JSON.stringify({ title, content, publish, tags, id, readTime })
-  );
   const session = await getServerSession(authOptions);
   const email = session?.user?.email ? session.user.email : undefined;
   const postResult = id

@@ -10,11 +10,8 @@ const theGreat = FredTheGreat({ weight: "400", subsets: ["latin"] });
 export const revalidate = 86400;
 
 export default async function Page() {
-  // console.log('>>>>>>>>>>>>>>>>>>>>searchTags:', searchTags);
   const { tags, posts } = await getBlogs();
   useStore.setState({ allTags: tags });
-  // console.log('useStore.getState().allTags:', useStore.getState().allTags);
-  // console.log('tags:', tags);
   return (
     <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
       <ZustandInitialiser searchTags="" allTags={useStore.getState().allTags} />

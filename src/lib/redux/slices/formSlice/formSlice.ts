@@ -1,7 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import getRandomColour from "@/utilities/colour/randomColour";
 import { FormSliceState } from "./types";
-import { saveField, saveTags } from "./localStorage";
 import { updateFromBlogPost } from "./asyncThunks";
 
 /* eslint-disable no-param-reassign, import/prefer-default-export */
@@ -62,9 +60,3 @@ const formSlice = createSlice({
 const { actions, reducer } = formSlice;
 export const { updateForm, recolourTag, closeTag, clearForm } = actions;
 export { reducer as FormReducer };
-// export type CloseTag = typeof closeTag;
-// export type RecolourTag = typeof recolourTag;
-
-function deepCopyTags(tags: [string, string][]): [string, string][] {
-  return tags.map((entry) => [...entry]);
-}

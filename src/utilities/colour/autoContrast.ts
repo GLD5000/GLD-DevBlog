@@ -250,7 +250,6 @@ export const autoContrast = {
         outOfBounds += 1;
       }
     }
-    // if (loopLimiter === loopLimit) console.log('loopLimiter:', loopLimiter);
     const { resultingContrastRatio, resultingHex } = autoContrast.getResults(
       currentSrgb,
       originalLuminance
@@ -265,7 +264,6 @@ export const autoContrast = {
   },
   adjustLuminanceFineHsl(originalHsl: number[], targetLuminance: number) {
     const originalLuminance = luminance.convertHslToLuminance(originalHsl);
-    // console.log("originalLuminance:", originalLuminance);
     const targetContrast = contrast.getContrastRatioFloat([
       targetLuminance,
       originalLuminance,
@@ -307,7 +305,6 @@ export const autoContrast = {
           ? currentLuminance > originalLuminance
           : currentLuminance < originalLuminance;
       equal = inRightDirection && currentContrast === targetContrast2dp;
-      // if (equal === true) console.log(inRightDirection, currentContrast, targetContrast2dp);
       if (directionUp !== currentLuminance < targetLuminance) {
         directionUp = !directionUp;
         changesOfDirection += 1;
@@ -326,21 +323,11 @@ export const autoContrast = {
       originalLuminance,
       luminance.convertHslToLuminance(currentHsl),
     ]);
-    if (loopLimiter === loopLimit)
-      console.log(
-        "loopLimiter:",
-        loopLimiter,
-        resultingContrastRatio,
-        targetContrast2dp,
-        inRightDirection,
-        equal
-      );
     const resultsAreGood = autoContrast.testResultsHsl(
       currentHsl,
       resultingContrastRatio,
       targetContrast
     );
-    console.log("currentLuminance:", currentLuminance);
     if (resultsAreGood)
       return {
         resultingContrastRatio,
