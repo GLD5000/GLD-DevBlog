@@ -16,6 +16,7 @@ export default async function Page() {
     <section className="prose mx-auto w-body-sm min-w-body max-w-body-sm p-2 pb-10 dark:prose-invert sm:w-body sm:max-w-body">
       <ZustandInitialiser searchTags="" allTags={useStore.getState().allTags} />
       <h1
+        data-test="hero-heading"
         className={`mx-auto mb-0 mt-8 w-fit text-6xl text-current xs:text-8xl ${theGreat.className}`}
       >
         DevBlog
